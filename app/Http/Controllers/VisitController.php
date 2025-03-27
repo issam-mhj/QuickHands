@@ -18,4 +18,8 @@ class VisitController extends Controller
     {
         return view("contact");
     }
+    public function join()
+    {
+        return view("auth");
+    }
 }

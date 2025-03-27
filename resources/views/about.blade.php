@@ -59,8 +59,8 @@
         <nav class="flex flex-col space-y-4">
             <a href="/" class="font-medium hover:text-primary transition">Home</a>
             <a href="/about" class="font-medium hover:text-primary transition">Prices</a>
-            <a href="#" class="font-medium hover:text-primary transition">Contact</a>
-            <a href="#" class="font-medium text-primary hover:text-secondary transition">Join Us</a>
+            <a href="contact" class="font-medium hover:text-primary transition">Contact</a>
+            <a href="join" class="font-medium text-primary hover:text-secondary transition">Join Us</a>
         </nav>
     </div>
 
