@@ -42,7 +42,7 @@
         <nav class="hidden md:flex space-x-8">
             <a href="/" class="text-gray-600 hover:text-blue-600 transition">Home</a>
             <a href="about" class="text-blue-600 font-medium">About</a>
-            <a href="#" class="text-gray-600 hover:text-blue-600 transition">Contact</a>
+            <a href="contact" class="text-gray-600 hover:text-blue-600 transition">Contact</a>
             <a href="#" class="text-gray-600 hover:text-blue-600 transition">Join Us</a>
         </nav>
         <button class="md:hidden">
@@ -217,6 +217,70 @@
             </button>
         </div>
     </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-800  text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick<span class="text-primary">Hands</span></h3>
+                    <p class="text-gray-400">Connecting you with skilled professionals for all your service needs.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home Cleaning</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Handyman</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Moving Help</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Lawn Care</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400">Subscribe to our newsletter</p>
+                    <div class="flex mt-2">
+                        <input type="email" placeholder="Your email"
+                            class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
+                        <button class="bg-primary px-4 py-2 rounded-r-md">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 QuickHands. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
 
     <script>
         // Mobile menu toggle
