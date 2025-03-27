@@ -54,8 +54,8 @@
             <a href="#" class="text-primary font-bold text-xl">Quick <span class="text-[#FF6F61]">Hands</span></a>
         </div>
         <nav class="hidden md:flex space-x-8">
-            <a href="#" class="text-blue-600 font-medium">Home</a>
-            <a href="#" class="text-gray-600 hover:text-blue-600 transition">About</a>
+            <a href="/" class="text-blue-600 font-medium">Home</a>
+            <a href="about" class="text-gray-600 hover:text-blue-600 transition">About</a>
             <a href="#" class="text-gray-600 hover:text-blue-600 transition">Contact</a>
             <a href="#" class="text-gray-600 hover:text-blue-600 transition">Join Us</a>
         </nav>
