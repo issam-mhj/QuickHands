@@ -9,3 +9,4 @@ Route::get("/about", [VisitController::class, "about"]);
 Route::get("/contact", [VisitController::class, "contact"]);
 Route::get("/join", [VisitController::class, "join"]);
 Route::post("/register", [AuthController::class, "register"])->name("signup");
+Route::post("/login", [AuthController::class, "login"])->name("login");
