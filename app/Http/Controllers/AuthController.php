@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Provider;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -21,13 +23,49 @@ class AuthController extends Controller
             $role = "admin";
         }
 
-        User::create([
+        $user = User::create([
             "name" => $validated['fullname'],
             "email" => $validated['email'],
             "password" => Hash::make($validated['password']),
             "role" => $role,
         ]);
+        if ($role == "provider") {
+            Provider::create([
+                'status' => "pending",
+                'user_id' => $user->id,
+            ]);
+        }
 
         return redirect()->back()->with("done", "You have created the account successfully");
+    }
+    public function login(Request $request)
+    {
+        $data = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($data)) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+
+            if ($user->role === 'admin') {
+                return view('/admin/dashboard');
+            } elseif ($user->role === 'provider') {
+                if ($user->provider->status === 'pending') {
+                    Auth::logout();
+                    return back()->withErrors([
+                        'email' => 'Your account is still pending approval.',
+                    ]);
+                }
+                return view('/provider/dashboard');
+            } else {
+                return view('/user/dashboard');
+            }
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 }
