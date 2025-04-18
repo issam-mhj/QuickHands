@@ -68,4 +68,65 @@ class AuthController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
+
+
+
+
+
+    public function showUserManage()
+    {
+        return view("admin.userManagement");
+    }
+    public function showproviderManage()
+    {
+        return view("admin.providerManagement");
+    }
+    public function showContent()
+    {
+        return view("admin.content");
+    }
+    public function showTask()
+    {
+        return view("admin.tasks");
+    }
+    public function showAnalytics()
+    {
+        return view("admin.analytics");
+    }
+    public function showNotifications()
+    {
+        return view("admin.notification");
+    }
+    public function showSettings()
+    {
+        return view("admin.settings");
+    }
+    public function showAvailableTasks()
+    {
+        return view("provider.tasks");
+    }
+    public function showTaskManage()
+    {
+        return view("provider.taskmanage");
+    }
+    public function showPayment()
+    {
+        return view("provider.payment");
+    }
+    public function showReviews()
+    {
+        return view("provider.reviews");
+    }
+    public function showProfile()
+    {
+        return view("provider.profile");
+    }
+    public function showMsg()
+    {
+        return view("provider.messages");
+    }
+    public function showSupport()
+    {
+        return view("provider.support");
+    }
 }
