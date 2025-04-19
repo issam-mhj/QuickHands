@@ -129,4 +129,8 @@ class AuthController extends Controller
     {
         return view("provider.support");
     }
+    public function showUserDashboard()
+    {
+        return view("user.dashboard");
+    }
 }

@@ -32,3 +32,4 @@ Route::get("/reviews", [AuthController::class, "showReviews"]);
 Route::get("/profile", [AuthController::class, "showProfile"]);
 Route::get("/messages", [AuthController::class, "showMsg"]);
 Route::get("/support", [AuthController::class, "showSupport"]);
+Route::get("/user", [AuthController::class, "showUserDashboard"]);
