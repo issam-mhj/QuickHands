@@ -57,6 +57,37 @@
                 @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300;
             }
 
+            .glass {
+                background: rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+
+            .nav-link {
+                position: relative;
+                transition: all 0.3s ease;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: linear-gradient(90deg, #FF6B6B, #4ECDC4);
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+            .nav-link.active::after {
+                width: 100%;
+            }
+
             .card-hover {
                 @apply hover:-translate-y-2 transform transition-all duration-300;
             }
@@ -221,39 +252,36 @@
         class="fixed w-8 h-8 rounded-full bg-primary opacity-50 pointer-events-none z-50 hidden md:block"></div>
 
     <!-- Header -->
-    <header class="fixed w-full z-50 transition-all duration-300" id="navbar">
+    <header class="fixed w-full z-50 transition-all duration-500" id="navbar">
         <div class="container mx-auto px-4 py-4">
-            <div class="backdrop-blur-md bg-white/70 rounded-2xl shadow-lg px-6 py-4 flex justify-between items-center">
+            <div class="glass rounded-2xl shadow-lg px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center">
-                    <a href="#" class="font-display font-bold text-2xl">
+                    <a href="#" class="font-bold text-2xl">
                         <span class="text-primary">Quick</span><span class="text-secondary">Hands</span>
                     </a>
                 </div>
                 <nav class="hidden md:flex space-x-8">
-                    <a href="/" class="text-dark font-medium relative group">
+                    <a href="/" class="text-gray-800 font-medium nav-link">
                         Home
-                        <span
-                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="/about" class="text-dark font-medium relative group">
+                    <a href="/about" class="text-gray-800 font-medium nav-link">
                         About
-                        <span
-                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="/contact" class="text-primary font-medium relative group">
+                    <a href="/contact" class="text-primary font-medium nav-link active">
                         Contact
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary"></span>
                     </a>
-                    <a href="/join" class="text-dark font-medium relative group">
+                    <a href="/join" class="text-gray-800 font-medium nav-link">
                         Join Us
-                        <span
-                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                     </a>
                 </nav>
                 <div class="flex items-center space-x-4">
-                    <a href="#" class="hidden md:block text-dark hover:text-primary transition-colors">Login</a>
-                    <a href="#" class="hidden md:block btn-primary">Sign Up</a>
-                    <button class="md:hidden text-dark hover:text-primary transition-colors" id="mobile-menu-button">
+                    <a href="join"
+                        class="hidden md:block text-gray-800 hover:text-primary transition-colors">Login</a>
+                    <a href="join" class="hidden md:block magnetic-btn">
+                        <div class="btn-primary content">Sign Up</div>
+                    </a>
+                    <button class="md:hidden text-gray-800 hover:text-primary transition-colors"
+                        id="mobile-menu-button">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -266,13 +294,13 @@
         <!-- Mobile Menu -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="container mx-auto px-4 py-2">
-                <div class="backdrop-blur-md bg-white/90 rounded-2xl shadow-lg p-6 space-y-4">
-                    <a href="/" class="block text-dark hover:text-primary transition-colors">Home</a>
-                    <a href="/about" class="block text-dark hover:text-primary transition-colors">About</a>
-                    <a href="/contact" class="block text-primary font-medium">Contact</a>
-                    <a href="/join" class="block text-dark hover:text-primary transition-colors">Join Us</a>
-                    <div class="flex space-x-4 pt-4 border-t border-gray-200">
-                        <a href="#" class="block text-dark hover:text-primary transition-colors">Login</a>
+                <div class="glass rounded-2xl shadow-lg p-6 space-y-4">
+                    <a href="/" class="block text-gray-800 hover:text-primary transition-colors">Home</a>
+                    <a href="/about" class="block text-primary font-medium">About</a>
+                    <a href="/contact" class="block text-gray-800 hover:text-primary transition-colors">Contact</a>
+                    <a href="/join" class="block text-gray-800 hover:text-primary transition-colors">Join Us</a>
+                    <div class="flex space-x-4 pt-4 border-t border-white/20">
+                        <a href="#" class="block text-gray-800 hover:text-primary transition-colors">Login</a>
                         <a href="#" class="block btn-primary">Sign Up</a>
                     </div>
                 </div>

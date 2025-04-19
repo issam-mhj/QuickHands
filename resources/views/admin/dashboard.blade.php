@@ -611,7 +611,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Task Distribution Chart -->
                 <div class="dashboard-card">
                     <div class="flex items-start justify-between mb-6">

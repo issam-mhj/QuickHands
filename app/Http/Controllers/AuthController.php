@@ -50,7 +50,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->role === 'admin') {
-                return view('/admin/dashboard');
+                return redirect("admindashboard");
             } elseif ($user->role === 'provider') {
                 if ($user->provider->status === 'pending') {
                     Auth::logout();

@@ -1222,9 +1222,9 @@
                     </a>
                 </nav>
                 <div class="flex items-center space-x-4">
-                    <a href="#"
+                    <a href="join"
                         class="hidden md:block text-gray-800 hover:text-primary transition-colors">Login</a>
-                    <a href="#" class="hidden md:block magnetic-btn">
+                    <a href="join" class="hidden md:block magnetic-btn">
                         <div class="btn-primary content">Sign Up</div>
                     </a>
                     <button class="md:hidden text-gray-800 hover:text-primary transition-colors"
@@ -1247,8 +1247,8 @@
                     <a href="/contact" class="block text-gray-800 hover:text-primary transition-colors">Contact</a>
                     <a href="/join" class="block text-gray-800 hover:text-primary transition-colors">Join Us</a>
                     <div class="flex space-x-4 pt-4 border-t border-white/20">
-                        <a href="#" class="block text-gray-800 hover:text-primary transition-colors">Login</a>
-                        <a href="#" class="block btn-primary">Sign Up</a>
+                        <a href="join" class="block text-gray-800 hover:text-primary transition-colors">Login</a>
+                        <a href="join" class="block btn-primary">Sign Up</a>
                     </div>
                 </div>
             </div>
