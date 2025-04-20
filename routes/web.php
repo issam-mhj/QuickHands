@@ -33,3 +33,7 @@ Route::get("/profile", [AuthController::class, "showProfile"]);
 Route::get("/messages", [AuthController::class, "showMsg"]);
 Route::get("/support", [AuthController::class, "showSupport"]);
 Route::get("/user", [AuthController::class, "showUserDashboard"]);
+Route::get("/user/task", [AuthController::class, "showPostTask"]);
+Route::get("/user/activetask", [AuthController::class, "showActiveTask"]);
+Route::get("/user/selectprovider", [AuthController::class, "showSelectProvider"]);
+Route::get("/user/conversation", [AuthController::class, "showMessages"]);

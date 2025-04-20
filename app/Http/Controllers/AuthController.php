@@ -133,4 +133,20 @@ class AuthController extends Controller
     {
         return view("user.dashboard");
     }
+    public function showPostTask()
+    {
+        return view("user.postTask");
+    }
+    public function showActiveTask()
+    {
+        return view("user.activePost");
+    }
+    public function showSelectProvider()
+    {
+        return view("user.selectProvider");
+    }
+    public function showMessages()
+    {
+        return view("user.messages");
+    }
 }
