@@ -336,7 +336,7 @@
                         to specialized services, we've got you covered.
                     </p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <button class="btn-primary group flex items-center justify-center">
+                        <a href="/join" class="btn-primary group flex items-center justify-center">
                             Get Started
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
@@ -345,8 +345,8 @@
                                     d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
                                     clip-rule="evenodd" />
                             </svg>
-                        </button>
-                        <button class="btn-secondary">Learn More</button>
+                        </a>
+                        <a class="btn-secondary">Learn More</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 md:pl-10" data-aos="fade-left" data-aos-delay="200">
@@ -414,6 +414,7 @@
         <div class="marquee">
             <div class="marquee-content">
                 <div class="flex space-x-8 items-center">
+                    <!-- Existing Services -->
                     <span class="text-xl font-medium">Home Cleaning</span>
                     <span class="text-accent text-2xl">•</span>
                     <span class="text-xl font-medium">Handyman Services</span>
@@ -426,17 +427,25 @@
                     <span class="text-accent text-2xl">•</span>
                     <span class="text-xl font-medium">Electrical Work</span>
                     <span class="text-accent text-2xl">•</span>
-                    <span class="text-xl font-medium">Home Cleaning</span>
+                    <span class="text-xl font-medium">Delivery Services</span>
                     <span class="text-accent text-2xl">•</span>
-                    <span class="text-xl font-medium">Handyman Services</span>
+                    <span class="text-xl font-medium">Personal Shopping</span>
                     <span class="text-accent text-2xl">•</span>
-                    <span class="text-xl font-medium">Lawn Care</span>
+                    <span class="text-xl font-medium">Pet Care</span>
                     <span class="text-accent text-2xl">•</span>
-                    <span class="text-xl font-medium">Moving Help</span>
+                    <span class="text-xl font-medium">Event Setup</span>
                     <span class="text-accent text-2xl">•</span>
-                    <span class="text-xl font-medium">Plumbing</span>
+                    <span class="text-xl font-medium">Furniture Assembly</span>
                     <span class="text-accent text-2xl">•</span>
-                    <span class="text-xl font-medium">Electrical Work</span>
+                    <span class="text-xl font-medium">Computer Help</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Car Washing</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Tutoring</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Senior Care</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Personal Training</span>
                 </div>
             </div>
         </div>
@@ -470,7 +479,7 @@
                     <p class="text-gray-600 mb-4">Professional cleaning services for your home or apartment.</p>
                     <div class="flex justify-between items-center">
                         <span class="text-primary font-semibold">From $65/hr</span>
-                        <a href="#"
+                        <a href="join"
                             class="text-sm text-secondary hover:text-dark group-hover:font-medium transition-all flex items-center">
                             Book Now
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -497,7 +506,7 @@
                     <p class="text-gray-600 mb-4">Repairs, installations, and maintenance for your home.</p>
                     <div class="flex justify-between items-center">
                         <span class="text-secondary font-semibold">From $80/hr</span>
-                        <a href="#"
+                        <a href="join"
                             class="text-sm text-primary hover:text-dark group-hover:font-medium transition-all flex items-center">
                             Book Now
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -524,7 +533,7 @@
                     <p class="text-gray-600 mb-4">Assistance with packing, loading, and moving your belongings.</p>
                     <div class="flex justify-between items-center">
                         <span class="text-accent font-semibold">From $90/hr</span>
-                        <a href="#"
+                        <a href="join"
                             class="text-sm text-primary hover:text-dark group-hover:font-medium transition-all flex items-center">
                             Book Now
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -540,7 +549,7 @@
             </div>
 
             <div class="text-center mt-16" data-aos="fade-up">
-                <a href="#" class="btn-primary inline-block">View All Services</a>
+                <a href="join" class="btn-primary inline-block">View All Services</a>
             </div>
         </div>
     </section>
@@ -721,7 +730,7 @@
             </div>
 
             <div class="text-center mt-16" data-aos="fade-up">
-                <a href="#" class="btn-primary inline-block">Post a Task Now</a>
+                <a href="join" class="btn-primary inline-block">Post a Task Now</a>
             </div>
         </div>
     </section>
@@ -775,16 +784,16 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="italic mb-8">"As a busy professional, QuickHands has been a lifesaver. I can find
-                        reliable help for any task with just a few clicks."</p>
+                    <p class="italic mb-8">"QuickHands opened up new opportunities for freelance work. I’ve connected
+                        with startups and businesses needing web development, all in one place."</p>
                     <div class="flex items-center">
                         <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-                                alt="Michael Chen" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/quickhand/brahim.png') }}" alt="Ibrahim Lmlilas"
+                                class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <h4 class="font-medium">Michael Chen</h4>
-                            <p class="text-sm text-white/70">Business Owner</p>
+                            <h4 class="font-medium">Ibrahim Lmlilas</h4>
+                            <p class="text-sm text-white/70">Full Stack Developer</p>
                         </div>
                     </div>
                 </div>
@@ -799,16 +808,16 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <p class="italic mb-8">"I've been using QuickHands to find clients for my handyman business. The
-                        platform is easy to use and has helped me grow."</p>
+                    <p class="italic mb-8">"Thanks to QuickHands, I now cater private events regularly. Clients love
+                        the easy booking, and I love how it helps me focus on what I do best—cooking."</p>
                     <div class="flex items-center">
                         <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-                                alt="David Wilson" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/quickhand/choayb.png') }}" alt="Choayb Oukhali"
+                                class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <h4 class="font-medium">David Wilson</h4>
-                            <p class="text-sm text-white/70">Service Provider</p>
+                            <h4 class="font-medium">Choayb Oukhali</h4>
+                            <p class="text-sm text-white/70">Chef de Cuisine</p>
                         </div>
                     </div>
                 </div>
@@ -834,8 +843,8 @@
                             QuickHands.
                         </p>
                         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                            <a href="#" class="btn-primary">Find a Service</a>
-                            <a href="#" class="btn-secondary">
+                            <a href="join" class="btn-primary">Find a Service</a>
+                            <a href="join" class="btn-secondary">
                                 Become a Provider
                             </a>
                         </div>
