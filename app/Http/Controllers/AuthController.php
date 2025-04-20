@@ -149,4 +149,8 @@ class AuthController extends Controller
     {
         return view("user.messages");
     }
+    public function showUserReviews()
+    {
+        return view("user.feedback");
+    }
 }

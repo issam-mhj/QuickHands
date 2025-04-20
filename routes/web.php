@@ -37,3 +37,4 @@ Route::get("/user/task", [AuthController::class, "showPostTask"]);
 Route::get("/user/activetask", [AuthController::class, "showActiveTask"]);
 Route::get("/user/selectprovider", [AuthController::class, "showSelectProvider"]);
 Route::get("/user/conversation", [AuthController::class, "showMessages"]);
+Route::get("/user/reviews", [AuthController::class, "showUserReviews"]);
