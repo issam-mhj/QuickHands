@@ -153,4 +153,8 @@ class AuthController extends Controller
     {
         return view("user.feedback");
     }
+    public function showUserProfile()
+    {
+        return view("user.profile");
+    }
 }
