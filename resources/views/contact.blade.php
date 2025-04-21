@@ -360,7 +360,7 @@
                     </div>
                     <h3 class="font-display font-semibold text-xl text-center mb-3">Our Address</h3>
                     <p class="text-gray-600 text-center">123 QuickHands Street</p>
-                    <p class="text-gray-600 text-center">Service City, SC 12345</p>
+                    <p class="text-gray-600 text-center">Nador, SC 12345</p>
 
                     <!-- Decorative Element -->
                     <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-primary/10 rounded-full"></div>
@@ -372,8 +372,8 @@
                         <i class="fas fa-phone contact-icon"></i>
                     </div>
                     <h3 class="font-display font-semibold text-xl text-center mb-3">Phone</h3>
-                    <p class="text-gray-600 text-center">Main: +1 (555) 123-4567</p>
-                    <p class="text-gray-600 text-center">Support: +1 (555) 987-6543</p>
+                    <p class="text-gray-600 text-center">Main: 0510000100</p>
+                    <p class="text-gray-600 text-center">Support: 0631674696</p>
 
                     <!-- Decorative Element -->
                     <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-secondary/10 rounded-full"></div>
@@ -657,10 +657,10 @@
                     Join thousands of satisfied customers who have found reliable service providers through QuickHands.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#"
+                    <a href="join"
                         class="bg-white text-primary px-6 py-3 rounded-xl font-medium hover:bg-white/90 transition duration-300 shadow-lg">Find
                         a Service</a>
-                    <a href="#"
+                    <a href="join"
                         class="bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-xl font-medium transition duration-300">
                         Become a Provider
                     </a>
