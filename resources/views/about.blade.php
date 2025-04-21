@@ -1329,7 +1329,7 @@
                                             </div>
                                             <span class="text-xs text-gray-500 ml-2">(4.8/5)</span>
                                         </div>
-                                        <p class="text-primary font-semibold mt-2">Since 2018</p>
+                                        <p class="text-primary font-semibold mt-2">Since 2025</p>
                                     </div>
                                     <div class="flex flex-col items-end">
                                         <span class="text-xs text-green-500 mb-2 font-medium">100,000+ Providers</span>
@@ -1382,7 +1382,7 @@
                     <div class="timeline-content glowing-border">
                         <div
                             class="bg-primary/10 text-primary text-sm font-semibold px-3 py-1 rounded-full inline-block mb-2">
-                            2018
+                            2025
                         </div>
                         <h3 class="text-xl font-semibold mb-2">The Beginning</h3>
                         <p class="text-gray-600">
@@ -1397,7 +1397,7 @@
                     <div class="timeline-content glowing-border">
                         <div
                             class="bg-secondary/10 text-secondary text-sm font-semibold px-3 py-1 rounded-full inline-block mb-2">
-                            2019
+                            2026
                         </div>
                         <h3 class="text-xl font-semibold mb-2">First 1,000 Users</h3>
                         <p class="text-gray-600">
@@ -1411,7 +1411,7 @@
                     <div class="timeline-content glowing-border">
                         <div
                             class="bg-primary/10 text-primary text-sm font-semibold px-3 py-1 rounded-full inline-block mb-2">
-                            2020
+                            2027
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Nationwide Expansion</h3>
                         <p class="text-gray-600">
@@ -1425,12 +1425,12 @@
                     <div class="timeline-content glowing-border">
                         <div
                             class="bg-secondary/10 text-secondary text-sm font-semibold px-3 py-1 rounded-full inline-block mb-2">
-                            2022
+                            2029
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Platform Redesign</h3>
                         <p class="text-gray-600">
                             We completely redesigned our platform for a better user experience and introduced our mobile
-                            app.
+                            app to be ready for the world cup 2030.
                         </p>
                     </div>
                 </div>
@@ -1440,7 +1440,7 @@
                     <div class="timeline-content glowing-border">
                         <div
                             class="bg-primary/10 text-primary text-sm font-semibold px-3 py-1 rounded-full inline-block mb-2">
-                            2023
+                            2030
                         </div>
                         <h3 class="text-xl font-semibold mb-2">100,000 Service Providers</h3>
                         <p class="text-gray-600">
@@ -1550,7 +1550,7 @@
 
                 <div class="relative overflow-hidden rounded-2xl shadow-xl hover-card">
                     <div class="card-content">
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1771&q=80"
+                        <img src="https://plus.unsplash.com/premium_photo-1663134275544-7d83fcfa0e54?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="Team working together"
                             class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700">
 
@@ -1680,18 +1680,18 @@
                 <!-- Team Member 1 -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden team-card hover-card" data-delay="0">
                     <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-                            alt="Sara Cooper" class="w-full h-full object-cover team-image">
+                        <img src="{{ asset('storage/quickhand/issam.png') }}" alt="Issam Mahtaj"
+                            class="w-full h-full object-cover team-image">
                     </div>
                     <div class="p-6 relative card-content">
-                        <h3 class="font-bold text-xl mb-1">Sara Cooper</h3>
+                        <h3 class="font-bold text-xl mb-1">Issam Mahtaj</h3>
                         <p class="text-primary text-sm mb-4">CEO & Founder</p>
                         <p class="text-gray-600 text-sm">
-                            With over 10 years of experience in the service industry, Sara founded QuickHands to bridge
+                            With over 10 years of experience in the IT, Issam founded QuickHands to bridge
                             the gap between skilled professionals and clients.
                         </p>
                         <div class="flex mt-4 space-x-2 team-social">
-                            <a href="#"
+                            <a href="https://www.linkedin.com/in/issam-mahtaj/"
                                 class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 social-icon">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
@@ -1813,14 +1813,14 @@
                     Whether you're looking for services or offering your skills, become part of our growing community!
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#" class="magnetic-btn">
+                    <a href="join" class="magnetic-btn">
                         <div
                             class="bg-white text-primary px-6 py-3 rounded-xl font-medium hover:bg-white/90 transition duration-300 shadow-lg hover:-translate-y-1 transform content">
                             Get Started
                             <i class="fas fa-arrow-right ml-2"></i>
                         </div>
                     </a>
-                    <a href="#"
+                    <a href="contact"
                         class="bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-xl font-medium transition duration-300 hover:-translate-y-1 transform glowing-border">
                         Learn More
                     </a>
