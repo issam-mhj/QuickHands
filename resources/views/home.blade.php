@@ -7,13 +7,36 @@
     <title>Quick Hands - Local Services On Demand</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0066CC',
-                        secondary: '#F8FAFC',
+                        primary: '#FF6B6B', // Coral red
+                        secondary: '#4ECDC4', // Teal
+                        accent: '#FFE66D', // Yellow
+                        dark: '#1A535C', // Dark teal
+                        light: '#F7FFF7', // Off-white
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Clash Display', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': {
+                                transform: 'translateY(0)'
+                            },
+                            '50%': {
+                                transform: 'translateY(-10px)'
+                            },
+                        }
                     }
                 }
             }
@@ -22,287 +45,1042 @@
     <style type="text/tailwindcss">
         @layer components {
             .btn-primary {
-                @apply bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition duration-300;
+                @apply bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-opacity-90 transition duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform;
             }
 
             .btn-secondary {
-                @apply bg-white text-primary px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition duration-300;
+                @apply bg-white text-dark border-2 border-secondary px-6 py-3 rounded-xl font-medium hover:bg-secondary hover:text-white transition duration-300;
+            }
+
+            .card {
+                @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300;
+            }
+
+            .card-hover {
+                @apply hover:-translate-y-2 transform transition-all duration-300;
+            }
+
+            .gradient-text {
+                @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
+            }
+
+            .blob {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transition: all 1s ease-in-out;
+                animation: blob-animation 8s ease-in-out infinite;
+            }
+
+            .service-card {
+                @apply relative overflow-hidden rounded-2xl p-6 shadow-lg transition-all duration-500 hover:shadow-2xl;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+
+            .service-card::before {
+                content: '';
+                @apply absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 opacity-0 transition-opacity duration-300;
+                z-index: -1;
+            }
+
+            .service-card:hover::before {
+                @apply opacity-100;
+            }
+
+            .nav-link {
+                position: relative;
+                transition: all 0.3s ease;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: linear-gradient(90deg, #FF6B6B, #4ECDC4);
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+            .nav-link.active::after {
+                width: 100%;
+            }
+
+            .glass {
+                background: rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+
+            .custom-shape-divider {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                overflow: hidden;
+                line-height: 0;
             }
         }
 
-        .bg-bubble {
-            position: absolute;
-            border-radius: 50%;
-            background-color: #f1f5f9;
-            z-index: -1;
+        @keyframes blob-animation {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
         }
 
         .toggle-switch:checked+.toggle-label {
-            background-color: #0066CC;
+            background-color: #4ECDC4;
+        }
+
+        .toggle-label::after {
+            content: '';
+            @apply absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition-transform duration-300 ease-in-out;
+        }
+
+        .toggle-switch:checked+.toggle-label::after {
+            @apply transform translate-x-5;
+        }
+
+        .scroll-indicator {
+            height: 50px;
+            width: 30px;
+            border: 2px solid white;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            margin-left: -3px;
+            background-color: white;
+            border-radius: 100%;
+            animation: scroll-animation 2s infinite;
+        }
+
+        @keyframes scroll-animation {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .curved-bg {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .curved-bg::before {
+            content: '';
+            display: block;
+            position: absolute;
+            border-radius: 100% 50%;
+            width: 55%;
+            height: 100%;
+            background-color: #4ECDC4;
+            right: -20%;
+            top: 30%;
+        }
+
+        .curved-bg::after {
+            content: '';
+            display: block;
+            position: absolute;
+            border-radius: 100% 50%;
+            width: 55%;
+            height: 100%;
+            background-color: #FF6B6B;
+            left: -20%;
+            top: 40%;
+            z-index: -1;
         }
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 </head>
 
-<body class="font-sans text-gray-800 overflow-x-hidden">
-    <!-- Background Bubbles -->
-    <div class="bg-bubble w-96 h-96 top-0 right-0 opacity-50"></div>
-    <div class="bg-bubble w-64 h-64 bottom-40 left-20 opacity-30"></div>
+<body class="font-sans text-dark overflow-x-hidden bg-light">
+    <!-- Cursor Follower (for desktop) -->
+    <div id="cursor-follower"
+        class="fixed w-8 h-8 rounded-full bg-primary opacity-50 pointer-events-none z-50 hidden md:block"></div>
 
     <!-- Header -->
-    <header class="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div class="flex items-center">
-            <a href="#" class="text-primary font-bold text-xl">Quick <span class="text-[#FF6F61]">Hands</span></a>
-        </div>
-        <nav class="hidden md:flex space-x-8">
-            <a href="/" class="text-blue-600 font-medium">Home</a>
-            <a href="about" class="text-gray-600 hover:text-blue-600 transition">About</a>
-            <a href="contact" class="text-gray-600 hover:text-blue-600 transition">Contact</a>
-            <a href="join" class="text-gray-600 hover:text-blue-600 transition">Join Us</a>
-        </nav>
-        <button class="md:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </button>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="container mx-auto px-4 py-12 md:py-20 relative">
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0">
-                <p class="text-sm font-semibold text-gray-600 mb-2">LOCAL SERVICES, ON DEMAND</p>
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Your Tasks, <br><span class="text-primary">Our
-                        Hands</span></h1>
-                <p class="text-gray-600 mb-8 max-w-md">Connect with trusted local service providers for all your
-                    everyday tasks. From home maintenance to specialized services, we've got you covered.</p>
-                <div class="flex space-x-4">
-                    <button class="btn-primary flex items-center">
-                        Get Started
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                                clip-rule="evenodd" />
+    <header class="fixed w-full z-50 transition-all duration-500" id="navbar">
+        <div class="container mx-auto px-4 py-4">
+            <div class="glass rounded-2xl shadow-lg px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="#" class="font-bold text-2xl">
+                        <span class="text-primary">Quick</span><span class="text-secondary">Hands</span>
+                    </a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/" class="text-primary font-medium nav-link active">
+                        Home
+                    </a>
+                    <a href="/about" class="text-gray-800 font-medium nav-link">
+                        About
+                    </a>
+                    <a href="/contact" class="text-gray-800 font-medium nav-link">
+                        Contact
+                    </a>
+                    <a href="/join" class="text-gray-800 font-medium nav-link">
+                        Join Us
+                    </a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <a href="join"
+                        class="hidden md:block text-gray-800 hover:text-primary transition-colors">Login</a>
+                    <a href="join" class="hidden md:block magnetic-btn">
+                        <div class="btn-primary content">Sign Up</div>
+                    </a>
+                    <button class="md:hidden text-gray-800 hover:text-primary transition-colors"
+                        id="mobile-menu-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <button class="btn-secondary">Learn More</button>
                 </div>
             </div>
-            <div class="md:w-1/2">
-                <div class="relative">
-                    <div class="bg-white rounded-xl shadow-lg p-4">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSps42uVZ1yJ7End4CYzlqR8uqwlLnVjjH9A&s"
-                            alt="People working together" class="rounded-lg w-full h-48 object-cover mb-6">
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="container mx-auto px-4 py-2">
+                <div class="glass rounded-2xl shadow-lg p-6 space-y-4">
+                    <a href="/" class="block text-gray-800 hover:text-primary transition-colors">Home</a>
+                    <a href="/about" class="block text-primary font-medium">About</a>
+                    <a href="/contact" class="block text-gray-800 hover:text-primary transition-colors">Contact</a>
+                    <a href="/join" class="block text-gray-800 hover:text-primary transition-colors">Join Us</a>
+                    <div class="flex space-x-4 pt-4 border-t border-white/20">
+                        <a href="#" class="block text-gray-800 hover:text-primary transition-colors">Login</a>
+                        <a href="#" class="block btn-primary">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-                        <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <h3 class="font-medium">Home Cleaning</h3>
-                                    <p class="text-primary font-semibold mt-1">$75/hr</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-xs text-green-500 mr-2">Available Today</span>
-                                    <div class="relative inline-block w-10 mr-2 align-middle">
-                                        <input type="checkbox" id="toggle" class="toggle-switch sr-only" checked />
-                                        <label for="toggle"
-                                            class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer transition-colors duration-200 ease-in"></label>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-24 overflow-hidden">
+        <div class="curved-bg opacity-20"></div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-1/4 right-10 w-20 h-20 bg-accent rounded-full opacity-20 animate-float"></div>
+        <div class="absolute bottom-1/4 left-10 w-16 h-16 bg-primary rounded-full opacity-20 animate-float-slow"></div>
+        <div class="absolute top-1/3 left-1/4 w-12 h-12 bg-secondary rounded-full opacity-20 animate-pulse-slow"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right">
+                    <div
+                        class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-6 backdrop-blur-sm">
+                        LOCAL SERVICES, ON DEMAND
+                    </div>
+                    <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                        Your Tasks, <br><span class="gradient-text">Our Hands</span>
+                    </h1>
+                    <p class="text-gray-600 mb-8 text-lg max-w-md">
+                        Connect with trusted local service providers for all your everyday tasks. From home maintenance
+                        to specialized services, we've got you covered.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="/join" class="btn-primary group flex items-center justify-center">
+                            Get Started
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a class="btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-10" data-aos="fade-left" data-aos-delay="200">
+                    <div class="relative">
+                        <!-- Blob Background -->
+                        <div class="absolute -top-10 -right-10 w-72 h-72 bg-accent/30 blob -z-10"></div>
+
+                        <div class="card p-6 relative transform hover:rotate-1 transition-all duration-500">
+                            <div
+                                class="absolute -top-4 -right-4 bg-accent text-dark text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                Popular
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
+                                alt="Home cleaning service"
+                                class="rounded-xl w-full h-56 object-cover mb-6 shadow-md">
+
+                            <div class="bg-white rounded-xl p-5 shadow-md border border-gray-100">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="font-medium text-lg">Home Cleaning</h3>
+                                        <div class="flex items-center mt-1">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star text-sm"></i>
+                                                <i class="fas fa-star text-sm"></i>
+                                                <i class="fas fa-star text-sm"></i>
+                                                <i class="fas fa-star text-sm"></i>
+                                                <i class="fas fa-star-half-alt text-sm"></i>
+                                            </div>
+                                            <span class="text-xs text-gray-500 ml-2">(4.8/5)</span>
+                                        </div>
+                                        <p class="text-primary font-semibold mt-2">$75/hr</p>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs text-green-500 mb-2 font-medium">Available Today</span>
+                                        <div class="relative inline-block w-12 align-middle">
+                                            <input type="checkbox" id="toggle" class="toggle-switch sr-only"
+                                                checked />
+                                            <label for="toggle"
+                                                class="toggle-label block overflow-hidden h-7 w-12 rounded-full bg-gray-300 cursor-pointer"></label>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Floating Elements -->
+                            <div
+                                class="absolute -bottom-3 -left-3 w-10 h-10 bg-secondary rounded-full opacity-70 animate-pulse">
+                            </div>
+                            <div
+                                class="absolute top-1/2 -right-3 w-6 h-6 bg-primary rounded-full opacity-70 animate-ping">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flex justify-center mt-16">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 animate-bounce" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+            <div class="scroll-indicator"></div>
+            <span class="text-dark mt-2 text-sm">Scroll Down</span>
+        </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <section class="py-8 bg-dark text-white overflow-hidden">
+        <div class="marquee">
+            <div class="marquee-content">
+                <div class="flex space-x-8 items-center">
+                    <!-- Existing Services -->
+                    <span class="text-xl font-medium">Home Cleaning</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Handyman Services</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Lawn Care</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Moving Help</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Plumbing</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Electrical Work</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Delivery Services</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Personal Shopping</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Pet Care</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Event Setup</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Furniture Assembly</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Computer Help</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Car Washing</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Tutoring</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Senior Care</span>
+                    <span class="text-accent text-2xl">•</span>
+                    <span class="text-xl font-medium">Personal Training</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 md:py-32 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-secondary/20 rounded-bl-full -z-10"></div>
+        <div class="absolute bottom-0 left-0 w-1/4 h-1/4 bg-primary/20 rounded-tr-full -z-10"></div>
+
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Popular Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Browse our most requested services and find the help you need today.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card card-hover group" data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-bl-full -z-10 transition-all duration-300 group-hover:bg-primary/20">
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-full inline-block mb-4">
+                        <i class="fas fa-broom text-primary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3 group-hover:text-primary transition-colors">Home
+                        Cleaning</h3>
+                    <p class="text-gray-600 mb-4">Professional cleaning services for your home or apartment.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-primary font-semibold">From $65/hr</span>
+                        <a href="join"
+                            class="text-sm text-secondary hover:text-dark group-hover:font-medium transition-all flex items-center">
+                            Book Now
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 ml-1 transition-transform duration-300 group-hover:translate-x-1"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card card-hover group" data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="absolute top-0 right-0 w-24 h-24 bg-secondary/10 rounded-bl-full -z-10 transition-all duration-300 group-hover:bg-secondary/20">
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-full inline-block mb-4">
+                        <i class="fas fa-tools text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3 group-hover:text-secondary transition-colors">
+                        Handyman</h3>
+                    <p class="text-gray-600 mb-4">Repairs, installations, and maintenance for your home.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-secondary font-semibold">From $80/hr</span>
+                        <a href="join"
+                            class="text-sm text-primary hover:text-dark group-hover:font-medium transition-all flex items-center">
+                            Book Now
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 ml-1 transition-transform duration-300 group-hover:translate-x-1"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card card-hover group" data-aos="fade-up" data-aos-delay="300">
+                    <div
+                        class="absolute top-0 right-0 w-24 h-24 bg-accent/10 rounded-bl-full -z-10 transition-all duration-300 group-hover:bg-accent/20">
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-full inline-block mb-4">
+                        <i class="fas fa-truck text-accent text-xl"></i>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3 group-hover:text-accent transition-colors">
+                        Moving Help</h3>
+                    <p class="text-gray-600 mb-4">Assistance with packing, loading, and moving your belongings.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-accent font-semibold">From $90/hr</span>
+                        <a href="join"
+                            class="text-sm text-primary hover:text-dark group-hover:font-medium transition-all flex items-center">
+                            Book Now
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 ml-1 transition-transform duration-300 group-hover:translate-x-1"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-16" data-aos="fade-up">
+                <a href="join" class="btn-primary inline-block">View All Services</a>
+            </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="container mx-auto px-4 py-16 md:py-24">
-        <h2 class="text-3xl font-bold text-center mb-4">What Makes QuickHands Different</h2>
-        <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Our platform is designed with simplicity and efficiency in mind, connecting you with trusted local
-            professionals for all your everyday needs.
-        </p>
+    <section class="py-20 md:py-32 bg-dark text-white relative overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-20 bg-light"
+            style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 0);"></div>
+        <div class="absolute bottom-0 right-0 w-full h-20 bg-light"
+            style="clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);"></div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Feature 1 -->
-            <div class="text-center">
-                <div class="bg-blue-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-clock text-primary"></i>
-                </div>
-                <h3 class="font-semibold mb-2">Quick Response</h3>
-                <p class="text-gray-600 text-sm">Get connected with service providers within minutes of placing your
-                    request.</p>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">What Makes QuickHands Different</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg">
+                    Our platform is designed with simplicity and efficiency in mind, connecting you with trusted local
+                    professionals for all your everyday needs.
+                </p>
             </div>
 
-            <!-- Feature 2 -->
-            <div class="text-center">
-                <div class="bg-green-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-check-circle text-green-500"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div class="relative group" data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-xl group-hover:blur-lg transition-all duration-300 opacity-70">
+                    </div>
+                    <div class="relative bg-dark/80 backdrop-blur-sm p-8 rounded-2xl border border-white/10 h-full">
+                        <div
+                            class="bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-clock text-primary text-2xl"></i>
+                        </div>
+                        <h3
+                            class="font-display font-semibold text-xl mb-4 text-white group-hover:text-primary transition-colors">
+                            Quick Response</h3>
+                        <p class="text-gray-300">Get connected with service providers within minutes of placing your
+                            request.</p>
+                    </div>
                 </div>
-                <h3 class="font-semibold mb-2">Vetted Professionals</h3>
-                <p class="text-gray-600 text-sm">All service providers are background-checked and skill-verified.</p>
+
+                <!-- Feature 2 -->
+                <div class="relative group" data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl blur-xl group-hover:blur-lg transition-all duration-300 opacity-70">
+                    </div>
+                    <div class="relative bg-dark/80 backdrop-blur-sm p-8 rounded-2xl border border-white/10 h-full">
+                        <div
+                            class="bg-secondary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-check-circle text-secondary text-2xl"></i>
+                        </div>
+                        <h3
+                            class="font-display font-semibold text-xl mb-4 text-white group-hover:text-secondary transition-colors">
+                            Vetted Professionals</h3>
+                        <p class="text-gray-300">All service providers are background-checked and skill-verified for
+                            your safety.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="relative group" data-aos="fade-up" data-aos-delay="300">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl blur-xl group-hover:blur-lg transition-all duration-300 opacity-70">
+                    </div>
+                    <div class="relative bg-dark/80 backdrop-blur-sm p-8 rounded-2xl border border-white/10 h-full">
+                        <div
+                            class="bg-accent/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-search text-accent text-2xl"></i>
+                        </div>
+                        <h3
+                            class="font-display font-semibold text-xl mb-4 text-white group-hover:text-accent transition-colors">
+                            Find Anything</h3>
+                        <p class="text-gray-300">From plumbing to tutoring, find the service you need locally with our
+                            extensive network.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="relative group" data-aos="fade-up" data-aos-delay="400">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl blur-xl group-hover:blur-lg transition-all duration-300 opacity-70">
+                    </div>
+                    <div class="relative bg-dark/80 backdrop-blur-sm p-8 rounded-2xl border border-white/10 h-full">
+                        <div
+                            class="bg-gradient-to-r from-primary/20 to-secondary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-star text-white text-2xl"></i>
+                        </div>
+                        <h3
+                            class="font-display font-semibold text-xl mb-4 text-white group-hover:text-gradient-text transition-colors">
+                            Transparent Reviews</h3>
+                        <p class="text-gray-300">Read real reviews from verified customers before booking any service.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 md:py-32 bg-light relative overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute top-1/4 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute bottom-1/4 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl -z-10"></div>
+
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">How QuickHands Works</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Getting help has never been easier. Follow these simple steps to find the perfect service provider.
+                </p>
             </div>
 
-            <!-- Feature 3 -->
-            <div class="text-center">
-                <div class="bg-purple-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-search text-purple-500"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Connection Lines (Desktop Only) -->
+                <div
+                    class="hidden md:block absolute top-1/3 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-primary to-secondary">
                 </div>
-                <h3 class="font-semibold mb-2">Find Anything</h3>
-                <p class="text-gray-600 text-sm">From plumbing to tutoring, find the service you need locally.</p>
+
+                <!-- Step 1 -->
+                <div class="relative" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card p-8 text-center relative z-10 h-full">
+                        <div class="relative mb-8">
+                            <div
+                                class="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                                1
+                            </div>
+                            <div
+                                class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-primary/20 rounded-full animate-pulse-slow">
+                            </div>
+                        </div>
+                        <h3 class="font-display font-semibold text-xl mb-4">Post Your Task</h3>
+                        <p class="text-gray-600">Describe what you need done, when you need it, and your budget.</p>
+
+                        <!-- Decorative Element -->
+                        <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-primary/20 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card p-8 text-center relative z-10 h-full">
+                        <div class="relative mb-8">
+                            <div
+                                class="bg-secondary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                                2
+                            </div>
+                            <div
+                                class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-secondary/20 rounded-full animate-pulse-slow">
+                            </div>
+                        </div>
+                        <h3 class="font-display font-semibold text-xl mb-4">Review Offers</h3>
+                        <p class="text-gray-600">Compare profiles, reviews, and quotes from interested service
+                            providers.</p>
+
+                        <!-- Decorative Element -->
+                        <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-secondary/20 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card p-8 text-center relative z-10 h-full">
+                        <div class="relative mb-8">
+                            <div
+                                class="bg-accent text-dark w-16 h-16 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                                3
+                            </div>
+                            <div
+                                class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-accent/20 rounded-full animate-pulse-slow">
+                            </div>
+                        </div>
+                        <h3 class="font-display font-semibold text-xl mb-4">Get It Done</h3>
+                        <p class="text-gray-600">Choose the right person for the job and get your task completed.</p>
+
+                        <!-- Decorative Element -->
+                        <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-accent/20 rounded-full"></div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Feature 4 -->
-            <div class="text-center">
-                <div class="bg-orange-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-star text-orange-500"></i>
-                </div>
-                <h3 class="font-semibold mb-2">Transparent Reviews</h3>
-                <p class="text-gray-600 text-sm">Read real reviews from verified customers before booking.</p>
+            <div class="text-center mt-16" data-aos="fade-up">
+                <a href="join" class="btn-primary inline-block">Post a Task Now</a>
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
-    <section class="container mx-auto px-4 py-16 md:py-24">
-        <h2 class="text-3xl font-bold text-center mb-4">What Our Users Say</h2>
-        <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Don't just take our word for it. Here's what people in our community have to say about QuickHands.
-        </p>
+    <section class="py-20 md:py-32 bg-gradient-to-br from-primary to-secondary text-white relative overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
+        </div>
 
-        <div class="relative max-w-3xl mx-auto">
-            <!-- Testimonial Carousel -->
-            <div class="testimonial-carousel">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">What Our Users Say</h2>
+                <p class="text-white/80 max-w-2xl mx-auto text-lg">
+                    Don't just take our word for it. Here's what people in our community have to say about QuickHands.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 <!-- Testimonial 1 -->
-                <div class="testimonial-slide bg-white rounded-lg p-8 shadow-md">
-                    <div class="flex justify-center mb-4">
-                        <div class="flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 transform transition-all duration-300 hover:scale-105 hover:bg-white/20"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex text-yellow-400 mb-6">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
-                    <p class="text-center text-gray-700 italic mb-6">"QuickHands has changed the way I manage household
-                        tasks. I found a reliable plumber within minutes of posting my job."</p>
-                    <div class="flex items-center justify-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden">
-                            <img src="https://www.celebrity-cutouts.co.uk/wp-content/uploads/2020/02/lionel-messi-mouth-open-celebrity-mask.jpg"
+                    <p class="italic mb-8">"QuickHands has changed the way I manage household tasks. I found a reliable
+                        plumber within minutes of posting my job."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
                                 alt="Sarah Johnson" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <h4 class="font-medium">Leo Messi</h4>
-                            <p class="text-sm text-gray-500">Football player</p>
+                            <h4 class="font-medium">Sarah Johnson</h4>
+                            <p class="text-sm text-white/70">Homeowner</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 transform transition-all duration-300 hover:scale-105 hover:bg-white/20"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex text-yellow-400 mb-6">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="italic mb-8">"QuickHands opened up new opportunities for freelance work. I’ve connected
+                        with startups and businesses needing web development, all in one place."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="{{ asset('storage/quickhand/brahim.png') }}" alt="Ibrahim Lmlilas"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Ibrahim Lmlilas</h4>
+                            <p class="text-sm text-white/70">Full Stack Developer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 transform transition-all duration-300 hover:scale-105 hover:bg-white/20"
+                    data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex text-yellow-400 mb-6">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="italic mb-8">"Thanks to QuickHands, I now cater private events regularly. Clients love
+                        the easy booking, and I love how it helps me focus on what I do best—cooking."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="{{ asset('storage/quickhand/choayb.png') }}" alt="Choayb Oukhali"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Choayb Oukhali</h4>
+                            <p class="text-sm text-white/70">Chef de Cuisine</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Carousel Controls -->
-            <button
-                class="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 shadow-md flex items-center justify-center">
-                <i class="fas fa-chevron-left text-gray-400"></i>
-            </button>
-            <button
-                class="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 shadow-md flex items-center justify-center">
-                <i class="fas fa-chevron-right text-gray-400"></i>
-            </button>
         </div>
+    </section>
 
-        <!-- Carousel Dots -->
-        <div class="flex justify-center mt-8 space-x-2">
-            <button class="w-2 h-2 rounded-full bg-primary"></button>
-            <button class="w-2 h-2 rounded-full bg-gray-300"></button>
-            <button class="w-2 h-2 rounded-full bg-gray-300"></button>
-            <button class="w-2 h-2 rounded-full bg-gray-300"></button>
+    <!-- CTA Section -->
+    <section class="py-20 md:py-32 bg-light relative overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-accent/10 rounded-bl-full -z-10"></div>
+        <div class="absolute bottom-0 left-0 w-1/4 h-1/4 bg-primary/10 rounded-tr-full -z-10"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden" data-aos="fade-up">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-10 md:p-12 flex flex-col justify-center">
+                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 leading-tight">Ready to Get
+                            Started?</h2>
+                        <p class="text-gray-600 mb-8">
+                            Join thousands of satisfied customers who have found reliable service providers through
+                            QuickHands.
+                        </p>
+                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="join" class="btn-primary">Find a Service</a>
+                            <a href="join" class="btn-secondary">
+                                Become a Provider
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80"
+                            alt="Happy customer" class="w-full h-full object-cover">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-primary/60 to-secondary/60 mix-blend-multiply">
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-white text-center p-8">
+                                <div class="text-5xl font-bold mb-2">4.9/5</div>
+                                <div class="flex justify-center text-yellow-400 mb-4">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-lg font-medium">Average Rating</p>
+                                <p class="text-sm opacity-80">Based on 10,000+ reviews</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer class="bg-dark text-white pt-20 pb-10 relative overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5">
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Quick<span class="text-primary">Hands</span></h3>
-                    <p class="text-gray-400">Connecting you with skilled professionals for all your service needs.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Services</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Services</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Home Cleaning</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Handyman</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Moving Help</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Lawn Care</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Connect With Us</h4>
-                    <div class="flex space-x-4 mb-4">
+                    <h3 class="font-display text-2xl font-bold mb-6">Quick<span class="text-primary">Hands</span></h3>
+                    <p class="text-gray-400 mb-6">Connecting you with skilled professionals for all your service needs.
+                    </p>
+                    <div class="flex space-x-4">
                         <a href="#"
-                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                         <a href="#"
-                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                             <i class="fab fa-twitter"></i>
                         </a>
                         <a href="#"
-                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <a href="#"
-                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
-                    <p class="text-gray-400">Subscribe to our newsletter</p>
-                    <div class="flex mt-2">
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Home
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>About Us
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Services
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>How It Works
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Contact
+                            </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Home Cleaning
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Handyman
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Moving Help
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Lawn Care
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>View All Services
+                            </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Subscribe to Our Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Stay updated with our latest services and offers.</p>
+                    <div class="flex mb-4">
                         <input type="email" placeholder="Your email"
-                            class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
-                        <button class="bg-primary px-4 py-2 rounded-r-md">
+                            class="px-4 py-3 w-full rounded-l-lg focus:outline-none text-gray-800">
+                        <button class="bg-primary px-4 py-3 rounded-r-lg hover:bg-opacity-90 transition-colors">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
+                    <p class="text-xs text-gray-500">By subscribing, you agree to our Privacy Policy and consent to
+                        receive updates.</p>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <div class="border-t border-white/10 mt-16 pt-8 text-center text-gray-400">
                 <p>&copy; 2025 QuickHands. All rights reserved.</p>
+                <div class="flex justify-center space-x-6 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Privacy
+                        Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Terms of
+                        Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">FAQ</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- React Integration (External) -->
+    <div id="react-components"></div>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // Toggle switch functionality
-        document.getElementById('toggle').addEventListener('change', function() {
-            // Add toggle functionality here
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true
         });
 
         // Mobile menu toggle
-        document.querySelector('header button').addEventListener('click', function() {
-            // Add mobile menu toggle functionality here
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
         });
 
-        // Testimonial carousel functionality could be added here
-        // For a real implementation, you might want to use a library like Swiper.js
+        // Toggle switch functionality
+        document.getElementById('toggle').addEventListener('change', function() {
+            console.log('Toggle changed:', this.checked);
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+
+        // Cursor follower for desktop
+        const cursorFollower = document.getElementById('cursor-follower');
+
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', function(e) {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            });
+
+            // Add special effects on hover for interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .card, .service-card');
+
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    cursorFollower.classList.add('scale-150');
+                    cursorFollower.classList.add('opacity-30');
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    cursorFollower.classList.remove('scale-150');
+                    cursorFollower.classList.remove('opacity-30');
+                });
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- React Integration Script (External) -->
+    <script type="text/javascript">
+        // This is where you would load your React components
+        // Example:
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // Load React and ReactDOM from CDN
+        //     const reactScript = document.createElement('script');
+        //     reactScript.src = 'https://unpkg.com/react@18/umd/react.production.min.js';
+        //     document.body.appendChild(reactScript);
+        //
+        //     const reactDOMScript = document.createElement('script');
+        //     reactDOMScript.src = 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js';
+        //     document.body.appendChild(reactDOMScript);
+        //
+        //     // Load your custom React components
+        //     reactDOMScript.onload = function() {
+        //         const customScript = document.createElement('script');
+        //         customScript.src = '/path/to/your/react-components.js';
+        //         document.body.appendChild(customScript);
+        //     };
+        // });
     </script>
 </body>
 

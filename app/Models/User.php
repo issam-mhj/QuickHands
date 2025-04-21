@@ -57,7 +57,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
-    public function Providers(): HasOne
+    public function Provider(): HasOne
     {
         return $this->hasOne(Provider::class);
     }
