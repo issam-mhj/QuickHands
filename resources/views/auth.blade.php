@@ -806,7 +806,7 @@
                 <div class="flex justify-center mb-8">
                     <div class="glass rounded-full p-1.5 shadow-lg relative">
                         <div id="tab-slider" class="tab-slider" style="width: 50%; left: 0;"></div>
-                        <button id="signup-tab" class="tab-button active px-8 py-3 font-medium rounded-full relative z-10 interactive">Sign Up</button>
+                        <button id="signup-tab" class="tab-button active px-6 py-3 font-medium rounded-full relative z-10 interactive">Sign Up</button>
                         <button id="login-tab" class="tab-button px-8 py-3 font-medium text-gray-600 hover:text-gray-800 transition-colors rounded-full relative z-10 interactive">Log In</button>
                     </div>
                 </div>
@@ -890,11 +890,6 @@
                                         <option value="user">User - I need services</option>
                                         <option value="provider">Provider - I offer services</option>
                                     </select>
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                        </svg>
-                                    </div>
                                 </div>
                             </div>
 
