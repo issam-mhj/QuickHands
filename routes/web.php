@@ -16,16 +16,17 @@ Route::get("/join", [VisitController::class, "join"]);
 Route::post("/register", [AuthController::class, "register"])->name("signup");
 Route::post("/login", [AuthController::class, "login"])->name("login");
 
-Route::get("/admin/dashboard", [UserController::class, "showAdminDashboard"]);
-Route::get("/admin/usermanage", [UserController::class, "showUserManage"]);
+Route::get("/admin/dashboard", [UserController::class, "showAdminDashboard"])->name("admin.dashboard");
+Route::get("/admin/usermanage", [UserController::class, "showUserManage"])->name("admin.users");
 
+Route::post("/adduser", [UserController::class, "storeUser"]);
 
-Route::get("/admin/providermanage", [AuthController::class, "showproviderManage"]);
-Route::get("/admin/content", [AuthController::class, "showContent"]);
-Route::get("/admin/task", [AuthController::class, "showTask"]);
-Route::get("/admin/analytics", [AuthController::class, "showAnalytics"]);
-Route::get("/admin/notifications", [AuthController::class, "showNotifications"]);
-Route::get("/admin/settings", [AuthController::class, "showSettings"]);
+Route::get("/admin/providermanage", [AuthController::class, "showproviderManage"])->name("admin.provider");
+Route::get("/admin/content", [AuthController::class, "showContent"])->name("admin.content");
+Route::get("/admin/task", [AuthController::class, "showTask"])->name("admin.tasks");
+Route::get("/admin/analytics", [AuthController::class, "showAnalytics"])->name("admin.analytics");
+Route::get("/admin/notifications", [AuthController::class, "showNotifications"])->name("admin.notifications");
+Route::get("/admin/settings", [AuthController::class, "showSettings"])->name("admin.settings");
 Route::get("/todotask", [AuthController::class, "showAvailableTasks"]);
 Route::get("/taskmanage", [AuthController::class, "showTaskManage"]);
 Route::get("/payment", [AuthController::class, "showPayment"]);

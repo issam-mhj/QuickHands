@@ -9,6 +9,8 @@ use App\Models\ServiceCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash as FacadesHash;
+use phpseclib3\Crypt\Hash;
 
 class UserController extends Controller
 {
@@ -50,9 +52,33 @@ class UserController extends Controller
     public function showUserManage()
     {
         $user = auth()->user();
+        $allusers = user::where('role', '!=', 'admin')->get();
         return view("admin.userManagement", [
             "user" => $user,
-
+            "users" => $allusers,
         ]);
+    }
+    public function storeUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:30',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+        ]);
+        $role = $request->role;
+        $user = User::create([
+            "name" => $validated['name'],
+            "email" => $validated['email'],
+            "password" => FacadesHash::make($validated['password']),
+            "role" => $role,
+        ]);
+        if ($role == "provider") {
+            Provider::create([
+                'status' => "pending",
+                'user_id' => $user->id,
+            ]);
+        }
+
+        return redirect()->back();
     }
 }

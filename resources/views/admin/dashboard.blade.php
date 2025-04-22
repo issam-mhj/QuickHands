@@ -309,11 +309,11 @@
                     <i class="fas fa-chart-pie icon"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.users') }}" class="nav-link">
                     <i class="fas fa-users icon"></i>
                     <span>User Management</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="" class="nav-link">
                     <i class="fas fa-user-tie icon"></i>
                     <span>Provider Management</span>
                 </a>
