@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -317,9 +318,10 @@
         <div class="sidebar-content">
             <div class="mb-8">
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="user-avatar">
+                    <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png" alt="Admin"
+                        class="user-avatar">
                     <div>
-                        <h4 class="font-medium">John Doe</h4>
+                        <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">Super Admin</p>
                     </div>
                 </div>
@@ -353,7 +355,8 @@
                 <a href="#" class="nav-link">
                     <i class="fas fa-bell icon"></i>
                     <span>Notifications</span>
-                    <span class="ml-auto bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">8</span>
+                    <span
+                        class="ml-auto bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">8</span>
                 </a>
                 <a href="#" class="nav-link">
                     <i class="fas fa-cog icon"></i>
@@ -390,10 +393,12 @@
                     <div class="flex items-center space-x-4">
                         <div class="relative">
                             <input type="text" placeholder="Search..." class="search-input">
-                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <i
+                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
                         <div class="relative">
-                            <button id="notifications-btn" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-primary/10 transition-colors">
+                            <button id="notifications-btn"
+                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-primary/10 transition-colors">
                                 <i class="fas fa-bell"></i>
                                 <span class="notification-badge">5</span>
                             </button>
@@ -404,7 +409,8 @@
                                 </div>
                                 <div class="max-h-64 overflow-y-auto">
                                     <a href="#" class="dropdown-item">
-                                        <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                                             <i class="fas fa-user-plus text-primary"></i>
                                         </div>
                                         <div>
@@ -413,7 +419,8 @@
                                         </div>
                                     </a>
                                     <a href="#" class="dropdown-item">
-                                        <div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
                                             <i class="fas fa-tasks text-secondary"></i>
                                         </div>
                                         <div>
@@ -422,7 +429,8 @@
                                         </div>
                                     </a>
                                     <a href="#" class="dropdown-item">
-                                        <div class="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
                                             <i class="fas fa-star text-accent"></i>
                                         </div>
                                         <div>
@@ -431,7 +439,8 @@
                                         </div>
                                     </a>
                                     <a href="#" class="dropdown-item">
-                                        <div class="w-8 h-8 rounded-full bg-success/20 flex items-center justify-center">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-success/20 flex items-center justify-center">
                                             <i class="fas fa-dollar-sign text-success"></i>
                                         </div>
                                         <div>
@@ -440,7 +449,8 @@
                                         </div>
                                     </a>
                                     <a href="#" class="dropdown-item">
-                                        <div class="w-8 h-8 rounded-full bg-warning/20 flex items-center justify-center">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-warning/20 flex items-center justify-center">
                                             <i class="fas fa-exclamation-triangle text-warning"></i>
                                         </div>
                                         <div>
@@ -450,14 +460,18 @@
                                     </a>
                                 </div>
                                 <div class="p-3 border-t border-gray-100">
-                                    <a href="#" class="text-center block text-sm text-primary hover:underline">View all notifications</a>
+                                    <a href="#"
+                                        class="text-center block text-sm text-primary hover:underline">View all
+                                        notifications</a>
                                 </div>
                             </div>
                         </div>
                         <div class="relative">
-                            <button id="user-btn" class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="w-8 h-8 rounded-full">
-                                <span class="hidden md:block">John Doe</span>
+                            <button id="user-btn"
+                                class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
+                                <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png"
+                                    alt="Admin" class="w-8 h-8 rounded-full">
+                                <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                             <div id="user-dropdown" class="dropdown">
@@ -489,10 +503,12 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <button id="addUserBtn" class="btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg flex items-center">
+                        <button id="addUserBtn"
+                            class="btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg flex items-center">
                             <i class="fas fa-plus mr-2"></i> Add User
                         </button>
-                        <button id="exportBtn" class="btn bg-success hover:bg-success/90 text-white px-4 py-2 rounded-lg flex items-center">
+                        <button id="exportBtn"
+                            class="btn bg-success hover:bg-success/90 text-white px-4 py-2 rounded-lg flex items-center">
                             <i class="fas fa-file-export mr-2"></i> Export Data
                         </button>
                     </div>
@@ -501,12 +517,14 @@
                 <!-- Search and Filter -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <div class="relative">
-                        <input type="text" id="searchInput" placeholder="Search users..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <input type="text" id="searchInput" placeholder="Search users..."
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
                     </div>
 
                     <div>
-                        <select id="roleFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select id="roleFilter"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="">Filter by Role</option>
                             <option value="user">User</option>
                             <option value="provider">Provider</option>
@@ -515,7 +533,8 @@
                     </div>
 
                     <div>
-                        <select id="statusFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select id="statusFilter"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="">Filter by Status</option>
                             <option value="active">Active</option>
                             <option value="suspended">Suspended</option>
@@ -529,37 +548,44 @@
                     <table class="min-w-full bg-white rounded-lg overflow-hidden">
                         <thead class="table-header">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
                                     <div class="flex items-center">
                                         <span>Name</span>
                                         <i class="fas fa-sort ml-1"></i>
                                     </div>
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
                                     <div class="flex items-center">
                                         <span>Email</span>
                                         <i class="fas fa-sort ml-1"></i>
                                     </div>
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
                                     <div class="flex items-center">
                                         <span>Role</span>
                                         <i class="fas fa-sort ml-1"></i>
                                     </div>
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
                                     <div class="flex items-center">
                                         <span>Status</span>
                                         <i class="fas fa-sort ml-1"></i>
                                     </div>
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
                                     <div class="flex items-center">
                                         <span>Join Date</span>
                                         <i class="fas fa-sort ml-1"></i>
                                     </div>
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                    Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200" id="userTableBody">
@@ -571,11 +597,13 @@
                 <!-- Pagination -->
                 <div class="flex justify-between items-center mt-6">
                     <div class="text-sm text-gray-500">
-                        Showing <span id="startRange">1</span> to <span id="endRange">10</span> of <span id="totalUsers">100</span> users
+                        Showing <span id="startRange">1</span> to <span id="endRange">10</span> of <span
+                            id="totalUsers">100</span> users
                     </div>
 
                     <div class="flex space-x-1">
-                        <button id="prevPage" class="pagination-btn px-3 py-1 rounded-md border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button id="prevPage"
+                            class="pagination-btn px-3 py-1 rounded-md border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <div id="paginationNumbers" class="flex space-x-1">
@@ -607,17 +635,20 @@
 
                     <div class="mb-4">
                         <label for="editName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                        <input type="text" id="editName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <input type="text" id="editName"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
 
                     <div class="mb-4">
                         <label for="editEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="editEmail" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <input type="email" id="editEmail"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
 
                     <div class="mb-4">
                         <label for="editRole" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                        <select id="editRole" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select id="editRole"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="user">User</option>
                             <option value="provider">Provider</option>
                             <option value="admin">Admin</option>
@@ -626,7 +657,8 @@
 
                     <div class="mb-4">
                         <label for="editStatus" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select id="editStatus" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select id="editStatus"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="active">Active</option>
                             <option value="suspended">Suspended</option>
                             <option value="banned">Banned</option>
@@ -634,8 +666,11 @@
                     </div>
 
                     <div class="flex justify-end space-x-3 mt-6">
-                        <button type="button" class="close-modal px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">Save Changes</button>
+                        <button type="button"
+                            class="close-modal px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">Save
+                            Changes</button>
                     </div>
                 </form>
             </div>
@@ -648,7 +683,8 @@
         <div class="modal-content relative bg-white w-full max-w-4xl mx-4 rounded-lg shadow-lg">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">User Activity - <span id="activityUserName"></span></h3>
+                    <h3 class="text-xl font-semibold text-gray-800">User Activity - <span
+                            id="activityUserName"></span></h3>
                     <button class="close-modal text-gray-400 hover:text-gray-600">
                         <i class="fas fa-times"></i>
                     </button>
@@ -656,9 +692,12 @@
 
                 <div class="mb-6">
                     <div class="flex space-x-4 mb-4">
-                        <button class="activity-tab px-4 py-2 bg-primary text-white rounded-md" data-tab="tasks">Tasks Posted</button>
-                        <button class="activity-tab px-4 py-2 bg-gray-200 text-gray-700 rounded-md" data-tab="reviews">Reviews Given</button>
-                        <button class="activity-tab px-4 py-2 bg-gray-200 text-gray-700 rounded-md" data-tab="logins">Login History</button>
+                        <button class="activity-tab px-4 py-2 bg-primary text-white rounded-md" data-tab="tasks">Tasks
+                            Posted</button>
+                        <button class="activity-tab px-4 py-2 bg-gray-200 text-gray-700 rounded-md"
+                            data-tab="reviews">Reviews Given</button>
+                        <button class="activity-tab px-4 py-2 bg-gray-200 text-gray-700 rounded-md"
+                            data-tab="logins">Login History</button>
                     </div>
 
                     <div id="tasksTab" class="activity-content">
@@ -666,10 +705,18 @@
                             <table class="min-w-full bg-white rounded-lg overflow-hidden">
                                 <thead class="bg-gray-100">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Task ID</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Title</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Status</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Task ID</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Title</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Date</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Status</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200" id="tasksTableBody">
@@ -684,10 +731,18 @@
                             <table class="min-w-full bg-white rounded-lg overflow-hidden">
                                 <thead class="bg-gray-100">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Provider</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Rating</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Comment</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Provider</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Rating</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Date</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Comment</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200" id="reviewsTableBody">
@@ -702,10 +757,18 @@
                             <table class="min-w-full bg-white rounded-lg overflow-hidden">
                                 <thead class="bg-gray-100">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Date & Time</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">IP Address</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Device</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Location</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Date & Time</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            IP Address</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Device</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                            Location</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200" id="loginsTableBody">
@@ -717,7 +780,8 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <button class="close-modal px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">Close</button>
+                    <button
+                        class="close-modal px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">Close</button>
                 </div>
             </div>
         </div>
@@ -740,12 +804,14 @@
 
                     <div class="space-y-3">
                         <div class="flex items-center">
-                            <input type="radio" id="csvFormat" name="exportFormat" value="csv" class="h-4 w-4 text-primary focus:ring-primary" checked>
+                            <input type="radio" id="csvFormat" name="exportFormat" value="csv"
+                                class="h-4 w-4 text-primary focus:ring-primary" checked>
                             <label for="csvFormat" class="ml-2 text-gray-700">CSV Format</label>
                         </div>
 
                         <div class="flex items-center">
-                            <input type="radio" id="excelFormat" name="exportFormat" value="excel" class="h-4 w-4 text-primary focus:ring-primary">
+                            <input type="radio" id="excelFormat" name="exportFormat" value="excel"
+                                class="h-4 w-4 text-primary focus:ring-primary">
                             <label for="excelFormat" class="ml-2 text-gray-700">Excel Format</label>
                         </div>
                     </div>
@@ -756,25 +822,30 @@
 
                     <div class="space-y-2">
                         <div class="flex items-center">
-                            <input type="checkbox" id="includeBasicInfo" class="h-4 w-4 text-primary focus:ring-primary" checked>
+                            <input type="checkbox" id="includeBasicInfo"
+                                class="h-4 w-4 text-primary focus:ring-primary" checked>
                             <label for="includeBasicInfo" class="ml-2 text-gray-700">Basic Information</label>
                         </div>
 
                         <div class="flex items-center">
-                            <input type="checkbox" id="includeActivity" class="h-4 w-4 text-primary focus:ring-primary">
+                            <input type="checkbox" id="includeActivity"
+                                class="h-4 w-4 text-primary focus:ring-primary">
                             <label for="includeActivity" class="ml-2 text-gray-700">User Activity</label>
                         </div>
 
                         <div class="flex items-center">
-                            <input type="checkbox" id="includeLoginHistory" class="h-4 w-4 text-primary focus:ring-primary">
+                            <input type="checkbox" id="includeLoginHistory"
+                                class="h-4 w-4 text-primary focus:ring-primary">
                             <label for="includeLoginHistory" class="ml-2 text-gray-700">Login History</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex justify-end space-x-3 mt-6">
-                    <button type="button" class="close-modal px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                    <button id="confirmExport" class="px-4 py-2 bg-success text-white rounded-md hover:bg-success/90">Export</button>
+                    <button type="button"
+                        class="close-modal px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
+                    <button id="confirmExport"
+                        class="px-4 py-2 bg-success text-white rounded-md hover:bg-success/90">Export</button>
                 </div>
             </div>
         </div>
@@ -782,52 +853,253 @@
 
     <script>
         // Sample user data
-        const users = [
-            { id: 1, name: 'John Doe', email: 'john.doe@example.com', role: 'user', status: 'active', joinDate: '2023-01-15' },
-            { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', role: 'user', status: 'active', joinDate: '2023-02-03' },
-            { id: 3, name: 'Robert Johnson', email: 'robert.j@example.com', role: 'provider', status: 'active', joinDate: '2023-01-20' },
-            { id: 4, name: 'Emily Davis', email: 'emily.davis@example.com', role: 'user', status: 'suspended', joinDate: '2023-03-10' },
-            { id: 5, name: 'Michael Brown', email: 'michael.b@example.com', role: 'provider', status: 'active', joinDate: '2023-02-15' },
-            { id: 6, name: 'Sarah Wilson', email: 'sarah.w@example.com', role: 'user', status: 'banned', joinDate: '2023-01-05' },
-            { id: 7, name: 'David Miller', email: 'david.m@example.com', role: 'admin', status: 'active', joinDate: '2022-12-10' },
-            { id: 8, name: 'Jennifer Taylor', email: 'jennifer.t@example.com', role: 'user', status: 'active', joinDate: '2023-03-01' },
-            { id: 9, name: 'Thomas Anderson', email: 'thomas.a@example.com', role: 'provider', status: 'suspended', joinDate: '2023-02-20' },
-            { id: 10, name: 'Lisa Moore', email: 'lisa.m@example.com', role: 'user', status: 'active', joinDate: '2023-01-25' },
-            { id: 11, name: 'Daniel White', email: 'daniel.w@example.com', role: 'user', status: 'active', joinDate: '2023-03-15' },
-            { id: 12, name: 'Jessica Brown', email: 'jessica.b@example.com', role: 'provider', status: 'active', joinDate: '2023-02-10' },
-            { id: 13, name: 'Matthew Johnson', email: 'matthew.j@example.com', role: 'user', status: 'banned', joinDate: '2023-01-30' },
-            { id: 14, name: 'Amanda Clark', email: 'amanda.c@example.com', role: 'user', status: 'active', joinDate: '2023-02-25' },
-            { id: 15, name: 'Christopher Lee', email: 'chris.l@example.com', role: 'provider', status: 'active', joinDate: '2023-03-05' },
-            { id: 16, name: 'Stephanie Hall', email: 'steph.h@example.com', role: 'user', status: 'suspended', joinDate: '2023-01-18' },
-            { id: 17, name: 'Andrew Wilson', email: 'andrew.w@example.com', role: 'admin', status: 'active', joinDate: '2022-12-15' },
-            { id: 18, name: 'Nicole Adams', email: 'nicole.a@example.com', role: 'user', status: 'active', joinDate: '2023-02-08' },
-            { id: 19, name: 'Kevin Martin', email: 'kevin.m@example.com', role: 'provider', status: 'active', joinDate: '2023-01-22' },
-            { id: 20, name: 'Rachel Green', email: 'rachel.g@example.com', role: 'user', status: 'active', joinDate: '2023-03-12' }
+        const users = [{
+                id: 1,
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+                role: 'user',
+                status: 'active',
+                joinDate: '2023-01-15'
+            },
+            {
+                id: 2,
+                name: 'Jane Smith',
+                email: 'jane.smith@example.com',
+                role: 'user',
+                status: 'active',
+                joinDate: '2023-02-03'
+            },
+            {
+                id: 3,
+                name: 'Robert Johnson',
+                email: 'robert.j@example.com',
+                role: 'provider',
+                status: 'active',
+                joinDate: '2023-01-20'
+            },
+            {
+                id: 4,
+                name: 'Emily Davis',
+                email: 'emily.davis@example.com',
+                role: 'user',
+                status: 'suspended',
+                joinDate: '2023-03-10'
+            },
+            {
+                id: 5,
+                name: 'Michael Brown',
+                email: 'michael.b@example.com',
+                role: 'provider',
+                status: 'active',
+                joinDate: '2023-02-15'
+            },
+            {
+                id: 6,
+                name: 'Sarah Wilson',
+                email: 'sarah.w@example.com',
+                role: 'user',
+                status: 'banned',
+                joinDate: '2023-01-05'
+            },
+            {
+                id: 7,
+                name: 'David Miller',
+                email: 'david.m@example.com',
+                role: 'admin',
+                status: 'active',
+                joinDate: '2022-12-10'
+            },
+            {
+                id: 8,
+                name: 'Jennifer Taylor',
+                email: 'jennifer.t@example.com',
+                role: 'user',
+                status: 'active',
+                joinDate: '2023-03-01'
+            },
+            {
+                id: 9,
+                name: 'Thomas Anderson',
+                email: 'thomas.a@example.com',
+                role: 'provider',
+                status: 'suspended',
+                joinDate: '2023-02-20'
+            },
+            {
+                id: 10,
+                name: 'Lisa Moore',
+                email: 'lisa.m@example.com',
+                role: 'user',
+                status: 'active',
+                joinDate: '2023-01-25'
+            },
+            {
+                id: 11,
+                name: 'Daniel White',
+                email: 'daniel.w@example.com',
+                role: 'user',
+                status: 'active',
+                joinDate: '2023-03-15'
+            },
+            {
+                id: 12,
+                name: 'Jessica Brown',
+                email: 'jessica.b@example.com',
+                role: 'provider',
+                status: 'active',
+                joinDate: '2023-02-10'
+            },
+            {
+                id: 13,
+                name: 'Matthew Johnson',
+                email: 'matthew.j@example.com',
+                role: 'user',
+                status: 'banned',
+                joinDate: '2023-01-30'
+            },
+            {
+                id: 14,
+                name: 'Amanda Clark',
+                email: 'amanda.c@example.com',
+                role: 'user',
+                status: 'active',
+                joinDate: '2023-02-25'
+            },
+            {
+                id: 15,
+                name: 'Christopher Lee',
+                email: 'chris.l@example.com',
+                role: 'provider',
+                status: 'active',
+                joinDate: '2023-03-05'
+            },
+            {
+                id: 16,
+                name: 'Stephanie Hall',
+                email: 'steph.h@example.com',
+                role: 'user',
+                status: 'suspended',
+                joinDate: '2023-01-18'
+            },
+            {
+                id: 17,
+                name: 'Andrew Wilson',
+                email: 'andrew.w@example.com',
+                role: 'admin',
+                status: 'active',
+                joinDate: '2022-12-15'
+            },
+            {
+                id: 18,
+                name: 'Nicole Adams',
+                email: 'nicole.a@example.com',
+                role: 'user',
+                status: 'active',
+                joinDate: '2023-02-08'
+            },
+            {
+                id: 19,
+                name: 'Kevin Martin',
+                email: 'kevin.m@example.com',
+                role: 'provider',
+                status: 'active',
+                joinDate: '2023-01-22'
+            },
+            {
+                id: 20,
+                name: 'Rachel Green',
+                email: 'rachel.g@example.com',
+                role: 'user',
+                status: 'active',
+                joinDate: '2023-03-12'
+            }
         ];
 
         // Sample task data
-        const tasks = [
-            { id: 'T1001', title: 'Furniture Assembly', date: '2023-03-10', status: 'Completed' },
-            { id: 'T1002', title: 'House Cleaning', date: '2023-03-05', status: 'Completed' },
-            { id: 'T1003', title: 'Grocery Delivery', date: '2023-03-15', status: 'In Progress' },
-            { id: 'T1004', title: 'Dog Walking', date: '2023-03-12', status: 'Completed' },
-            { id: 'T1005', title: 'Lawn Mowing', date: '2023-03-18', status: 'Pending' }
+        const tasks = [{
+                id: 'T1001',
+                title: 'Furniture Assembly',
+                date: '2023-03-10',
+                status: 'Completed'
+            },
+            {
+                id: 'T1002',
+                title: 'House Cleaning',
+                date: '2023-03-05',
+                status: 'Completed'
+            },
+            {
+                id: 'T1003',
+                title: 'Grocery Delivery',
+                date: '2023-03-15',
+                status: 'In Progress'
+            },
+            {
+                id: 'T1004',
+                title: 'Dog Walking',
+                date: '2023-03-12',
+                status: 'Completed'
+            },
+            {
+                id: 'T1005',
+                title: 'Lawn Mowing',
+                date: '2023-03-18',
+                status: 'Pending'
+            }
         ];
 
         // Sample review data
-        const reviews = [
-            { provider: 'Robert Johnson', rating: 4.5, date: '2023-03-11', comment: 'Great service, very professional!' },
-            { provider: 'Michael Brown', rating: 5, date: '2023-03-06', comment: 'Excellent work, highly recommend!' },
-            { provider: 'Jessica Brown', rating: 3.5, date: '2023-03-16', comment: 'Good service but arrived late.' },
-            { provider: 'Christopher Lee', rating: 4, date: '2023-03-13', comment: 'Did a thorough job, would hire again.' }
+        const reviews = [{
+                provider: 'Robert Johnson',
+                rating: 4.5,
+                date: '2023-03-11',
+                comment: 'Great service, very professional!'
+            },
+            {
+                provider: 'Michael Brown',
+                rating: 5,
+                date: '2023-03-06',
+                comment: 'Excellent work, highly recommend!'
+            },
+            {
+                provider: 'Jessica Brown',
+                rating: 3.5,
+                date: '2023-03-16',
+                comment: 'Good service but arrived late.'
+            },
+            {
+                provider: 'Christopher Lee',
+                rating: 4,
+                date: '2023-03-13',
+                comment: 'Did a thorough job, would hire again.'
+            }
         ];
 
         // Sample login history
-        const loginHistory = [
-            { datetime: '2023-03-15 09:23:45', ip: '192.168.1.1', device: 'iPhone 13', location: 'New York, USA' },
-            { datetime: '2023-03-14 14:12:30', ip: '192.168.1.1', device: 'MacBook Pro', location: 'New York, USA' },
-            { datetime: '2023-03-12 18:45:22', ip: '192.168.1.1', device: 'iPhone 13', location: 'New York, USA' },
-            { datetime: '2023-03-10 10:05:17', ip: '192.168.1.1', device: 'MacBook Pro', location: 'New York, USA' }
+        const loginHistory = [{
+                datetime: '2023-03-15 09:23:45',
+                ip: '192.168.1.1',
+                device: 'iPhone 13',
+                location: 'New York, USA'
+            },
+            {
+                datetime: '2023-03-14 14:12:30',
+                ip: '192.168.1.1',
+                device: 'MacBook Pro',
+                location: 'New York, USA'
+            },
+            {
+                datetime: '2023-03-12 18:45:22',
+                ip: '192.168.1.1',
+                device: 'iPhone 13',
+                location: 'New York, USA'
+            },
+            {
+                datetime: '2023-03-10 10:05:17',
+                ip: '192.168.1.1',
+                device: 'MacBook Pro',
+                location: 'New York, USA'
+            }
         ];
 
         // Pagination variables
@@ -881,10 +1153,16 @@
 
                 // Status badge class
                 let statusClass = '';
-                switch(user.status) {
-                    case 'active': statusClass = 'badge-active'; break;
-                    case 'suspended': statusClass = 'badge-suspended'; break;
-                    case 'banned': statusClass = 'badge-banned'; break;
+                switch (user.status) {
+                    case 'active':
+                        statusClass = 'badge-active';
+                        break;
+                    case 'suspended':
+                        statusClass = 'badge-suspended';
+                        break;
+                    case 'banned':
+                        statusClass = 'badge-banned';
+                        break;
                 }
 
                 row.innerHTML = `
@@ -920,11 +1198,11 @@
                             </button>
                             ${user.status !== 'banned' ?
                                 `<button class="ban-user text-danger hover:text-danger/80" data-id="${user.id}">
-                                    <i class="fas fa-ban"></i>
-                                </button>` :
+                                                    <i class="fas fa-ban"></i>
+                                                </button>` :
                                 `<button class="unban-user text-warning hover:text-warning/80" data-id="${user.id}">
-                                    <i class="fas fa-undo"></i>
-                                </button>`
+                                                    <i class="fas fa-undo"></i>
+                                                </button>`
                             }
                         </div>
                     </td>
@@ -1015,7 +1293,8 @@
         // Add a page button to pagination
         function addPageButton(pageNum) {
             const button = document.createElement('button');
-            button.className = `pagination-btn px-3 py-1 rounded-md border ${currentPage === pageNum ? 'bg-primary text-white' : 'border-gray-300 text-gray-700'}`;
+            button.className =
+                `pagination-btn px-3 py-1 rounded-md border ${currentPage === pageNum ? 'bg-primary text-white' : 'border-gray-300 text-gray-700'}`;
             button.textContent = pageNum;
             button.addEventListener('click', () => {
                 currentPage = pageNum;
@@ -1034,7 +1313,11 @@
 
         // Format date
         function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            };
             return new Date(dateString).toLocaleDateString(undefined, options);
         }
 
@@ -1381,8 +1664,11 @@
 
             // In a real application, this would generate and download the file
             // For this demo, we'll just show an alert
-            alert(`Exporting user data in ${format.toUpperCase()} format\nIncluding: ${includeBasic ? 'Basic Info, ' : ''}${includeActivity ? 'Activity, ' : ''}${includeLogin ? 'Login History' : ''}`);
+            alert(
+                `Exporting user data in ${format.toUpperCase()} format\nIncluding: ${includeBasic ? 'Basic Info, ' : ''}${includeActivity ? 'Activity, ' : ''}${includeLogin ? 'Login History' : ''}`
+            );
         }
     </script>
 </body>
+
 </html>

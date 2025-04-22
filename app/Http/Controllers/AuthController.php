@@ -73,10 +73,7 @@ class AuthController extends Controller
 
 
 
-    public function showUserManage()
-    {
-        return view("admin.userManagement");
-    }
+
     public function showproviderManage()
     {
         return view("admin.providerManagement");
