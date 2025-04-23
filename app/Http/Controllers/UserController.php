@@ -81,4 +81,8 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+    public function editUser(Request $request)
+    {
+        dd($request);
+    }
 }

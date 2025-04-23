@@ -20,6 +20,7 @@ Route::get("/admin/dashboard", [UserController::class, "showAdminDashboard"])->n
 Route::get("/admin/usermanage", [UserController::class, "showUserManage"])->name("admin.users");
 
 Route::post("/adduser", [UserController::class, "storeUser"]);
+Route::post("/edituser", [UserController::class, "editUser"]);
 
 Route::get("/admin/providermanage", [AuthController::class, "showproviderManage"])->name("admin.provider");
 Route::get("/admin/content", [AuthController::class, "showContent"])->name("admin.content");
