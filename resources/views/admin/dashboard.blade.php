@@ -295,9 +295,10 @@
         <div class="sidebar-content">
             <div class="mb-8">
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="user-avatar">
+                    <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png" alt="Admin"
+                        class="user-avatar">
                     <div>
-                        <h4 class="font-medium">John Doe</h4>
+                        <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">Super Admin</p>
                     </div>
                 </div>
@@ -308,11 +309,11 @@
                     <i class="fas fa-chart-pie icon"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.users') }}" class="nav-link">
                     <i class="fas fa-users icon"></i>
                     <span>User Management</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="" class="nav-link">
                     <i class="fas fa-user-tie icon"></i>
                     <span>Provider Management</span>
                 </a>
@@ -364,7 +365,7 @@
                         <h1 class="font-display text-4xl font-bold mb-2">
                             Dashboard <span class="gradient-text">Overview</span>
                         </h1>
-                        <p class="text-gray-600">Welcome back, John! Here's what's happening today.</p>
+                        <p class="text-gray-600">Welcome back, {{ $user->name }}! Here's what's happening today.</p>
                     </div>
                     <div class="flex items-center space-x-4">
                         <div class="relative">
@@ -445,9 +446,9 @@
                         <div class="relative">
                             <button id="user-btn"
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
-                                    class="w-8 h-8 rounded-full">
-                                <span class="hidden md:block">John Doe</span>
+                                <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png"
+                                    alt="Admin" class="w-8 h-8 rounded-full">
+                                <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                             <div id="user-dropdown" class="dropdown">
@@ -489,11 +490,11 @@
                     </div>
                     <div class="mt-4">
                         <div class="progress-bar">
-                            <div class="progress bg-primary" style="width: 75%"></div>
+                            <div class="progress bg-primary" style="width: 90%"></div>
                         </div>
                         <div class="flex justify-between mt-1 text-xs text-gray-500">
-                            <span>Target: 10,000</span>
-                            <span>75%</span>
+                            <span>Target: {{ $userNum + 100 }}</span>
+                            <span>90%</span>
                         </div>
                     </div>
                 </div>
@@ -515,11 +516,11 @@
                     </div>
                     <div class="mt-4">
                         <div class="progress-bar">
-                            <div class="progress bg-secondary" style="width: 60%"></div>
+                            <div class="progress bg-secondary" style="width: 80%"></div>
                         </div>
                         <div class="flex justify-between mt-1 text-xs text-gray-500">
-                            <span>Target: 5,000</span>
-                            <span>60%</span>
+                            <span>Target: {{ $providerNum + 155 }}</span>
+                            <span>80%</span>
                         </div>
                     </div>
                 </div>
@@ -541,11 +542,11 @@
                     </div>
                     <div class="mt-4">
                         <div class="progress-bar">
-                            <div class="progress bg-accent" style="width: 45%"></div>
+                            <div class="progress bg-accent" style="width: 2%"></div>
                         </div>
                         <div class="flex justify-between mt-1 text-xs text-gray-500">
-                            <span>Target: 2,000</span>
-                            <span>45%</span>
+                            <span>Target: {{ $activeSrv + 250 }}</span>
+                            <span>2%</span>
                         </div>
                     </div>
                 </div>
@@ -570,7 +571,7 @@
                             <div class="progress bg-success" style="width: 85%"></div>
                         </div>
                         <div class="flex justify-between mt-1 text-xs text-gray-500">
-                            <span>Target: $500,000</span>
+                            <span>Target: ${{ $totalAmount + 400 }}</span>
                             <span>85%</span>
                         </div>
                     </div>
@@ -616,7 +617,7 @@
                     <div class="flex items-start justify-between mb-6">
                         <div>
                             <h3 class="font-display text-xl font-semibold">Task Distribution</h3>
-                            <p class="text-gray-500 text-sm">By category</p>
+                            <p class="text-gray-500 text-sm">By Top 4 category</p>
                         </div>
                         <button class="text-gray-400 hover:text-primary transition-colors">
                             <i class="fas fa-ellipsis-v"></i>
@@ -628,19 +629,19 @@
                     <div class="mt-4 grid grid-cols-2 gap-2">
                         <div class="task-type">
                             <div class="task-type-dot bg-primary"></div>
-                            <div class="task-type-label">Deliveries</div>
+                            <div class="task-type-label">{{ $categories[0]->name }}</div>
                         </div>
                         <div class="task-type">
                             <div class="task-type-dot bg-secondary"></div>
-                            <div class="task-type-label">Errands</div>
+                            <div class="task-type-label">{{ $categories[1]->name }}</div>
                         </div>
                         <div class="task-type">
                             <div class="task-type-dot bg-accent"></div>
-                            <div class="task-type-label">Home Services</div>
+                            <div class="task-type-label">{{ $categories[2]->name }}</div>
                         </div>
                         <div class="task-type">
                             <div class="task-type-dot bg-success"></div>
-                            <div class="task-type-label">Small Jobs</div>
+                            <div class="task-type-label">{{ $categories[3]->name }}</div>
                         </div>
                     </div>
                 </div>
@@ -734,27 +735,27 @@
                 <div class="dashboard-card">
                     <h3 class="font-display text-xl font-semibold mb-6">Quick Actions</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <a href="#" class="quick-action">
+                        <a href="usermanage" class="quick-action">
                             <i class="fas fa-user-plus icon text-primary"></i>
                             <span class="text-sm font-medium">Add User</span>
                         </a>
-                        <a href="#" class="quick-action">
+                        <a href="providermanage" class="quick-action">
                             <i class="fas fa-user-tie icon text-secondary"></i>
                             <span class="text-sm font-medium">Add Provider</span>
                         </a>
-                        <a href="#" class="quick-action">
+                        <a href="task" class="quick-action">
                             <i class="fas fa-tasks icon text-accent"></i>
                             <span class="text-sm font-medium">New Task</span>
                         </a>
-                        <a href="#" class="quick-action">
+                        <a href="content" class="quick-action">
                             <i class="fas fa-chart-bar icon text-success"></i>
                             <span class="text-sm font-medium">Reports</span>
                         </a>
-                        <a href="#" class="quick-action">
+                        <a href="settings" class="quick-action">
                             <i class="fas fa-cog icon text-info"></i>
                             <span class="text-sm font-medium">Settings</span>
                         </a>
-                        <a href="#" class="quick-action">
+                        <a href="settings" class="quick-action">
                             <i class="fas fa-question-circle icon text-warning"></i>
                             <span class="text-sm font-medium">Help</span>
                         </a>
@@ -896,10 +897,10 @@
 
             // Start animations after a short delay
             setTimeout(() => {
-                animateValue('users-count', 0, 7500, 2000);
-                animateValue('providers-count', 0, 3000, 2000);
-                animateValue('tasks-count', 0, 950, 2000);
-                animateValue('revenue-count', 0, 425000, 2000);
+                animateValue('users-count', 0, {{ $userNum }}, 2000);
+                animateValue('providers-count', 0, {{ $providerNum }}, 2000);
+                animateValue('tasks-count', 0, {{ $activeSrv }}, 2000);
+                animateValue('revenue-count', 0, {{ $totalAmount }}, 2000);
             }, 500);
 
             // Initialize charts
@@ -973,9 +974,15 @@
             const taskDistributionChart = new Chart(taskDistributionCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Deliveries', 'Errands', 'Home Services', 'Small Jobs'],
+                    labels: ['{{ $categories[0]->name }}', '{{ $categories[1]->name }}',
+                        '{{ $categories[2]->name }}', '{{ $categories[3]->name }}'
+                    ],
                     datasets: [{
-                        data: [35, 25, 30, 10],
+                        data: [{{ ($categories[0]->service_count / $total) * 100 }},
+                            {{ ($categories[1]->service_count / $total) * 100 }},
+                            {{ ($categories[2]->service_count / $total) * 100 }},
+                            {{ ($categories[3]->service_count / $total) * 100 }}
+                        ],
                         backgroundColor: [
                             '#FF6B6B',
                             '#4ECDC4',

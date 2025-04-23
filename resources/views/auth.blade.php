@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickHands - Join Our Community</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
@@ -44,46 +46,98 @@
                     },
                     keyframes: {
                         float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+                            '0%, 100%': {
+                                transform: 'translateY(0)'
+                            },
+                            '50%': {
+                                transform: 'translateY(-10px)'
+                            },
                         },
                         wiggle: {
-                            '0%, 100%': { transform: 'rotate(-3deg)' },
-                            '50%': { transform: 'rotate(3deg)' },
+                            '0%, 100%': {
+                                transform: 'rotate(-3deg)'
+                            },
+                            '50%': {
+                                transform: 'rotate(3deg)'
+                            },
                         },
                         morph: {
-                            '0%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
-                            '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
-                            '100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }
+                            '0%': {
+                                borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%'
+                            },
+                            '50%': {
+                                borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%'
+                            },
+                            '100%': {
+                                borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%'
+                            }
                         },
                         gradient: {
-                            '0%': { backgroundPosition: '0% 50%' },
-                            '50%': { backgroundPosition: '100% 50%' },
-                            '100%': { backgroundPosition: '0% 50%' }
+                            '0%': {
+                                backgroundPosition: '0% 50%'
+                            },
+                            '50%': {
+                                backgroundPosition: '100% 50%'
+                            },
+                            '100%': {
+                                backgroundPosition: '0% 50%'
+                            }
                         },
                         slideIn: {
-                            '0%': { transform: 'translateX(-100%)', opacity: 0 },
-                            '100%': { transform: 'translateX(0)', opacity: 1 }
+                            '0%': {
+                                transform: 'translateX(-100%)',
+                                opacity: 0
+                            },
+                            '100%': {
+                                transform: 'translateX(0)',
+                                opacity: 1
+                            }
                         },
                         slideOut: {
-                            '0%': { transform: 'translateX(0)', opacity: 1 },
-                            '100%': { transform: 'translateX(100%)', opacity: 0 }
+                            '0%': {
+                                transform: 'translateX(0)',
+                                opacity: 1
+                            },
+                            '100%': {
+                                transform: 'translateX(100%)',
+                                opacity: 0
+                            }
                         },
                         fadeIn: {
-                            '0%': { opacity: 0 },
-                            '100%': { opacity: 1 }
+                            '0%': {
+                                opacity: 0
+                            },
+                            '100%': {
+                                opacity: 1
+                            }
                         },
                         fadeOut: {
-                            '0%': { opacity: 1 },
-                            '100%': { opacity: 0 }
+                            '0%': {
+                                opacity: 1
+                            },
+                            '100%': {
+                                opacity: 0
+                            }
                         },
                         scaleIn: {
-                            '0%': { transform: 'scale(0.8)', opacity: 0 },
-                            '100%': { transform: 'scale(1)', opacity: 1 }
+                            '0%': {
+                                transform: 'scale(0.8)',
+                                opacity: 0
+                            },
+                            '100%': {
+                                transform: 'scale(1)',
+                                opacity: 1
+                            }
                         },
                         scaleOut: {
-                            '0%': { transform: 'scale(1)', opacity: 1 },
-                            '100%': { transform: 'scale(0.8)', opacity: 0 }
+                            '0%': {
+                                transform: 'scale(1)',
+                                opacity: 1
+                            },
+                            '100%': {
+                                transform: 'scale(0.8)',
+                                opacity: 0
+                            }
                         }
                     }
                 }
@@ -92,40 +146,87 @@
     </script>
     <style>
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         @keyframes morph {
-            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
         }
 
         @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         @keyframes pulse-ring {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            100% { transform: scale(1.5); opacity: 0; }
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
 
         @keyframes rotate-3d {
-            0% { transform: perspective(1000px) rotateY(0deg); }
-            100% { transform: perspective(1000px) rotateY(360deg); }
+            0% {
+                transform: perspective(1000px) rotateY(0deg);
+            }
+
+            100% {
+                transform: perspective(1000px) rotateY(360deg);
+            }
         }
 
         @keyframes bounce-subtle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
         }
 
         @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
         }
 
         .animate-float {
@@ -157,7 +258,7 @@
         }
 
         .animate-shimmer {
-            background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,0));
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
             background-size: 200% 100%;
             animation: shimmer 2s infinite;
         }
@@ -350,7 +451,7 @@
             transition: all 0.3s ease;
         }
 
-        .checkbox-wrapper input[type="checkbox"]:checked + label::before {
+        .checkbox-wrapper input[type="checkbox"]:checked+label::before {
             background: #FF6B6B;
             border-color: #FF6B6B;
         }
@@ -369,7 +470,7 @@
             transition: all 0.2s ease;
         }
 
-        .checkbox-wrapper input[type="checkbox"]:checked + label::after {
+        .checkbox-wrapper input[type="checkbox"]:checked+label::after {
             opacity: 1;
             transform: rotate(45deg) scale(1);
         }
@@ -418,7 +519,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,107,107,0.5) 0%, rgba(255,107,107,0) 70%);
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.5) 0%, rgba(255, 107, 107, 0) 70%);
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
@@ -438,20 +539,22 @@
             transition: transform 0.1s;
         }
 
-        .interactive:hover ~ #cursor-follower {
+        .interactive:hover~#cursor-follower {
             width: 80px;
             height: 80px;
-            background: radial-gradient(circle, rgba(78,205,196,0.4) 0%, rgba(78,205,196,0) 70%);
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.4) 0%, rgba(78, 205, 196, 0) 70%);
         }
 
-        .interactive:active ~ #cursor-follower {
+        .interactive:active~#cursor-follower {
             width: 100px;
             height: 100px;
-            background: radial-gradient(circle, rgba(255,230,109,0.4) 0%, rgba(255,230,109,0) 70%);
+            background: radial-gradient(circle, rgba(255, 230, 109, 0.4) 0%, rgba(255, 230, 109, 0) 70%);
         }
 
         @media (max-width: 768px) {
-            #cursor-follower, #cursor-dot {
+
+            #cursor-follower,
+            #cursor-dot {
                 display: none;
             }
         }
@@ -460,7 +563,7 @@
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
         }
 
         .floating-shapes {
@@ -541,7 +644,7 @@
             transition: all 0.3s ease;
         }
 
-        .form-input:focus + .input-icon {
+        .form-input:focus+.input-icon {
             transform: scale(1.2);
             color: #FF6B6B;
         }
@@ -577,8 +680,8 @@
             transition: all 0.3s ease;
         }
 
-        .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label {
+        .form-input:focus~.form-label,
+        .form-input:not(:placeholder-shown)~.form-label {
             transform: translateY(-1.5rem) scale(0.8);
             color: #FF6B6B;
             font-weight: 500;
@@ -631,34 +734,43 @@
                 <div class="flex items-center">
                     <a href="#" class="font-display font-bold text-2xl interactive">
                         <span class="text-primary">Quick</span><span class="text-secondary">Hands</span>
-                        <div class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                        <div
+                            class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left">
+                        </div>
                     </a>
                 </div>
                 <nav class="hidden md:flex space-x-8">
                     <a href="/" class="text-dark font-medium relative group interactive">
                         Home
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary/50 transition-all duration-300 group-hover:w-full"></span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary/50 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="/about" class="text-dark font-medium relative group interactive">
                         About
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary/50 transition-all duration-300 group-hover:w-full"></span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary/50 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="/contact" class="text-dark font-medium relative group interactive">
                         Contact
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary/50 transition-all duration-300 group-hover:w-full"></span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary/50 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="/join" class="text-primary font-medium relative group interactive">
                         Join Us
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary"></span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary"></span>
                     </a>
                 </nav>
                 <div class="flex items-center space-x-4">
-                    <a href="#" class="hidden md:block text-dark hover:text-primary transition-colors interactive">Login</a>
+                    <a href="#"
+                        class="hidden md:block text-dark hover:text-primary transition-colors interactive">Login</a>
                     <a href="#" class="hidden md:block btn-primary interactive">Sign Up</a>
-                    <button class="md:hidden text-dark hover:text-primary transition-colors interactive" id="mobile-menu-button">
+                    <button class="md:hidden text-dark hover:text-primary transition-colors interactive"
+                        id="mobile-menu-button">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
                 </div>
@@ -688,15 +800,21 @@
             <div class="text-center mb-16" data-aos="fade-up">
                 <div class="relative inline-flex mb-6">
                     <div class="absolute inset-0 bg-primary/20 rounded-full animate-pulse-ring"></div>
-                    <div class="relative inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white animate-bounce-subtle" fill="none" viewBox="0   class="h-10 w-10 text-white animate-bounce-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                    <div
+                        class="relative inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white animate-bounce-subtle"
+                            fill="none" viewBox="0   class="h-10 w-10 text-white animate-bounce-subtle"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
                         </svg>
                     </div>
                 </div>
                 <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 relative">
                     Join Our <span class="gradient-text">Community</span>
-                    <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full"></div>
+                    <div
+                        class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full">
+                    </div>
                 </h1>
                 <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
                     Connect with local service providers and get things done faster than ever before.
@@ -708,12 +826,17 @@
                 <!-- For Customers -->
                 <div class="glass-card p-8 relative overflow-hidden group" data-aos="fade-right">
                     <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/10 blob -z-10"></div>
-                    <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-primary to-primary/50 rounded-full"></div>
+                    <div
+                        class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-primary to-primary/50 rounded-full">
+                    </div>
 
                     <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mr-4 rotate-12 group-hover:rotate-0 transition-all duration-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mr-4 rotate-12 group-hover:rotate-0 transition-all duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                         </div>
                         <h2 class="font-display text-2xl font-semibold">For Customers</h2>
@@ -721,44 +844,65 @@
 
                     <ul class="space-y-4 pl-4">
                         <li class="flex items-start group/item">
-                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-all duration-300 group-hover/item:scale-110">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            <div
+                                class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-all duration-300 group-hover/item:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Find local professionals for everyday tasks</span>
+                            <span
+                                class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Find
+                                local professionals for everyday tasks</span>
                         </li>
                         <li class="flex items-start group/item">
-                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-all duration-300 group-hover/item:scale-110">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            <div
+                                class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-all duration-300 group-hover/item:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Save time with quick service matching</span>
+                            <span
+                                class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Save
+                                time with quick service matching</span>
                         </li>
                         <li class="flex items-start group/item">
-                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-all duration-300 group-hover/item:scale-110">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            <div
+                                class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-all duration-300 group-hover/item:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Secure payments and verified providers</span>
+                            <span
+                                class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Secure
+                                payments and verified providers</span>
                         </li>
                     </ul>
 
                     <!-- Decorative Element -->
-                    <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-primary/10 rounded-full animate-pulse-slow"></div>
+                    <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-primary/10 rounded-full animate-pulse-slow">
+                    </div>
                 </div>
 
                 <!-- For Providers -->
                 <div class="glass-card p-8 relative overflow-hidden group" data-aos="fade-left">
                     <div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary/10 blob -z-10"></div>
-                    <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-secondary to-secondary/50 rounded-full"></div>
+                    <div
+                        class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-secondary to-secondary/50 rounded-full">
+                    </div>
 
                     <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-secondary/20 to-secondary/40 rounded-2xl flex items-center justify-center mr-4 -rotate-12 group-hover:rotate-0 transition-all duration-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-secondary/20 to-secondary/40 rounded-2xl flex items-center justify-center mr-4 -rotate-12 group-hover:rotate-0 transition-all duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-secondary" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
                         <h2 class="font-display text-2xl font-semibold">For Providers</h2>
@@ -766,33 +910,49 @@
 
                     <ul class="space-y-4 pl-4">
                         <li class="flex items-start group/item">
-                            <div class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-all duration-300 group-hover/item:scale-110">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            <div
+                                class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-all duration-300 group-hover/item:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Grow your client base in your local area</span>
+                            <span
+                                class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Grow
+                                your client base in your local area</span>
                         </li>
                         <li class="flex items-start group/item">
-                            <div class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-all duration-300 group-hover/item:scale-110">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            <div
+                                class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-all duration-300 group-hover/item:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Set your own schedule and rates</span>
+                            <span
+                                class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Set
+                                your own schedule and rates</span>
                         </li>
                         <li class="flex items-start group/item">
-                            <div class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-all duration-300 group-hover/item:scale-110">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            <div
+                                class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-all duration-300 group-hover/item:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Get paid quickly with secure transactions</span>
+                            <span
+                                class="text-gray-600 group-hover/item:text-gray-800 transition-colors duration-300 group-hover/item:translate-x-1 transform transition-transform">Get
+                                paid quickly with secure transactions</span>
                         </li>
                     </ul>
 
                     <!-- Decorative Element -->
-                    <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-secondary/10 rounded-full animate-pulse-slow"></div>
+                    <div class="absolute -bottom-3 -right-3 w-12 h-12 bg-secondary/10 rounded-full animate-pulse-slow">
+                    </div>
                 </div>
             </div>
 
@@ -806,8 +966,12 @@
                 <div class="flex justify-center mb-8">
                     <div class="glass rounded-full p-1.5 shadow-lg relative">
                         <div id="tab-slider" class="tab-slider" style="width: 50%; left: 0;"></div>
-                        <button id="signup-tab" class="tab-button active px-6 py-3 font-medium rounded-full relative z-10 interactive">Sign Up</button>
-                        <button id="login-tab" class="tab-button px-8 py-3 font-medium text-gray-600 hover:text-gray-800 transition-colors rounded-full relative z-10 interactive">Log In</button>
+                        <button id="signup-tab"
+                            class="tab-button active px-6 py-3 font-medium rounded-full relative z-10 interactive">Sign
+                            Up</button>
+                        <button id="login-tab"
+                            class="tab-button px-8 py-3 font-medium text-gray-600 hover:text-gray-800 transition-colors rounded-full relative z-10 interactive">Log
+                            In</button>
                     </div>
                 </div>
 
@@ -816,7 +980,9 @@
                     <div class="glass-card p-8 shadow-xl">
                         <h2 class="font-display text-3xl font-bold text-center mb-2 relative">
                             Create Your Account
-                            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                            <div
+                                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-primary to-secondary rounded-full">
+                            </div>
                         </h2>
                         <p class="text-gray-600 text-center mb-8">
                             Join our community and start connecting with service providers.
@@ -828,11 +994,15 @@
                             <div class="mb-8 form-group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-gray-400 input-icon" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                         </svg>
                                     </div>
-                                    <input type="text" id="fullname" name="fullname" placeholder="John Doe" class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
+                                    <input type="text" id="fullname" name="fullname" placeholder="John Doe"
+                                        class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
                                     <label for="fullname" class="form-label">Full Name</label>
                                 </div>
                                 @error('fullname')
@@ -844,11 +1014,16 @@
                             <div class="mb-8 form-group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-gray-400 input-icon" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
                                     </div>
-                                    <input type="email" id="email" name="email" placeholder="john@example.com" class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
+                                    <input type="email" id="email" name="email"
+                                        placeholder="john@example.com"
+                                        class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
                                     <label for="email" class="form-label">Email Address</label>
                                 </div>
                                 @error('email')
@@ -860,20 +1035,31 @@
                             <div class="mb-8 form-group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-gray-400 input-icon" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                         </svg>
                                     </div>
-                                    <input type="password" id="password" name="password" placeholder="••••••••" class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
+                                    <input type="password" id="password" name="password" placeholder="••••••••"
+                                        class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
                                     <label for="password" class="form-label">Password</label>
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                        <button type="button" id="toggle-password" class="text-gray-400 hover:text-gray-500 focus:outline-none interactive">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="eye-open">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        <button type="button" id="toggle-password"
+                                            class="text-gray-400 hover:text-gray-500 focus:outline-none interactive">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" id="eye-open">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                             </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="eye-closed">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-3.809a4.5 4.5 0 00-6.364 0m11.868 8.693A10.05 10.05 0 0112 19c-2.751 0-5.273-1.109-7.103-2.907m14.206 0a9.97 9.97 0 01-7.103 2.907" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                id="eye-closed">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-3.809a4.5 4.5 0 00-6.364 0m11.868 8.693A10.05 10.05 0 0112 19c-2.751 0-5.273-1.109-7.103-2.907m14.206 0a9.97 9.97 0 01-7.103 2.907" />
                                             </svg>
                                         </button>
                                     </div>
@@ -886,7 +1072,8 @@
                             <!-- User Type -->
                             <div class="mb-8 form-group">
                                 <div class="select-wrapper">
-                                    <select name="role" class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
+                                    <select name="role"
+                                        class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
                                         <option value="user">User - I need services</option>
                                         <option value="provider">Provider - I offer services</option>
                                     </select>
@@ -897,7 +1084,10 @@
                             <div class="mb-8">
                                 <div class="checkbox-wrapper">
                                     <input type="checkbox" id="terms" name="terms" class="interactive">
-                                    <label for="terms" class="text-gray-600">I agree to the <a href="#" class="text-primary hover:underline">Terms of Service</a> and <a href="#" class="text-primary hover:underline">Privacy Policy</a></label>
+                                    <label for="terms" class="text-gray-600">I agree to the <a href="#"
+                                            class="text-primary hover:underline">Terms of Service</a> and <a
+                                            href="#" class="text-primary hover:underline">Privacy
+                                            Policy</a></label>
                                 </div>
                                 @error('terms')
                                     <div class="text-primary text-sm mt-1">{{ $message }}</div>
@@ -905,14 +1095,18 @@
                             </div>
 
                             <!-- Sign Up Button -->
-                            <button type="submit" class="w-full btn-primary py-4 flex justify-center items-center interactive">
+                            <button type="submit"
+                                class="w-full btn-primary py-4 flex justify-center items-center interactive">
                                 <span class="relative z-10">Sign Up</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 relative z-10"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
                             </button>
                             @if (session('done'))
-                                <div class="mt-4 p-3 bg-green-100 text-green-700 rounded-xl">{{ session('done') }}</div>
+                                <div class="mt-4 p-3 bg-green-100 text-green-700 rounded-xl">{{ session('done') }}
+                                </div>
                             @endif
 
                             <!-- Or Continue With -->
@@ -927,16 +1121,22 @@
                                 </div>
 
                                 <div class="mt-6 grid grid-cols-2 gap-4">
-                                    <a href="#" class="btn-social py-3 flex justify-center items-center interactive">
-                                        <svg class="h-5 w-5 text-red-500 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z" />
+                                    <a href="{{ url('/auth/google') }}"
+                                        class="btn-social py-3 flex justify-center items-center interactive">
+                                        <svg class="h-5 w-5 text-red-500 mr-2" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path
+                                                d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z" />
                                         </svg>
                                         <span>Google</span>
                                     </a>
 
-                                    <a href="#" class="btn-social py-3 flex justify-center items-center interactive">
-                                        <svg class="h-5 w-5 text-blue-600 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                    <a href="#"
+                                        class="btn-social py-3 flex justify-center items-center interactive">
+                                        <svg class="h-5 w-5 text-blue-600 mr-2" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path
+                                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                                         </svg>
                                         <span>Facebook</span>
                                     </a>
@@ -946,7 +1146,8 @@
                             <!-- Already have an account -->
                             <div class="mt-6 text-center">
                                 <p class="text-gray-600">
-                                    Already have an account? <a href="#" id="login-link" class="text-primary hover:underline interactive">Log in</a>
+                                    Already have an account? <a href="#" id="login-link"
+                                        class="text-primary hover:underline interactive">Log in</a>
                                 </p>
                             </div>
                         </form>
@@ -958,7 +1159,9 @@
                     <div class="glass-card p-8 shadow-xl">
                         <h2 class="font-display text-3xl font-bold text-center mb-2 relative">
                             Welcome Back
-                            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                            <div
+                                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-primary to-secondary rounded-full">
+                            </div>
                         </h2>
                         <p class="text-gray-600 text-center mb-8">
                             Log in to your account and continue your journey
@@ -969,11 +1172,16 @@
                             <div class="mb-8 form-group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-gray-400 input-icon" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
                                     </div>
-                                    <input type="email" id="login-email" name="email" placeholder="john@example.com" class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
+                                    <input type="email" id="login-email" name="email"
+                                        placeholder="john@example.com"
+                                        class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
                                     <label for="login-email" class="form-label">Email Address</label>
                                 </div>
                             </div>
@@ -982,27 +1190,36 @@
                             <div class="mb-8 form-group">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-gray-400 input-icon" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                         </svg>
                                     </div>
-                                    <input type="password" id="login-password" name="password" placeholder="••••••••" class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
+                                    <input type="password" id="login-password" name="password"
+                                        placeholder="••••••••"
+                                        class="pl-12 w-full px-4 py-3 form-input focus:outline-none">
                                     <label for="login-password" class="form-label">Password</label>
                                 </div>
                             </div>
 
                             <!-- Log In Button -->
-                            <button type="submit" class="w-full btn-primary py-4 flex justify-center items-center interactive">
+                            <button type="submit"
+                                class="w-full btn-primary py-4 flex justify-center items-center interactive">
                                 <span class="relative z-10">Log In</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 relative z-10"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
                             </button>
 
                             <!-- Don't have an account -->
                             <div class="mt-6 text-center">
                                 <p class="text-gray-600">
-                                    Don't have an account? <a href="#" id="signup-link" class="text-primary hover:underline interactive">Sign up</a>
+                                    Don't have an account? <a href="#" id="signup-link"
+                                        class="text-primary hover:underline interactive">Sign up</a>
                                 </p>
                             </div>
                         </form>
@@ -1015,24 +1232,30 @@
     <!-- Footer -->
     <footer class="bg-dark text-white pt-20 pb-10 relative overflow-hidden">
         <!-- Decorative Elements -->
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5">
+        </div>
 
         <div class="container mx-auto px-4 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
                 <div>
                     <h3 class="font-display text-2xl font-bold mb-6">Quick<span class="text-primary">Hands</span></h3>
-                    <p class="text-gray-400 mb-6">Connecting you with skilled professionals for all your service needs.</p>
+                    <p class="text-gray-400 mb-6">Connecting you with skilled professionals for all your service needs.
+                    </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors interactive">
+                        <a href="#"
+                            class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors interactive">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors interactive">
+                        <a href="#"
+                            class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors interactive">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors interactive">
+                        <a href="#"
+                            class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors interactive">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors interactive">
+                        <a href="#"
+                            class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors interactive">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
@@ -1040,55 +1263,70 @@
                 <div>
                     <h4 class="font-bold text-lg mb-6">Quick Links</h4>
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
-                            <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Home
-                        </a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
-                            <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>About Us
-                        </a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
-                            <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Services
-                        </a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
-                            <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Contact
-                        </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Home
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>About Us
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Services
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
+                                <span class="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Contact
+                            </a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-bold text-lg mb-6">Services</h4>
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
-                            <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Home Cleaning
-                        </a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
-                            <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Handyman
-                        </a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
-                            <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Moving Help
-                        </a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
-                            <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Lawn Care
-                        </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Home Cleaning
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Handyman
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Moving Help
+                            </a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors flex items-center interactive">
+                                <span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></span>Lawn Care
+                            </a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-bold text-lg mb-6">Subscribe to Our Newsletter</h4>
                     <p class="text-gray-400 mb-4">Stay updated with our latest services and offers.</p>
                     <div class="flex mb-4">
-                        <input type="email" placeholder="Your email" class="px-4 py-3 w-full rounded-l-lg focus:outline-none text-gray-800">
-                        <button class="bg-primary px-4 py-3 rounded-r-lg hover:bg-opacity-90 transition-colors interactive">
+                        <input type="email" placeholder="Your email"
+                            class="px-4 py-3 w-full rounded-l-lg focus:outline-none text-gray-800">
+                        <button
+                            class="bg-primary px-4 py-3 rounded-r-lg hover:bg-opacity-90 transition-colors interactive">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
-                    <p class="text-xs text-gray-500">By subscribing, you agree to our Privacy Policy and consent to receive updates.</p>
+                    <p class="text-xs text-gray-500">By subscribing, you agree to our Privacy Policy and consent to
+                        receive updates.</p>
                 </div>
             </div>
             <div class="border-t border-white/10 mt-16 pt-8 text-center text-gray-400">
                 <p>&copy; 2025 QuickHands. All rights reserved.</p>
                 <div class="flex justify-center space-x-6 mt-4">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm interactive">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm interactive">Terms of Service</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm interactive">FAQ</a>
+                    <a href="#"
+                        class="text-gray-400 hover:text-white transition-colors text-sm interactive">Privacy Policy</a>
+                    <a href="#"
+                        class="text-gray-400 hover:text-white transition-colors text-sm interactive">Terms of
+                        Service</a>
+                    <a href="#"
+                        class="text-gray-400 hover:text-white transition-colors text-sm interactive">FAQ</a>
                 </div>
             </div>
         </div>
