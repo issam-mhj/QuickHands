@@ -400,7 +400,7 @@
                 <div class="flex items-center space-x-3 mb-4">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="user-avatar">
                     <div>
-                        <h4 class="font-medium">John Doe</h4>
+                        <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">Super Admin</p>
                     </div>
                 </div>
@@ -550,7 +550,7 @@
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
                                 <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
                                     class="w-8 h-8 rounded-full">
-                                <span class="hidden md:block">John Doe</span>
+                                <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                             <div id="user-dropdown" class="dropdown">
@@ -598,7 +598,7 @@
                 <div class="metric-card">
                     <div class="flex justify-between items-start">
                         <div>
-                            <div class="metric-value" id="totalUsers">8,742</div>
+                            <div class="metric-value" id="totalUsers">{{ $usersNum }}</div>
                             <div class="metric-label">Total Users</div>
                         </div>
                         <div
@@ -615,7 +615,7 @@
                 <div class="metric-card">
                     <div class="flex justify-between items-start">
                         <div>
-                            <div class="metric-value" id="totalProviders">1,254</div>
+                            <div class="metric-value" id="totalProviders">{{ $provNum }}</div>
                             <div class="metric-label">Active Providers</div>
                         </div>
                         <div
@@ -632,7 +632,7 @@
                 <div class="metric-card">
                     <div class="flex justify-between items-start">
                         <div>
-                            <div class="metric-value" id="totalTasks">15,689</div>
+                            <div class="metric-value" id="totalTasks">{{ $taskNum }}</div>
                             <div class="metric-label">Total Tasks</div>
                         </div>
                         <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent">
@@ -648,7 +648,7 @@
                 <div class="metric-card">
                     <div class="flex justify-between items-start">
                         <div>
-                            <div class="metric-value" id="totalRevenue">$124,568</div>
+                            <div class="metric-value" id="totalRevenue">${{ $totalRev }}</div>
                             <div class="metric-label">Total Revenue</div>
                         </div>
                         <div
@@ -1225,7 +1225,7 @@
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
                     datasets: [{
                         label: 'New Users',
-                        data: [650, 720, 810, 890, 950, 1020, 1150],
+                        data: [{{ $janUsersCount }}, {{ $febUsersCount }}, {{ $marUsersCount }}, {{ $aprUsersCount }}, {{ $maiUsersCount }}, {{ $junUsersCount }}, {{ $julUsersCount }}],
                         borderColor: '#FF6B6B',
                         backgroundColor: 'rgba(255, 107, 107, 0.1)',
                         borderWidth: 2,
@@ -1905,7 +1905,8 @@
             // In a real application, this would generate and download the file
             // For this demo, we'll just show an alert
             alert(
-                `Exporting analytics data in ${format.toUpperCase()} format\nIncluding: ${includeUser ? 'User Analytics, ' : ''}${includeProvider ? 'Provider Analytics, ' : ''}${includeTask ? 'Task Analytics, ' : ''}${includeRevenue ? 'Revenue Analytics' : ''}`);
+                `Exporting analytics data in ${format.toUpperCase()} format\nIncluding: ${includeUser ? 'User Analytics, ' : ''}${includeProvider ? 'Provider Analytics, ' : ''}${includeTask ? 'Task Analytics, ' : ''}${includeRevenue ? 'Revenue Analytics' : ''}`
+            );
         }
     </script>
 </body>
