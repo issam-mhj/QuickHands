@@ -26,6 +26,7 @@ Route::get("/admin/content", [UserController::class, "showContent"])->name("admi
 Route::post("/solved/{id}", [UserController::class, "solvedflag"]);
 Route::post("/remove/{id}", [UserController::class, "deleteflag"]);
 Route::get("/admin/task", [TaskController::class, "showTask"])->name("admin.tasks");
+Route::post("/removetask/{id}", [TaskController::class, "deleteTask"]);
 
 
 Route::get("/admin/analytics", [AuthController::class, "showAnalytics"])->name("admin.analytics");
