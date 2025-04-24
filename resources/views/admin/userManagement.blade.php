@@ -759,8 +759,8 @@
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-
-                <form id="editUserForm">
+                <form action="/edituser" method="POST">
+                    @csrf
                     <input type="hidden" id="editUserId">
 
                     <div class="mb-4">

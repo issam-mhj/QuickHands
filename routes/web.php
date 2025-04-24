@@ -18,11 +18,14 @@ Route::post("/login", [AuthController::class, "login"])->name("login");
 
 Route::get("/admin/dashboard", [UserController::class, "showAdminDashboard"])->name("admin.dashboard");
 Route::get("/admin/usermanage", [UserController::class, "showUserManage"])->name("admin.users");
-
 Route::post("/adduser", [UserController::class, "storeUser"]);
+Route::post("/edituser", [UserController::class, "editUser"]);
+Route::get("/admin/providermanage", [UserController::class, "showproviderManage"])->name("admin.provider");
+Route::get("/admin/content", [UserController::class, "showContent"])->name("admin.content");
+Route::post("/solved/{id}", [UserController::class, "solvedflag"]);
+Route::post("/remove/{id}", [UserController::class, "deleteflag"]);
 
-Route::get("/admin/providermanage", [AuthController::class, "showproviderManage"])->name("admin.provider");
-Route::get("/admin/content", [AuthController::class, "showContent"])->name("admin.content");
+
 Route::get("/admin/task", [AuthController::class, "showTask"])->name("admin.tasks");
 Route::get("/admin/analytics", [AuthController::class, "showAnalytics"])->name("admin.analytics");
 Route::get("/admin/notifications", [AuthController::class, "showNotifications"])->name("admin.notifications");

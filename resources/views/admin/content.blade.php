@@ -392,7 +392,7 @@
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
                         class="w-10 h-10 rounded-full border-2 border-white">
                     <div>
-                        <h4 class="font-medium">John Doe</h4>
+                        <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">Super Admin</p>
                     </div>
                 </div>
@@ -542,7 +542,7 @@
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
                                 <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
                                     class="w-8 h-8 rounded-full">
-                                <span class="hidden md:block">John Doe</span>
+                                <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                             <div id="user-dropdown" class="dropdown">
@@ -575,14 +575,8 @@
                         </div>
                         <div class="ml-4">
                             <h2 class="text-sm font-medium text-gray-600">Pending Reports</h2>
-                            <p class="text-2xl font-bold text-gray-800">24</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $PreportsNum }}</p>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <span class="text-red-500 text-sm font-medium">
-                            <i class="fas fa-arrow-up mr-1"></i> 12%
-                        </span>
-                        <span class="text-gray-500 text-sm">since last week</span>
                     </div>
                 </div>
 
@@ -593,14 +587,8 @@
                         </div>
                         <div class="ml-4">
                             <h2 class="text-sm font-medium text-gray-600">Flagged Reviews</h2>
-                            <p class="text-2xl font-bold text-gray-800">18</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $flaggedReviews }}</p>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <span class="text-green-500 text-sm font-medium">
-                            <i class="fas fa-arrow-down mr-1"></i> 5%
-                        </span>
-                        <span class="text-gray-500 text-sm">since last week</span>
                     </div>
                 </div>
 
@@ -610,15 +598,9 @@
                             <i class="fas fa-user-shield text-xl"></i>
                         </div>
                         <div class="ml-4">
-                            <h2 class="text-sm font-medium text-gray-600">Flagged Users</h2>
-                            <p class="text-2xl font-bold text-gray-800">7</p>
+                            <h2 class="text-sm font-medium text-gray-600">Flagged Services</h2>
+                            <p class="text-2xl font-bold text-gray-800">{{ $flaggedServices }}</p>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <span class="text-red-500 text-sm font-medium">
-                            <i class="fas fa-arrow-up mr-1"></i> 3%
-                        </span>
-                        <span class="text-gray-500 text-sm">since last week</span>
                     </div>
                 </div>
 
@@ -628,15 +610,9 @@
                             <i class="fas fa-check-circle text-xl"></i>
                         </div>
                         <div class="ml-4">
-                            <h2 class="text-sm font-medium text-gray-600">Resolved Today</h2>
-                            <p class="text-2xl font-bold text-gray-800">15</p>
+                            <h2 class="text-sm font-medium text-gray-600">flagged message</h2>
+                            <p class="text-2xl font-bold text-gray-800">{{ $flaggedMessage }}</p>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <span class="text-green-500 text-sm font-medium">
-                            <i class="fas fa-arrow-up mr-1"></i> 8%
-                        </span>
-                        <span class="text-gray-500 text-sm">since yesterday</span>
                     </div>
                 </div>
             </div>
@@ -647,10 +623,10 @@
                     <i class="fas fa-star mr-2"></i> Review Moderation
                 </button>
                 <button class="tab-button" data-tab="reports">
-                    <i class="fas fa-flag mr-2"></i> Report Management
+                    <i class="fas fa-flag mr-2"></i> Reported Messages
                 </button>
                 <button class="tab-button" data-tab="flagged">
-                    <i class="fas fa-user-shield mr-2"></i> Flagged Users/Providers
+                    <i class="fas fa-user-shield mr-2"></i> Flagged Services
                 </button>
             </div>
 
@@ -699,247 +675,54 @@
                             <thead>
                                 <tr class="bg-gray-50 text-gray-600 uppercase text-xs">
                                     <th class="py-3 px-4 text-left">User</th>
-                                    <th class="py-3 px-4 text-left">Provider</th>
-                                    <th class="py-3 px-4 text-left">Rating</th>
                                     <th class="py-3 px-4 text-left">Comment</th>
                                     <th class="py-3 px-4 text-left">Date</th>
-                                    <th class="py-3 px-4 text-left">Flags</th>
+                                    <th class="py-3 px-4 text-left">status</th>
                                     <th class="py-3 px-4 text-left">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200" id="reviews-table-body">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Sarah Johnson</p>
-                                                <p class="text-xs text-gray-500">sarah.j@example.com</p>
+                                @foreach ($reviews as $review)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center">
+                                                <img src="/placeholder.svg?height=32&width=32" alt="User"
+                                                    class="h-8 w-8 rounded-full">
+                                                <div class="ml-3">
+                                                    <p class="text-sm font-medium">{{ $review->user->name }}</p>
+                                                    <p class="text-xs text-gray-500">{{ $review->user->email }}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="Provider"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Mike Plumber</p>
-                                                <p class="text-xs text-gray-500">Plumbing Services</p>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <p class="text-sm text-gray-600 truncate w-48">{{ $review->reason }}</p>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <p class="text-sm text-gray-600">
+                                                {{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</p>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="bg-green-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $review->status }}</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex space-x-2">
+                                                <form action="/solved/{{ $review->id }}" method="post">
+                                                    @csrf
+                                                    <button type="submit">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                                <form action="/remove/{{ $review->id }}" method="post">
+                                                    @csrf
+                                                    <button class="text-red-600 hover:text-red-800">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="star-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600 truncate w-48">Great service but used
-                                            inappropriate language during the job.</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 12, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Inappropriate</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewReviewModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('editReviewModal')">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('removeReviewModal')">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Robert Chen</p>
-                                                <p class="text-xs text-gray-500">robert.c@example.com</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="Provider"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Elena Electrician</p>
-                                                <p class="text-xs text-gray-500">Electrical Services</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="star-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600 truncate w-48">This provider is a scam! They
-                                            charged me $500 for a 5-minute job!</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 10, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Disputed</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewReviewModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('editReviewModal')">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('removeReviewModal')">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Maria Lopez</p>
-                                                <p class="text-xs text-gray-500">maria.l@example.com</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="Provider"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">David Cleaner</p>
-                                                <p class="text-xs text-gray-500">Cleaning Services</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="star-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600 truncate w-48">Amazing service! Visit my
-                                            website at www.scam-site.com for more reviews!</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 8, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Spam</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewReviewModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('editReviewModal')">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('removeReviewModal')">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">James Wilson</p>
-                                                <p class="text-xs text-gray-500">james.w@example.com</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="Provider"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Sandra Painter</p>
-                                                <p class="text-xs text-gray-500">Painting Services</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="star-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600 truncate w-48">Terrible service with offensive
-                                            comments about my home decor.</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 5, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Offensive</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewReviewModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('editReviewModal')">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('removeReviewModal')">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -1012,218 +795,55 @@
                         <table class="min-w-full bg-white">
                             <thead>
                                 <tr class="bg-gray-50 text-gray-600 uppercase text-xs">
-                                    <th class="py-3 px-4 text-left">ID</th>
-                                    <th class="py-3 px-4 text-left">Reporter</th>
-                                    <th class="py-3 px-4 text-left">Type</th>
-                                    <th class="py-3 px-4 text-left">Content</th>
-                                    <th class="py-3 px-4 text-left">Reason</th>
+                                    <th class="py-3 px-4 text-left">User</th>
+                                    <th class="py-3 px-4 text-left">Comment</th>
                                     <th class="py-3 px-4 text-left">Date</th>
-                                    <th class="py-3 px-4 text-left">Severity</th>
-                                    <th class="py-3 px-4 text-left">Status</th>
+                                    <th class="py-3 px-4 text-left">status</th>
                                     <th class="py-3 px-4 text-left">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200" id="reports-table-body">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm font-medium">#R-2305</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Thomas Brown</p>
-                                                <p class="text-xs text-gray-500">thomas.b@example.com</p>
+                                @foreach ($messages as $message)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center">
+                                                <img src="/placeholder.svg?height=32&width=32" alt="User"
+                                                    class="h-8 w-8 rounded-full">
+                                                <div class="ml-3">
+                                                    <p class="text-sm font-medium">{{ $message->user->name }}</p>
+                                                    <p class="text-xs text-gray-500">{{ $message->user->email }}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Message</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600 truncate w-48">Provider sent inappropriate
-                                            messages asking for personal information</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Harassment</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 15, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span class="px-2 py-1 text-xs rounded-full severity-high">High</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Pending</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewReportModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-green-600 hover:text-green-800"
-                                                onclick="openModal('resolveReportModal')">
-                                                <i class="fas fa-check"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('dismissReportModal')">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm font-medium">#R-2304</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Lisa Wong</p>
-                                                <p class="text-xs text-gray-500">lisa.w@example.com</p>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <p class="text-sm text-gray-600 truncate w-48">{{ $message->reason }}</p>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <p class="text-sm text-gray-600">
+                                                {{ \Carbon\Carbon::parse($message->created_at)->format('M d, Y') }}</p>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="bg-green-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $message->status }}</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex space-x-2">
+                                                <form action="/solved/{{ $message->id }}" method="post">
+                                                    @csrf
+                                                    <button type="submit">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                                <form action="/remove/{{ $message->id }}" method="post">
+                                                    @csrf
+                                                    <button class="text-red-600 hover:text-red-800">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">Profile</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600 truncate w-48">Provider profile contains false
-                                            credentials and misleading information</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">False Information</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 14, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span class="px-2 py-1 text-xs rounded-full severity-medium">Medium</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Investigating</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewReportModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-green-600 hover:text-green-800"
-                                                onclick="openModal('resolveReportModal')">
-                                                <i class="fas fa-check"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('dismissReportModal')">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm font-medium">#R-2303</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Kevin Smith</p>
-                                                <p class="text-xs text-gray-500">kevin.s@example.com</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Task</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600 truncate w-48">Provider never showed up but
-                                            marked task as complete</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Fraud</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 13, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span class="px-2 py-1 text-xs rounded-full severity-high">High</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Resolved</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewReportModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('reopenReportModal')">
-                                                <i class="fas fa-redo"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm font-medium">#R-2302</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Amanda Davis</p>
-                                                <p class="text-xs text-gray-500">amanda.d@example.com</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-orange-100 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded">Review</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600 truncate w-48">Review contains offensive
-                                            language and personal attacks</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Offensive Content</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 11, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span class="px-2 py-1 text-xs rounded-full severity-low">Low</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">Dismissed</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewReportModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('reopenReportModal')">
-                                                <i class="fas fa-redo"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -1295,226 +915,55 @@
                         <table class="min-w-full bg-white">
                             <thead>
                                 <tr class="bg-gray-50 text-gray-600 uppercase text-xs">
-                                    <th class="py-3 px-4 text-left">User/Provider</th>
-                                    <th class="py-3 px-4 text-left">Type</th>
-                                    <th class="py-3 px-4 text-left">Email</th>
-                                    <th class="py-3 px-4 text-left">Violations</th>
-                                    <th class="py-3 px-4 text-left">Reports</th>
-                                    <th class="py-3 px-4 text-left">Last Violation</th>
-                                    <th class="py-3 px-4 text-left">Status</th>
+                                    <th class="py-3 px-4 text-left">User</th>
+                                    <th class="py-3 px-4 text-left">Comment</th>
+                                    <th class="py-3 px-4 text-left">Date</th>
+                                    <th class="py-3 px-4 text-left">status</th>
                                     <th class="py-3 px-4 text-left">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200" id="flagged-table-body">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Alex Johnson</p>
-                                                <p class="text-xs text-gray-500">Member since Jan 2023</p>
+                                @foreach ($services as $service)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center">
+                                                <img src="/placeholder.svg?height=32&width=32" alt="User"
+                                                    class="h-8 w-8 rounded-full">
+                                                <div class="ml-3">
+                                                    <p class="text-sm font-medium">{{ $service->user->name }}</p>
+                                                    <p class="text-xs text-gray-500">{{ $service->user->email }}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">User</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">alex.j@example.com</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex flex-wrap gap-1">
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <p class="text-sm text-gray-600 truncate w-48">{{ $service->reason }}</p>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <p class="text-sm text-gray-600">
+                                                {{ \Carbon\Carbon::parse($service->created_at)->format('M d, Y') }}</p>
+                                        </td>
+                                        <td class="py-3 px-4">
                                             <span
-                                                class="bg-red-100 text-red-800 text-xs font-medium px-2 py-0.5 rounded">Harassment</span>
-                                            <span
-                                                class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded">Spam</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm font-medium text-red-600">5</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 16, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Warned</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewUserModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('warnUserModal')">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('suspendUserModal')">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="Provider"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Michael Plumber</p>
-                                                <p class="text-xs text-gray-500">Member since Nov 2022</p>
+                                                class="bg-green-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $service->status }}</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex space-x-2">
+                                                <form action="/solved/{{ $service->id }}" method="post">
+                                                    @csrf
+                                                    <button type="submit">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                                <form action="/remove/{{ $service->id }}" method="post">
+                                                    @csrf
+                                                    <button class="text-red-600 hover:text-red-800">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Provider</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">michael.p@example.com</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex flex-wrap gap-1">
-                                            <span
-                                                class="bg-red-100 text-red-800 text-xs font-medium px-2 py-0.5 rounded">Fraud</span>
-                                            <span
-                                                class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-0.5 rounded">False
-                                                Info</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm font-medium text-red-600">8</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 15, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Suspended</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewUserModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-green-600 hover:text-green-800"
-                                                onclick="openModal('reactivateUserModal')">
-                                                <i class="fas fa-check-circle"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('banUserModal')">
-                                                <i class="fas fa-times-circle"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">Sarah Miller</p>
-                                                <p class="text-xs text-gray-500">Member since Feb 2023</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">User</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">sarah.m@example.com</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex flex-wrap gap-1">
-                                            <span
-                                                class="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-0.5 rounded">Inappropriate</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm font-medium text-red-600">3</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 10, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Warned</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewUserModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('warnUserModal')">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('suspendUserModal')">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-3 px-4">
-                                        <div class="flex items-center">
-                                            <img src="/placeholder.svg?height=32&width=32" alt="Provider"
-                                                class="h-8 w-8 rounded-full">
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium">David Electrician</p>
-                                                <p class="text-xs text-gray-500">Member since Dec 2022</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Provider</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">david.e@example.com</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex flex-wrap gap-1">
-                                            <span
-                                                class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded">Spam</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm font-medium text-red-600">2</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <p class="text-sm text-gray-600">Apr 8, 2023</p>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span
-                                            class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Active</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <div class="flex space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"
-                                                onclick="openModal('viewUserModal')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="text-yellow-600 hover:text-yellow-800"
-                                                onclick="openModal('warnUserModal')">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-800"
-                                                onclick="openModal('suspendUserModal')">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -1847,14 +1296,12 @@
                     btn.classList.remove('active');
                 });
 
-                // Add active class to selected tab and button
                 const tabId = button.getAttribute('data-tab');
                 document.getElementById(`${tabId}-tab`).classList.add('active');
                 button.classList.add('active');
             });
         });
 
-        // Modal functions
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
         }
@@ -1863,7 +1310,6 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modals = document.getElementsByClassName('modal');
             for (let i = 0; i < modals.length; i++) {
@@ -1953,7 +1399,6 @@
             document.body.removeChild(element);
         }
 
-        // Scroll progress bar
         window.addEventListener('scroll', function() {
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
