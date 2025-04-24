@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Flag;
 use App\Models\Offer;
 use App\Models\Provider;
 use App\Models\Service;
@@ -84,5 +85,46 @@ class UserController extends Controller
     public function editUser(Request $request)
     {
         dd($request);
+    }
+
+    public function showproviderManage()
+    {
+        $user = auth()->user();
+        $provider = user::where('role', 'provider')->get();
+        return view("admin.providerManagement", [
+            "user" => $user,
+            "providers" => $provider,
+        ]);
+    }
+    public function showContent()
+    {
+        $user = auth()->user();
+        $pendingReview = Flag::where('status', 'pending')->count();
+        $flaggedReviews = Flag::where('content_type', 'review')->count();
+        $flaggedServices = Flag::where('content_type', 'service')->count();
+        $flaggedMessage = Flag::where('content_type', 'message')->count();
+        $allReviews = Flag::where('content_type', 'review')->get();
+        $allMessage = Flag::where('content_type', 'message')->get();
+        $allServices = Flag::where('content_type', 'service')->get();
+        return view("admin.content", [
+            "user" => $user,
+            "PreportsNum" => $pendingReview,
+            "flaggedReviews" => $flaggedReviews,
+            "flaggedServices" => $flaggedServices,
+            "flaggedMessage" => $flaggedMessage,
+            "reviews" => $allReviews,
+            "messages" => $allMessage,
+            "services" => $allServices,
+        ]);
+    }
+    public function solvedflag(Flag $id)
+    {
+        $id->update(['status' => 'reviewed']);
+        return redirect()->back();
+    }
+    public function deleteflag(Flag $id)
+    {
+        $id->delete();
+        return redirect()->back();
     }
 }
