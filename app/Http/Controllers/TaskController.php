@@ -11,9 +11,23 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function showTask()
     {
-        //
+        $user = auth()->user();
+        $tasks = Task::count();
+        $alltasks = Task::all();
+        $Activetasks = Task::where("status", "in-progress")->count();
+        $notStartedTasks = Task::where("status", "not-started")->count();
+        $completedTasks = Task::where("status", "completed")->count();
+        $completationRate = $completedTasks * 100 / $tasks;
+        return view("admin.tasks", [
+            "user" => $user,
+            "taskNum" => $tasks,
+            "activeTaskNum" => $Activetasks,
+            "notStartedTasks" => $notStartedTasks,
+            "rateCompleted" => $completationRate,
+            "tasks" => $alltasks,
+        ]);
     }
 
     /**
@@ -59,8 +73,9 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function deleteTask(Task $id)
     {
-        //
+        $id->delete();
+        return redirect()->back();
     }
 }

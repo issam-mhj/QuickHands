@@ -72,11 +72,6 @@ class AuthController extends Controller
 
 
 
-
-    public function showTask()
-    {
-        return view("admin.tasks");
-    }
     public function showAnalytics()
     {
         return view("admin.analytics");

@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\TaskController;
 
 Route::get("/", [VisitController::class, "home"]);
 Route::get("/about", [VisitController::class, "about"]);
@@ -24,9 +25,10 @@ Route::get("/admin/providermanage", [UserController::class, "showproviderManage"
 Route::get("/admin/content", [UserController::class, "showContent"])->name("admin.content");
 Route::post("/solved/{id}", [UserController::class, "solvedflag"]);
 Route::post("/remove/{id}", [UserController::class, "deleteflag"]);
+Route::get("/admin/task", [TaskController::class, "showTask"])->name("admin.tasks");
+Route::post("/removetask/{id}", [TaskController::class, "deleteTask"]);
 
 
-Route::get("/admin/task", [AuthController::class, "showTask"])->name("admin.tasks");
 Route::get("/admin/analytics", [AuthController::class, "showAnalytics"])->name("admin.analytics");
 Route::get("/admin/notifications", [AuthController::class, "showNotifications"])->name("admin.notifications");
 Route::get("/admin/settings", [AuthController::class, "showSettings"])->name("admin.settings");

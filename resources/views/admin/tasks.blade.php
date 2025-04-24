@@ -11,10 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -43,307 +39,334 @@
             }
         }
     </script>
-    <style type="text/tailwindcss">
-        @layer components {
-            .dashboard-card {
-                @apply relative overflow-hidden rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl bg-white border border-gray-100;
-            }
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-            .dashboard-card:hover {
-                @apply transform -translate-y-1;
-            }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8f9fa;
+        }
 
-            .stat-card {
-                @apply relative overflow-hidden rounded-2xl p-6 shadow-lg transition-all duration-300 bg-white border border-gray-100;
-            }
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, #FF6B6B, #4ECDC4, #FFE66D);
+            z-index: 50;
+            width: 0%;
+        }
 
-            .stat-card:hover {
-                @apply transform -translate-y-1;
-            }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 16rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
+            z-index: 40;
+            transform: translateX(0);
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+        }
 
-            .stat-card.users {
-                @apply border-l-4 border-l-primary;
-            }
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
 
-            .stat-card.providers {
-                @apply border-l-4 border-l-secondary;
-            }
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
 
-            .stat-card.tasks {
-                @apply border-l-4 border-l-accent;
-            }
+        .sidebar-content {
+            padding: 1rem;
+            overflow-y: auto;
+            height: calc(100% - 80px);
+        }
 
-            .stat-card.revenue {
-                @apply border-l-4 border-l-success;
-            }
+        .sidebar-footer {
+            padding: 1rem;
+            border-top: 1px solid #f0f0f0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
 
-            .nav-link {
-                @apply flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300;
-            }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+        }
 
-            .nav-link:hover {
-                @apply bg-gray-100;
-            }
+        .nav-link:hover {
+            background-color: #f3f4f6;
+        }
 
-            .nav-link.active {
-                @apply bg-white text-primary font-medium shadow-md;
-            }
+        .nav-link.active {
+            background-color: #FF6B6B;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
 
-            .nav-link .icon {
-                @apply text-lg;
-            }
+        .nav-link .icon {
+            font-size: 1.125rem;
+        }
 
-            .gradient-text {
-                @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
-            }
+        .sidebar-toggle {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 50;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
 
-            .progress-bar {
-                @apply h-2 rounded-full overflow-hidden bg-gray-200;
-            }
+        .sidebar-toggle:hover {
+            background-color: #FF6B6B;
+            color: white;
+        }
 
-            .progress-bar .progress {
-                @apply h-full rounded-full transition-all duration-500;
-            }
+        .content {
+            transition: all 0.3s;
+            margin-left: 16rem;
+            padding: 2rem 1.5rem;
+        }
 
-            .table-container {
-                @apply rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-100;
-            }
+        .content.full-width {
+            margin-left: 0;
+        }
 
-            .table-header {
-                @apply bg-gray-50 text-dark font-medium py-4 px-6;
-            }
-
-            .table-row {
-                @apply border-b border-gray-100 transition-colors duration-300;
-            }
-
-            .table-row:hover {
-                @apply bg-gray-50;
-            }
-
-            .table-cell {
-                @apply py-4 px-6;
-            }
-
-            .badge {
-                @apply px-3 py-1 rounded-full text-xs font-medium;
-            }
-
-            .badge-primary {
-                @apply bg-primary/20 text-primary;
-            }
-
-            .badge-secondary {
-                @apply bg-secondary/20 text-secondary;
-            }
-
-            .badge-accent {
-                @apply bg-accent/20 text-dark;
-            }
-
-            .badge-success {
-                @apply bg-success/20 text-success;
-            }
-
-            .badge-warning {
-                @apply bg-warning/20 text-warning;
-            }
-
-            .badge-danger {
-                @apply bg-danger/20 text-danger;
-            }
-
-            .badge-active {
-                @apply bg-success/20 text-success;
-            }
-
-            .badge-suspended {
-                @apply bg-warning/20 text-warning;
-            }
-
-            .badge-banned {
-                @apply bg-danger/20 text-danger;
-            }
-
-            .quick-action {
-                @apply flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 bg-white border border-gray-100;
-            }
-
-            .quick-action:hover {
-                @apply shadow-lg transform -translate-y-1 bg-gray-50;
-            }
-
-            .quick-action .icon {
-                @apply text-2xl mb-2 transition-all duration-300;
-            }
-
-            .quick-action:hover .icon {
-                @apply transform scale-110;
-            }
-
-            .notification-dot {
-                @apply absolute top-0 right-0 w-2 h-2 bg-primary rounded-full;
-            }
-
-            .search-input {
-                @apply w-full px-4 py-2 pl-10 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all duration-300;
-            }
-
-            .scroll-progress {
-                @apply fixed top-0 left-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent z-50;
-                width: 0%;
-            }
-
-            .chart-container {
-                @apply relative rounded-2xl overflow-hidden;
-                min-height: 300px;
-            }
-
-            .chart-container canvas {
-                @apply rounded-2xl;
-            }
-
-            .chart-overlay {
-                @apply absolute inset-0 flex items-center justify-center bg-white/80 opacity-0 transition-opacity duration-300;
-                z-index: 10;
-            }
-
-            .chart-container:hover .chart-overlay {
-                @apply opacity-100;
-            }
-
-            .task-type {
-                @apply flex items-center space-x-2 mb-2;
-            }
-
-            .task-type-dot {
-                @apply w-3 h-3 rounded-full;
-            }
-
-            .task-type-label {
-                @apply text-sm text-gray-600;
-            }
-
-            .animated-number {
-                @apply transition-all duration-1000;
-            }
-
-            .sidebar-toggle {
-                @apply fixed top-6 left-6 z-50 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all duration-300;
-            }
-
-            .sidebar-toggle:hover {
-                @apply bg-primary text-white;
-            }
-
+        @media (max-width: 768px) {
             .sidebar {
-                @apply fixed top-0 left-0 h-full w-64 bg-white shadow-xl transition-all duration-500 z-40 transform;
-                border-right: 1px solid rgba(0, 0, 0, 0.05);
+                transform: translateX(-100%);
             }
 
-            .sidebar.collapsed {
-                @apply -translate-x-full;
+            .sidebar.mobile-open {
+                transform: translateX(0);
             }
 
-            .sidebar-header {
-                @apply p-6 border-b border-gray-100;
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-primary {
+            background-color: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        .btn-primary:hover {
+            background-color: #4338ca;
+            border-color: #4338ca;
+        }
+
+        .btn-outline-primary {
+            color: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        .badge-primary {
+            background-color: #4f46e5;
+        }
+
+        .badge-warning {
+            background-color: #f59e0b;
+            color: white;
+        }
+
+        .badge-danger {
+            background-color: #ef4444;
+        }
+
+        .badge-success {
+            background-color: #10b981;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .tab-button:not(.active):hover {
+            background-color: #f0f4ff;
+        }
+
+        .severity-high {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .severity-medium {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .severity-low {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .star-rating {
+            color: #f59e0b;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 60%;
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
             }
 
-            .sidebar-content {
-                @apply p-4 overflow-y-auto;
-                height: calc(100% - 80px);
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
 
-            .sidebar-footer {
-                @apply p-4 border-t border-gray-100 absolute bottom-0 w-full;
-            }
+        .gradient-text {
+            @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
+        }
 
-            .user-avatar {
-                @apply w-10 h-10 rounded-full object-cover border-2 border-white;
-            }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-            .notification-badge {
-                @apply absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-white text-xs flex items-center justify-center;
-            }
+        .close:hover {
+            color: black;
+        }
 
-            .dropdown {
-                @apply absolute right-0 top-full mt-2 w-64 bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 opacity-0 invisible;
-                z-index: 30;
-            }
+        .dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 0.5rem;
+            width: 16rem;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 30;
+        }
 
-            .dropdown.show {
-                @apply opacity-100 visible;
-            }
+        .dropdown.show {
+            opacity: 1;
+            visibility: visible;
+        }
 
-            .dropdown-item {
-                @apply px-4 py-3 hover:bg-gray-50 transition-colors duration-300 flex items-center space-x-3;
-            }
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
 
-            .dropdown-divider {
-                @apply border-t border-gray-100 my-1;
-            }
+        .dropdown-item:hover {
+            background-color: #f3f4f6;
+        }
 
-            .modal {
-                background-color: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(5px);
-            }
+        .dropdown-divider {
+            border-top: 1px solid #f0f0f0;
+            margin: 0.25rem 0;
+        }
 
+        .gradient-text {
+            @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -0.25rem;
+            right: -0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            background-color: #FF6B6B;
+            color: white;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
             .modal-content {
-                background: white;
-                border-radius: 16px;
-                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            }
-
-            .status-pending {
-                @apply bg-yellow-100 text-yellow-800;
-            }
-
-            .status-in-progress {
-                @apply bg-blue-100 text-blue-800;
-            }
-
-            .status-completed {
-                @apply bg-green-100 text-green-800;
-            }
-
-            .status-cancelled {
-                @apply bg-red-100 text-red-800;
-            }
-
-            .status-dispute {
-                @apply bg-purple-100 text-purple-800;
-            }
-
-            .priority-high {
-                @apply bg-red-100 text-red-800;
-            }
-
-            .priority-medium {
-                @apply bg-yellow-100 text-yellow-800;
-            }
-
-            .priority-low {
-                @apply bg-green-100 text-green-800;
-            }
-
-            .task-type-cleaning {
-                @apply bg-blue-100 text-blue-800;
-            }
-
-            .task-type-delivery {
-                @apply bg-green-100 text-green-800;
-            }
-
-            .task-type-assembly {
-                @apply bg-purple-100 text-purple-800;
-            }
-
-            .task-type-moving {
-                @apply bg-orange-100 text-orange-800;
-            }
-
-            .task-type-other {
-                @apply bg-gray-100 text-gray-800;
+                width: 90%;
             }
         }
     </style>
@@ -370,9 +393,10 @@
         <div class="sidebar-content">
             <div class="mb-8">
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="user-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
+                        class="w-10 h-10 rounded-full border-2 border-white">
                     <div>
-                        <h4 class="font-medium">John Doe</h4>
+                        <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">Super Admin</p>
                     </div>
                 </div>
@@ -380,37 +404,37 @@
 
             <nav class="space-y-2">
                 <a href="simplified-dashboard.html" class="nav-link">
-                    <i class="fas fa-chart-pie icon"></i>
+                    <i class="fas fa-chart-pie icon mr-3"></i>
                     <span>Dashboard</span>
                 </a>
                 <a href="user-management.html" class="nav-link">
-                    <i class="fas fa-users icon"></i>
+                    <i class="fas fa-users icon mr-3"></i>
                     <span>User Management</span>
                 </a>
-                <a href="provider-management.html" class="nav-link">
-                    <i class="fas fa-user-tie icon"></i>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user-tie icon mr-3"></i>
                     <span>Provider Management</span>
                 </a>
-                <a href="content-moderation.html" class="nav-link">
-                    <i class="fas fa-shield-alt icon"></i>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-shield-alt icon mr-3"></i>
                     <span>Content Moderation</span>
                 </a>
-                <a href="task-oversight.html" class="nav-link active">
-                    <i class="fas fa-tasks icon"></i>
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-tasks icon mr-3"></i>
                     <span>Task Oversight</span>
                 </a>
                 <a href="#" class="nav-link">
-                    <i class="fas fa-chart-line icon"></i>
+                    <i class="fas fa-chart-line icon mr-3"></i>
                     <span>Analytics & Reports</span>
                 </a>
                 <a href="#" class="nav-link">
-                    <i class="fas fa-bell icon"></i>
+                    <i class="fas fa-bell icon mr-3"></i>
                     <span>Notifications</span>
                     <span
                         class="ml-auto bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">8</span>
                 </a>
                 <a href="#" class="nav-link">
-                    <i class="fas fa-cog icon"></i>
+                    <i class="fas fa-cog icon mr-3"></i>
                     <span>Settings</span>
                 </a>
             </nav>
@@ -430,8 +454,8 @@
     </div>
 
     <!-- Main Content -->
-    <main class="min-h-screen pt-8 pb-16 transition-all duration-500" id="main-content">
-        <div class="container mx-auto px-4 lg:px-8">
+    <div id="content" class="content">
+        <div class="container mx-auto">
             <!-- Header -->
             <header class="mb-8">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -522,7 +546,7 @@
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
                                 <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
                                     class="w-8 h-8 rounded-full">
-                                <span class="hidden md:block">John Doe</span>
+                                <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                             <div id="user-dropdown" class="dropdown">
@@ -545,1350 +569,824 @@
                 </div>
             </header>
 
-            <!-- Task Overview Stats -->
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="stat-card tasks">
+                <!-- Total Tasks Card -->
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all duration-200 hover:shadow-md overflow-hidden relative">
                     <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-500">Total Tasks</h3>
-                            <p class="text-3xl font-bold mt-1">1,248</p>
+                        <div class="relative z-10">
+                            <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Tasks</h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $taskNum }}</p>
+                            <div class="mt-4 flex items-center">
+                                <div class="flex items-center text-emerald-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                                    </svg>
+                                    <span class="text-xs font-medium ml-1">12%</span>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-2">vs last month</span>
+                            </div>
                         </div>
-                        <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
-                            <i class="fas fa-tasks text-accent"></i>
+                        <div class="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
                         </div>
                     </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This month</span>
-                            <span class="text-success">+12.5%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-accent" style="width: 75%"></div>
-                        </div>
+                    <div class="absolute bottom-0 right-0 opacity-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" fill="currentColor"
+                            class="text-indigo-500" viewBox="0 0 16 16">
+                            <path
+                                d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2z" />
+                            <path
+                                d="M9.828 4h-2.193c-.33 0-.4.19-.4.385L7.235 8h3.77l-.305 2H5.975L5 5.975V5h5l-.445-1h-4.41L3 6.057V12h9l1.235-8.185C13.445 3.622 13.167 4 9.828 4z" />
+                        </svg>
                     </div>
                 </div>
 
-                <div class="stat-card">
+                <!-- Active Tasks Card -->
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all duration-200 hover:shadow-md overflow-hidden relative">
                     <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-500">Active Tasks</h3>
-                            <p class="text-3xl font-bold mt-1">342</p>
+                        <div class="relative z-10">
+                            <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Active Tasks</h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $activeTaskNum }}</p>
+                            <div class="mt-4 flex items-center">
+                                <div class="flex items-center text-blue-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                    </svg>
+                                    <span class="text-xs font-medium ml-1">8%</span>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-2">vs last month</span>
+                            </div>
                         </div>
-                        <div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center">
-                            <i class="fas fa-spinner text-secondary"></i>
+                        <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                         </div>
                     </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This week</span>
-                            <span class="text-success">+8.2%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-secondary" style="width: 65%"></div>
-                        </div>
+                    <div class="absolute bottom-0 right-0 opacity-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" fill="currentColor"
+                            class="text-blue-500" viewBox="0 0 16 16">
+                            <path
+                                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm-6.2-3.4A6.978 6.978 0 0 1 8 2a7 7 0 0 1 7 7 6.938 6.938 0 0 1-2.05 4.95l-7.15-7.15V7a.5.5 0 0 0 1 0V6a.5.5 0 0 0-1 0v.551L4.7 5.45A.5.5 0 1 0 4 6.17l1.1 1.1v.628a.5.5 0 0 0 1 0v-1.23l1.55 1.55a.5.5 0 1 0 .7-.7L7.345 6.45h.93a.5.5 0 0 0 0-1h-.93L8.45 4.35a.5.5 0 0 0-.7-.7L6 5.4V3.8A.5.5 0 0 0 5.5 4c-.178 0-.33.13-.347.304L9.05 8.1c.806.804 1.16 1.614 1.225 2.324.037.404-.074.773-.26 1.105l-.017-.004c-.324.21-.723.33-1.175.33C7.36 11.855 6.3 10.277 6.3 8a.5.5 0 0 0-.832-.374L1.8 12.6z" />
+                        </svg>
                     </div>
                 </div>
 
-                <div class="stat-card">
+                <!-- Not Started Tasks Card -->
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all duration-200 hover:shadow-md overflow-hidden relative">
                     <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-500">Disputes</h3>
-                            <p class="text-3xl font-bold mt-1">28</p>
+                        <div class="relative z-10">
+                            <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Not Started Tasks
+                            </h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $notStartedTasks }}</p>
+                            <div class="mt-4 flex items-center">
+                                <div class="flex items-center text-amber-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                                    </svg>
+                                    <span class="text-xs font-medium ml-1">5%</span>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-2">vs last month</span>
+                            </div>
                         </div>
-                        <div class="w-10 h-10 rounded-full bg-warning/20 flex items-center justify-center">
-                            <i class="fas fa-exclamation-triangle text-warning"></i>
+                        <div class="w-12 h-12 rounded-lg bg-amber-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
                         </div>
                     </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This month</span>
-                            <span class="text-danger">+3.7%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-warning" style="width: 28%"></div>
-                        </div>
+                    <div class="absolute bottom-0 right-0 opacity-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" fill="currentColor"
+                            class="text-amber-500" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+                        </svg>
                     </div>
                 </div>
 
-                <div class="stat-card">
+                <!-- Completion Rate Card -->
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all duration-200 hover:shadow-md overflow-hidden relative">
                     <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-500">Completion Rate</h3>
-                            <p class="text-3xl font-bold mt-1">94.2%</p>
+                        <div class="relative z-10">
+                            <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Completion Rate</h3>
+                            <p class="text-3xl font-bold mt-2 text-gray-800">{{ $rateCompleted }}%</p>
+                            <div class="mt-4 flex items-center">
+                                <div class="flex items-center text-emerald-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                                    </svg>
+                                    <span class="text-xs font-medium ml-1">15%</span>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-2">vs last month</span>
+                            </div>
                         </div>
-                        <div class="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center">
-                            <i class="fas fa-check-circle text-success"></i>
+                        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                         </div>
                     </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This month</span>
-                            <span class="text-success">+1.2%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-success" style="width: 94%"></div>
-                        </div>
+                    <div class="absolute bottom-0 right-0 opacity-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" fill="currentColor"
+                            class="text-emerald-500" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                        </svg>
                     </div>
                 </div>
             </div>
 
-            <!-- Task Management Controls -->
-            <div class="dashboard-card mb-6">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-                    <div class="mb-4 md:mb-0">
-                        <h2 class="text-xl font-semibold text-gray-800">Task List</h2>
-                        <p class="text-sm text-gray-500">Monitor and manage all tasks on the platform</p>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <button id="exportBtn"
-                            class="btn bg-success hover:bg-success/90 text-white px-4 py-2 rounded-lg flex items-center">
-                            <i class="fas fa-file-export mr-2"></i> Export Data
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Search and Filter -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                    <div class="relative">
-                        <input type="text" id="searchInput" placeholder="Search tasks..."
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                        <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
-                    </div>
-
-                    <div>
-                        <select id="statusFilter"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="">Filter by Status</option>
-                            <option value="pending">Pending</option>
-                            <option value="in-progress">In Progress</option>
-                            <option value="completed">Completed</option>
-                            <option value="cancelled">Cancelled</option>
-                            <option value="dispute">In Dispute</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <select id="typeFilter"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="">Filter by Type</option>
-                            <option value="cleaning">Cleaning</option>
-                            <option value="delivery">Delivery</option>
-                            <option value="assembly">Assembly</option>
-                            <option value="moving">Moving</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <input type="date" id="dateFilter"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-                </div>
-
-                <!-- Tasks Table -->
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white rounded-lg overflow-hidden">
-                        <thead class="table-header">
-                            <tr>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
-                                    <div class="flex items-center">
-                                        <span>Task ID</span>
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
-                                    <div class="flex items-center">
-                                        <span>User</span>
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
-                                    <div class="flex items-center">
-                                        <span>Provider</span>
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
-                                    <div class="flex items-center">
-                                        <span>Type</span>
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
-                                    <div class="flex items-center">
-                                        <span>Status</span>
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
-                                    <div class="flex items-center">
-                                        <span>Date</span>
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
-                                    <div class="flex items-center">
-                                        <span>Budget</span>
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                                    Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200" id="taskTableBody">
-                            <!-- Task rows will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination -->
-                <div class="flex justify-between items-center mt-6">
-                    <div class="text-sm text-gray-500">
-                        Showing <span id="startRange">1</span> to <span id="endRange">10</span> of <span
-                            id="totalTasks">100</span> tasks
-                    </div>
-
-                    <div class="flex space-x-1">
-                        <button id="prevPage"
-                            class="pagination-btn px-3 py-1 rounded-md border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <div id="paginationNumbers" class="flex space-x-1">
-                            <!-- Pagination numbers will be populated by JavaScript -->
-                        </div>
-                        <button id="nextPage" class="pagination-btn px-3 py-1 rounded-md border border-gray-300">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Task Details Modal -->
-    <div id="taskDetailsModal" class="modal fixed inset-0 z-50 hidden flex items-center justify-center">
-        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
-        <div class="modal-content relative bg-white w-full max-w-4xl mx-4 rounded-lg shadow-lg">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">Task Details - <span id="detailsTaskId"></span>
-                    </h3>
-                    <button class="close-modal text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <h4 class="font-medium text-gray-700 mb-2">Basic Information</h4>
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <p class="text-sm text-gray-500">Title</p>
-                                    <p class="font-medium" id="detailsTitle"></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Type</p>
-                                    <p class="font-medium" id="detailsType"></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Status</p>
-                                    <p class="font-medium" id="detailsStatus"></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Date</p>
-                                    <p class="font-medium" id="detailsDate"></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Budget</p>
-                                    <p class="font-medium" id="detailsBudget"></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Priority</p>
-                                    <p class="font-medium" id="detailsPriority"></p>
-                                </div>
+            <!-- Tab Content -->
+            <div class="bg-white rounded-b-lg shadow-sm p-6">
+                <!-- Review Moderation Tab -->
+                <div id="reviews-tab" class="tab-content active">
+                    <!-- Filters -->
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                        <div class="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-4">
+                            <div class="relative">
+                                <input type="text" id="review-search" placeholder="Search reviews..."
+                                    class="border border-gray-300 rounded-md px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                             </div>
+                            <select
+                                class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">All Ratings</option>
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                            <select
+                                class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">All Flags</option>
+                                <option value="inappropriate">Inappropriate</option>
+                                <option value="spam">Spam</option>
+                                <option value="offensive">Offensive</option>
+                                <option value="false">False Information</option>
+                            </select>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <button
+                                class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors"
+                                onclick="resetFilters('review')">
+                                <i class="fas fa-filter mr-2"></i> Reset Filters
+                            </button>
                         </div>
                     </div>
 
-                    <div>
-                        <h4 class="font-medium text-gray-700 mb-2">Participants</h4>
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <div class="mb-4">
-                                <p class="text-sm text-gray-500">User</p>
-                                <div class="flex items-center mt-1">
-                                    <img id="detailsUserAvatar" class="w-8 h-8 rounded-full mr-2"
-                                        src="/placeholder.svg" alt="User">
-                                    <div>
-                                        <p class="font-medium" id="detailsUserName"></p>
-                                        <p class="text-xs text-gray-500" id="detailsUserEmail"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Provider</p>
-                                <div class="flex items-center mt-1">
-                                    <img id="detailsProviderAvatar" class="w-8 h-8 rounded-full mr-2"
-                                        src="/placeholder.svg" alt="Provider">
-                                    <div>
-                                        <p class="font-medium" id="detailsProviderName"></p>
-                                        <p class="text-xs text-gray-500" id="detailsProviderEmail"></p>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Reviews Table -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                        <div class="flex items-center">
+                                            <span>Task ID</span>
+                                            <i class="fas fa-sort ml-1"></i>
+                                        </div>
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                        <div class="flex items-center">
+                                            <span>User</span>
+                                            <i class="fas fa-sort ml-1"></i>
+                                        </div>
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                        <div class="flex items-center">
+                                            <span>Provider</span>
+                                            <i class="fas fa-sort ml-1"></i>
+                                        </div>
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                        <div class="flex items-center">
+                                            <span>Type</span>
+                                            <i class="fas fa-sort ml-1"></i>
+                                        </div>
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                        <div class="flex items-center">
+                                            <span>Status</span>
+                                            <i class="fas fa-sort ml-1"></i>
+                                        </div>
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                        <div class="flex items-center">
+                                            <span>Start date</span>
+                                            <i class="fas fa-sort ml-1"></i>
+                                        </div>
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                        <div class="flex items-center">
+                                            <span>End date</span>
+                                            <i class="fas fa-sort ml-1"></i>
+                                        </div>
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer">
+                                        <div class="flex items-center">
+                                            <span>Budget</span>
+                                            <i class="fas fa-sort ml-1"></i>
+                                        </div>
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                        Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white" id="reviews-table-body">
+                                @foreach ($tasks as $task)
+                                    <tr class="transition-colors hover:bg-gray-50">
+                                        <!-- Task ID Column -->
+                                        <td class="whitespace-nowrap py-4 px-4">
+                                            <div class="flex items-center">
+                                                <span
+                                                    class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-xs font-medium text-blue-700">
+                                                    {{ $task->id . \Carbon\Carbon::parse($task->created_at)->format('d') }}
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                        <!-- Service User Column -->
+                                        <td class="py-4 px-4">
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                    {{ $task->offer->service->user->name }}</p>
+                                                <p class="text-xs text-gray-500">Service User</p>
+                                            </div>
+                                        </td>
+
+                                        <!-- Provider Column -->
+                                        <td class="py-4 px-4">
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                    {{ $task->offer->provider->user->name }}</p>
+                                                <p class="text-xs text-gray-500">Provider</p>
+                                            </div>
+                                        </td>
+
+                                        <!-- Service Category Column -->
+                                        <td class="py-4 px-4">
+                                            <span
+                                                class="inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-800">
+                                                {{ $task->offer->service->serviceCategory->name }}
+                                            </span>
+                                        </td>
+
+                                        <!-- Status Column -->
+                                        <td class="py-4 px-4">
+                                            @php
+                                                $statusColor = 'gray';
+                                                if ($task->status == 'completed') {
+                                                    $statusColor = 'green';
+                                                } elseif ($task->status == 'in progress') {
+                                                    $statusColor = 'blue';
+                                                } elseif ($task->status == 'pending') {
+                                                    $statusColor = 'yellow';
+                                                } elseif ($task->status == 'cancelled') {
+                                                    $statusColor = 'red';
+                                                }
+                                            @endphp
+                                            <span
+                                                class="inline-flex rounded-full bg-{{ $statusColor }}-100 px-3 py-1 text-xs font-medium text-{{ $statusColor }}-800">
+                                                {{ ucfirst($task->status) }}
+                                            </span>
+                                        </td>
+
+                                        <!-- Start Date Column -->
+                                        <td class="py-4 px-4">
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-medium text-gray-900">
+                                                    {{ \Carbon\Carbon::parse($task->start_date)->format('M d, Y') }}
+                                                </p>
+                                                <p class="text-xs text-gray-500">Start Date</p>
+                                            </div>
+                                        </td>
+
+                                        <!-- End Date Column -->
+                                        <td class="py-4 px-4">
+                                            <div class="flex flex-col">
+                                                @if (\Carbon\Carbon::parse($task->end_date)->isPast())
+                                                    <p class="text-sm font-medium text-red-600">
+                                                        {{ \Carbon\Carbon::parse($task->end_date)->format('M d, Y') }}
+                                                    </p>
+                                                    <p class="text-xs text-red-500">Overdue</p>
+                                                @else
+                                                    <p class="text-sm font-medium text-gray-900">
+                                                        {{ \Carbon\Carbon::parse($task->end_date)->format('M d, Y') }}
+                                                    </p>
+                                                    <p class="text-xs text-gray-500">End Date</p>
+                                                @endif
+                                            </div>
+                                        </td>
+
+                                        <!-- Amount Column -->
+                                        <td class="py-4 px-4">
+                                            <p class="text-right text-sm font-medium text-gray-900">
+                                                ${{ number_format($task->offer->proposed_amount, 2) }}</p>
+                                        </td>
+
+                                        <!-- Actions Column -->
+                                        <td class="whitespace-nowrap py-4 px-4">
+                                            <div class="flex items-center space-x-3">
+                                                <a href="/admin/providermanage"
+                                                    class="rounded-full bg-green-100 p-2 text-green-600 transition-colors hover:bg-green-200">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                        viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </a>
+                                                <form action="/removetask/{{ $task->id }}" method="post">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="rounded-full bg-red-100 p-2 text-red-600 transition-colors hover:bg-red-200">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                            viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd"
+                                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                                clip-rule="evenodd" />
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between mt-6">
+                        <div class="text-sm text-gray-600">
+                            Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span
+                                class="font-medium">24</span> reviews
+                        </div>
+                        <div class="flex space-x-1">
+                            <button class="px-3 py-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="px-3 py-1 rounded-md bg-indigo-600 text-white">1</button>
+                            <button class="px-3 py-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300">2</button>
+                            <button class="px-3 py-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300">3</button>
+                            <button class="px-3 py-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                     </div>
-                </div>
-
-                <div class="mb-6">
-                    <h4 class="font-medium text-gray-700 mb-2">Description</h4>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <p id="detailsDescription" class="text-gray-700"></p>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <h4 class="font-medium text-gray-700 mb-2">Location</h4>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <p id="detailsLocation" class="text-gray-700"></p>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <h4 class="font-medium text-gray-700 mb-2">Timeline</h4>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mr-3">
-                                    <i class="fas fa-plus text-primary"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Task Created</p>
-                                    <p class="text-sm text-gray-500" id="timelineCreated"></p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center mr-3">
-                                    <i class="fas fa-user-check text-secondary"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Provider Assigned</p>
-                                    <p class="text-sm text-gray-500" id="timelineAssigned"></p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center mr-3">
-                                    <i class="fas fa-spinner text-accent"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Work Started</p>
-                                    <p class="text-sm text-gray-500" id="timelineStarted"></p>
-                                </div>
-                            </div>
-                            <div class="flex items-start" id="timelineCompletedContainer">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center mr-3">
-                                    <i class="fas fa-check text-success"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Task Completed</p>
-                                    <p class="text-sm text-gray-500" id="timelineCompleted"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-end space-x-3">
-                    <button id="cancelTaskBtn"
-                        class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel
-                        Task</button>
-                    <button id="resolveDisputeBtn"
-                        class="px-4 py-2 bg-warning text-white rounded-md hover:bg-warning/90">Resolve Dispute</button>
-                    <button
-                        class="close-modal px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Resolve Dispute Modal -->
-    <div id="resolveDisputeModal" class="modal fixed inset-0 z-50 hidden flex items-center justify-center">
-        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
-        <div class="modal-content relative bg-white w-full max-w-md mx-4 rounded-lg shadow-lg">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">Resolve Dispute</h3>
-                    <button class="close-modal text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <form id="resolveDisputeForm">
-                    <input type="hidden" id="disputeTaskId">
-
-                    <div class="mb-4">
-                        <label for="disputeReason" class="block text-sm font-medium text-gray-700 mb-1">Dispute
-                            Reason</label>
-                        <p id="disputeReason" class="bg-gray-50 p-3 rounded-lg text-gray-700"></p>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="disputeResolution"
-                            class="block text-sm font-medium text-gray-700 mb-1">Resolution</label>
-                        <select id="disputeResolution"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="">Select Resolution</option>
-                            <option value="user">Favor User</option>
-                            <option value="provider">Favor Provider</option>
-                            <option value="partial">Partial Refund</option>
-                            <option value="mediation">Require Mediation</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="disputeNotes" class="block text-sm font-medium text-gray-700 mb-1">Resolution
-                            Notes</label>
-                        <textarea id="disputeNotes" rows="4"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                    </div>
-
-                    <div class="flex justify-end space-x-3 mt-6">
-                        <button type="button"
-                            class="close-modal px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                        <button type="submit"
-                            class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">Resolve
-                            Dispute</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Export Options Modal -->
-    <div id="exportModal" class="modal fixed inset-0 z-50 hidden flex items-center justify-center">
-        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
-        <div class="modal-content relative bg-white w-full max-w-md mx-4 rounded-lg shadow-lg">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">Export Task Data</h3>
-                    <button class="close-modal text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-gray-600 mb-4">Select the format you want to export the task data in:</p>
-
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="csvFormat" name="exportFormat" value="csv"
-                                class="h-4 w-4 text-primary focus:ring-primary" checked>
-                            <label for="csvFormat" class="ml-2 text-gray-700">CSV Format</label>
-                        </div>
-
-                        <div class="flex items-center">
-                            <input type="radio" id="excelFormat" name="exportFormat" value="excel"
-                                class="h-4 w-4 text-primary focus:ring-primary">
-                            <label for="excelFormat" class="ml-2 text-gray-700">Excel Format</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-gray-600 mb-2">Select data to include:</p>
-
-                    <div class="space-y-2">
-                        <div class="flex items-center">
-                            <input type="checkbox" id="includeBasicInfo"
-                                class="h-4 w-4 text-primary focus:ring-primary" checked>
-                            <label for="includeBasicInfo" class="ml-2 text-gray-700">Basic Information</label>
-                        </div>
-
-                        <div class="flex items-center">
-                            <input type="checkbox" id="includeUserInfo"
-                                class="h-4 w-4 text-primary focus:ring-primary">
-                            <label for="includeUserInfo" class="ml-2 text-gray-700">User Information</label>
-                        </div>
-
-                        <div class="flex items-center">
-                            <input type="checkbox" id="includeProviderInfo"
-                                class="h-4 w-4 text-primary focus:ring-primary">
-                            <label for="includeProviderInfo" class="ml-2 text-gray-700">Provider Information</label>
-                        </div>
-
-                        <div class="flex items-center">
-                            <input type="checkbox" id="includeTimeline"
-                                class="h-4 w-4 text-primary focus:ring-primary">
-                            <label for="includeTimeline" class="ml-2 text-gray-700">Task Timeline</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-gray-600 mb-2">Date range:</p>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label for="startDate" class="block text-sm text-gray-700 mb-1">Start Date</label>
-                            <input type="date" id="startDate"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-                        <div>
-                            <label for="endDate" class="block text-sm text-gray-700 mb-1">End Date</label>
-                            <input type="date" id="endDate"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-end space-x-3 mt-6">
-                    <button type="button"
-                        class="close-modal px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                    <button id="confirmExport"
-                        class="px-4 py-2 bg-success text-white rounded-md hover:bg-success/90">Export</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modals -->
+    <!-- View Review Modal -->
+    <div id="viewReviewModal" class="modal">
+        <div class="modal-content max-w-2xl">
+            <span class="close" onclick="closeModal('viewReviewModal')">&times;</span>
+            <h2 class="text-xl font-bold mb-4">Review Details</h2>
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <img src="/placeholder.svg?height=48&width=48" alt="User" class="h-12 w-12 rounded-full">
+                        <div class="ml-3">
+                            <p class="text-sm font-medium">Sarah Johnson</p>
+                            <p class="text-xs text-gray-500">sarah.j@example.com</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600">Apr 12, 2023</p>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Provider</h3>
+                    <div class="flex items-center">
+                        <img src="/placeholder.svg?height=40&width=40" alt="Provider" class="h-10 w-10 rounded-full">
+                        <div class="ml-3">
+                            <p class="text-sm font-medium">Mike Plumber</p>
+                            <p class="text-xs text-gray-500">Plumbing Services</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Review Content</h3>
+                    <p class="text-sm text-gray-600 p-3 bg-gray-50 rounded-md">
+                        Great service but used inappropriate language during the job. He fixed my sink perfectly but
+                        kept swearing and making uncomfortable jokes. I appreciate the quality work but the behavior was
+                        unprofessional. Would recommend his skills but hope he can be more professional with customers
+                        in the future.
+                    </p>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Flags</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Inappropriate</span>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Reported
+                            by Provider</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Report Reason</h3>
+                    <p class="text-sm text-gray-600 p-3 bg-gray-50 rounded-md">
+                        This review contains false information. I never used inappropriate language and maintained
+                        professional behavior throughout the service.
+                    </p>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                    onclick="closeModal('viewReviewModal')">Close</button>
+                <button class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+                    onclick="closeModal('viewReviewModal')">Edit Review</button>
+                <button class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                    onclick="closeModal('viewReviewModal')">Remove Review</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Report Modal -->
+    <div id="viewReportModal" class="modal">
+        <div class="modal-content max-w-2xl">
+            <span class="close" onclick="closeModal('viewReportModal')">&times;</span>
+            <h2 class="text-xl font-bold mb-4">Report Details</h2>
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <p class="text-sm font-medium">Report ID: #R-2305</p>
+                        <p class="text-xs text-gray-500">Submitted on Apr 15, 2023</p>
+                    </div>
+                    <div>
+                        <span
+                            class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Pending</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Reporter</h3>
+                    <div class="flex items-center">
+                        <img src="/placeholder.svg?height=40&width=40" alt="User" class="h-10 w-10 rounded-full">
+                        <div class="ml-3">
+                            <p class="text-sm font-medium">Thomas Brown</p>
+                            <p class="text-xs text-gray-500">thomas.b@example.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Report Type</h3>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Message</span>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Reported Content</h3>
+                    <div class="p-3 bg-gray-50 rounded-md">
+                        <p class="text-sm text-gray-600 mb-2">Provider sent inappropriate messages asking for personal
+                            information</p>
+                        <div class="border-l-4 border-gray-300 pl-3">
+                            <p class="text-sm italic text-gray-600">
+                                "Hey, I need your personal address and credit card details to verify your identity
+                                before I come to your house. Also, will you be alone when I arrive? Please send me your
+                                social media profiles so I can check you're a real person."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Reported User/Provider</h3>
+                    <div class="flex items-center">
+                        <img src="/placeholder.svg?height=40&width=40" alt="Provider" class="h-10 w-10 rounded-full">
+                        <div class="ml-3">
+                            <p class="text-sm font-medium">John Handyman</p>
+                            <p class="text-xs text-gray-500">john.h@example.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Reason</h3>
+                    <p class="text-sm text-gray-600">Harassment</p>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Severity</h3>
+                    <span class="px-2 py-1 text-xs rounded-full severity-high">High</span>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Additional Notes</h3>
+                    <p class="text-sm text-gray-600 p-3 bg-gray-50 rounded-md">
+                        This is the second time this provider has asked for personal information. I've already reported
+                        them once before. I feel unsafe using the platform with providers like this.
+                    </p>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                    onclick="closeModal('viewReportModal')">Close</button>
+                <button class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+                    onclick="closeModal('viewReportModal')">Investigate</button>
+                <button class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                    onclick="closeModal('viewReportModal')">Resolve</button>
+                <button class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                    onclick="closeModal('viewReportModal')">Dismiss</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View User Modal -->
+    <div id="viewUserModal" class="modal">
+        <div class="modal-content max-w-2xl">
+            <span class="close" onclick="closeModal('viewUserModal')">&times;</span>
+            <h2 class="text-xl font-bold mb-4">User/Provider Details</h2>
+            <div class="mb-6">
+                <div class="flex items-center mb-4">
+                    <img src="/placeholder.svg?height=64&width=64" alt="User" class="h-16 w-16 rounded-full">
+                    <div class="ml-4">
+                        <p class="text-lg font-medium">Alex Johnson</p>
+                        <div class="flex items-center">
+                            <span
+                                class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2">User</span>
+                            <span
+                                class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Warned</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">Member since Jan 2023</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 mb-1">Contact Information</h3>
+                        <p class="text-sm text-gray-600">Email: alex.j@example.com</p>
+                        <p class="text-sm text-gray-600">Phone: (555) 123-4567</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 mb-1">Location</h3>
+                        <p class="text-sm text-gray-600">City: New York</p>
+                        <p class="text-sm text-gray-600">State: NY</p>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Violations</h3>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <span
+                            class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Harassment</span>
+                        <span
+                            class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Spam</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Total Reports: <span class="font-medium text-red-600">5</span>
+                    </p>
+                    <p class="text-sm text-gray-600">Last Violation: Apr 16, 2023</p>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Violation History</h3>
+                    <div class="overflow-y-auto max-h-40 bg-gray-50 rounded-md p-3">
+                        <div class="mb-3 pb-3 border-b border-gray-200">
+                            <div class="flex justify-between">
+                                <p class="text-sm font-medium">Harassment</p>
+                                <p class="text-xs text-gray-500">Apr 16, 2023</p>
+                            </div>
+                            <p class="text-sm text-gray-600">Sent threatening messages to provider after service
+                                completion.</p>
+                        </div>
+                        <div class="mb-3 pb-3 border-b border-gray-200">
+                            <div class="flex justify-between">
+                                <p class="text-sm font-medium">Spam</p>
+                                <p class="text-xs text-gray-500">Apr 10, 2023</p>
+                            </div>
+                            <p class="text-sm text-gray-600">Posted multiple fake reviews with promotional links.</p>
+                        </div>
+                        <div class="mb-3 pb-3 border-b border-gray-200">
+                            <div class="flex justify-between">
+                                <p class="text-sm font-medium">Harassment</p>
+                                <p class="text-xs text-gray-500">Mar 28, 2023</p>
+                            </div>
+                            <p class="text-sm text-gray-600">Used offensive language towards customer support.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-700 mb-1">Actions Taken</h3>
+                    <div class="overflow-y-auto max-h-40 bg-gray-50 rounded-md p-3">
+                        <div class="mb-3 pb-3 border-b border-gray-200">
+                            <div class="flex justify-between">
+                                <p class="text-sm font-medium">Warning Issued</p>
+                                <p class="text-xs text-gray-500">Apr 16, 2023</p>
+                            </div>
+                            <p class="text-sm text-gray-600">Final warning issued for harassment violation.</p>
+                        </div>
+                        <div class="mb-3 pb-3 border-b border-gray-200">
+                            <div class="flex justify-between">
+                                <p class="text-sm font-medium">Warning Issued</p>
+                                <p class="text-xs text-gray-500">Apr 10, 2023</p>
+                            </div>
+                            <p class="text-sm text-gray-600">Warning issued for spam violation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                    onclick="closeModal('viewUserModal')">Close</button>
+                <button class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+                    onclick="closeModal('viewUserModal')">Send Warning</button>
+                <button class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                    onclick="closeModal('viewUserModal')">Suspend Account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
     <script>
-        // Sample task data
-        const tasks = [{
-                id: 'T1001',
-                title: 'Furniture Assembly',
-                user: {
-                    name: 'John Doe',
-                    email: 'john.doe@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/1.jpg'
-                },
-                provider: {
-                    name: 'Robert Johnson',
-                    email: 'robert.j@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/2.jpg'
-                },
-                type: 'assembly',
-                status: 'completed',
-                date: '2023-03-10',
-                budget: '$120',
-                priority: 'medium',
-                description: 'Assembly of a new IKEA bookshelf and desk for home office.',
-                location: '123 Main St, Apt 4B, New York, NY 10001',
-                timeline: {
-                    created: '2023-03-08 09:15 AM',
-                    assigned: '2023-03-08 10:30 AM',
-                    started: '2023-03-10 09:00 AM',
-                    completed: '2023-03-10 11:45 AM'
-                }
-            },
-            {
-                id: 'T1002',
-                title: 'House Cleaning',
-                user: {
-                    name: 'Jane Smith',
-                    email: 'jane.smith@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/1.jpg'
-                },
-                provider: {
-                    name: 'Emily Davis',
-                    email: 'emily.davis@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/2.jpg'
-                },
-                type: 'cleaning',
-                status: 'completed',
-                date: '2023-03-12',
-                budget: '$85',
-                priority: 'low',
-                description: 'Deep cleaning of 2-bedroom apartment including kitchen and bathrooms.',
-                location: '456 Park Ave, New York, NY 10022',
-                timeline: {
-                    created: '2023-03-09 14:20 PM',
-                    assigned: '2023-03-09 15:45 PM',
-                    started: '2023-03-12 10:00 AM',
-                    completed: '2023-03-12 01:30 PM'
-                }
-            },
-            {
-                id: 'T1003',
-                title: 'Grocery Delivery',
-                user: {
-                    name: 'Michael Brown',
-                    email: 'michael.b@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/3.jpg'
-                },
-                provider: {
-                    name: 'Sarah Wilson',
-                    email: 'sarah.w@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
-                },
-                type: 'delivery',
-                status: 'in-progress',
-                date: '2023-03-15',
-                budget: '$45',
-                priority: 'high',
-                description: 'Purchase and delivery of weekly groceries from Whole Foods.',
-                location: '789 Broadway, New York, NY 10003',
-                timeline: {
-                    created: '2023-03-14 16:10 PM',
-                    assigned: '2023-03-14 16:45 PM',
-                    started: '2023-03-15 09:30 AM',
-                    completed: null
-                }
-            },
-            {
-                id: 'T1004',
-                title: 'Dog Walking',
-                user: {
-                    name: 'Jennifer Taylor',
-                    email: 'jennifer.t@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/4.jpg'
-                },
-                provider: {
-                    name: 'David Miller',
-                    email: 'david.m@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/4.jpg'
-                },
-                type: 'other',
-                status: 'completed',
-                date: '2023-03-11',
-                budget: '$30',
-                priority: 'medium',
-                description: 'Walk golden retriever for 30 minutes in Central Park.',
-                location: 'Central Park, New York, NY',
-                timeline: {
-                    created: '2023-03-10 18:05 PM',
-                    assigned: '2023-03-10 19:20 PM',
-                    started: '2023-03-11 16:00 PM',
-                    completed: '2023-03-11 16:45 PM'
-                }
-            },
-            {
-                id: 'T1005',
-                title: 'Moving Assistance',
-                user: {
-                    name: 'Thomas Anderson',
-                    email: 'thomas.a@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/5.jpg'
-                },
-                provider: {
-                    name: 'Lisa Moore',
-                    email: 'lisa.m@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/5.jpg'
-                },
-                type: 'moving',
-                status: 'pending',
-                date: '2023-03-18',
-                budget: '$200',
-                priority: 'high',
-                description: 'Help moving furniture and boxes from studio apartment to new 1-bedroom.',
-                location: 'From: 101 E 10th St, To: 202 W 20th St, New York, NY',
-                timeline: {
-                    created: '2023-03-12 11:30 AM',
-                    assigned: '2023-03-12 13:15 PM',
-                    started: null,
-                    completed: null
-                }
-            },
-            {
-                id: 'T1006',
-                title: 'TV Mounting',
-                user: {
-                    name: 'Daniel White',
-                    email: 'daniel.w@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/6.jpg'
-                },
-                provider: {
-                    name: 'Jessica Brown',
-                    email: 'jessica.b@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/6.jpg'
-                },
-                type: 'assembly',
-                status: 'dispute',
-                date: '2023-03-14',
-                budget: '$95',
-                priority: 'medium',
-                description: 'Mount 55" TV on living room wall with concealed wiring.',
-                location: '303 E 33rd St, Apt 5C, New York, NY 10016',
-                timeline: {
-                    created: '2023-03-13 09:45 AM',
-                    assigned: '2023-03-13 10:30 AM',
-                    started: '2023-03-14 14:00 PM',
-                    completed: null
-                },
-                dispute: {
-                    reason: 'Provider damaged wall during installation and refused to repair it. TV is mounted but there is a large crack in the drywall that needs professional repair.'
-                }
-            },
-            {
-                id: 'T1007',
-                title: 'Lawn Mowing',
-                user: {
-                    name: 'Matthew Johnson',
-                    email: 'matthew.j@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/7.jpg'
-                },
-                provider: {
-                    name: 'Amanda Clark',
-                    email: 'amanda.c@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/7.jpg'
-                },
-                type: 'other',
-                status: 'cancelled',
-                date: '2023-03-13',
-                budget: '$50',
-                priority: 'low',
-                description: 'Mow front and back lawn, edge walkways, and trim hedges.',
-                location: '404 Oak St, Queens, NY 11101',
-                timeline: {
-                    created: '2023-03-11 15:20 PM',
-                    assigned: '2023-03-11 16:05 PM',
-                    started: null,
-                    completed: null
-                }
-            },
-            {
-                id: 'T1008',
-                title: 'Plumbing Repair',
-                user: {
-                    name: 'Christopher Lee',
-                    email: 'chris.l@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/8.jpg'
-                },
-                provider: {
-                    name: 'Stephanie Hall',
-                    email: 'steph.h@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/8.jpg'
-                },
-                type: 'other',
-                status: 'in-progress',
-                date: '2023-03-15',
-                budget: '$150',
-                priority: 'high',
-                description: 'Fix leaking kitchen sink and replace bathroom faucet.',
-                location: '505 W 47th St, Apt 2D, New York, NY 10036',
-                timeline: {
-                    created: '2023-03-14 10:10 AM',
-                    assigned: '2023-03-14 11:25 AM',
-                    started: '2023-03-15 08:30 AM',
-                    completed: null
-                }
-            },
-            {
-                id: 'T1009',
-                title: 'Painting Room',
-                user: {
-                    name: 'Nicole Adams',
-                    email: 'nicole.a@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/9.jpg'
-                },
-                provider: {
-                    name: 'Kevin Martin',
-                    email: 'kevin.m@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/9.jpg'
-                },
-                type: 'other',
-                status: 'pending',
-                date: '2023-03-20',
-                budget: '$180',
-                priority: 'medium',
-                description: 'Paint bedroom walls and ceiling, color: Soft Blue (paint provided).',
-                location: '606 E 9th St, Apt 3A, New York, NY 10009',
-                timeline: {
-                    created: '2023-03-15 13:40 PM',
-                    assigned: '2023-03-15 14:55 PM',
-                    started: null,
-                    completed: null
-                }
-            },
-            {
-                id: 'T1010',
-                title: 'Computer Setup',
-                user: {
-                    name: 'Rachel Green',
-                    email: 'rachel.g@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/women/10.jpg'
-                },
-                provider: {
-                    name: 'Andrew Wilson',
-                    email: 'andrew.w@example.com',
-                    avatar: 'https://randomuser.me/api/portraits/men/10.jpg'
-                },
-                type: 'other',
-                status: 'completed',
-                date: '2023-03-09',
-                budget: '$75',
-                priority: 'low',
-                description: 'Set up new desktop computer, connect to network, and install basic software.',
-                location: '707 3rd Ave, New York, NY 10017',
-                timeline: {
-                    created: '2023-03-08 16:30 PM',
-                    assigned: '2023-03-08 17:15 PM',
-                    started: '2023-03-09 13:00 PM',
-                    completed: '2023-03-09 14:45 PM'
-                }
+        // Toggle sidebar on mobile
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+
+            sidebar.classList.toggle('collapsed');
+            sidebar.classList.toggle('mobile-open');
+
+            if (window.innerWidth >= 768) {
+                content.classList.toggle('full-width');
             }
-        ];
-
-        // Pagination variables
-        let currentPage = 1;
-        const itemsPerPage = 10;
-        let filteredTasks = [...tasks];
-
-        // DOM elements
-        const taskTableBody = document.getElementById('taskTableBody');
-        const paginationNumbers = document.getElementById('paginationNumbers');
-        const prevPageBtn = document.getElementById('prevPage');
-        const nextPageBtn = document.getElementById('nextPage');
-        const startRangeEl = document.getElementById('startRange');
-        const endRangeEl = document.getElementById('endRange');
-        const totalTasksEl = document.getElementById('totalTasks');
-        const searchInput = document.getElementById('searchInput');
-        const statusFilter = document.getElementById('statusFilter');
-        const typeFilter = document.getElementById('typeFilter');
-        const dateFilter = document.getElementById('dateFilter');
-        const taskDetailsModal = document.getElementById('taskDetailsModal');
-        const resolveDisputeModal = document.getElementById('resolveDisputeModal');
-        const exportModal = document.getElementById('exportModal');
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', () => {
-            renderTasks();
-            setupEventListeners();
         });
 
-        // Render tasks table
-        function renderTasks() {
-            // Apply filters
-            applyFilters();
-
-            // Calculate pagination
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, filteredTasks.length);
-            const paginatedTasks = filteredTasks.slice(startIndex, endIndex);
-
-            // Update pagination info
-            startRangeEl.textContent = filteredTasks.length > 0 ? startIndex + 1 : 0;
-            endRangeEl.textContent = endIndex;
-            totalTasksEl.textContent = filteredTasks.length;
-
-            // Clear table
-            taskTableBody.innerHTML = '';
-
-            // Render task rows
-            paginatedTasks.forEach(task => {
-                const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50';
-
-                // Status badge class
-                let statusClass = '';
-                switch (task.status) {
-                    case 'pending':
-                        statusClass = 'status-pending';
-                        break;
-                    case 'in-progress':
-                        statusClass = 'status-in-progress';
-                        break;
-                    case 'completed':
-                        statusClass = 'status-completed';
-                        break;
-                    case 'cancelled':
-                        statusClass = 'status-cancelled';
-                        break;
-                    case 'dispute':
-                        statusClass = 'status-dispute';
-                        break;
-                }
-
-                // Type badge class
-                let typeClass = '';
-                switch (task.type) {
-                    case 'cleaning':
-                        typeClass = 'task-type-cleaning';
-                        break;
-                    case 'delivery':
-                        typeClass = 'task-type-delivery';
-                        break;
-                    case 'assembly':
-                        typeClass = 'task-type-assembly';
-                        break;
-                    case 'moving':
-                        typeClass = 'task-type-moving';
-                        break;
-                    case 'other':
-                        typeClass = 'task-type-other';
-                        break;
-                }
-
-                row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">${task.id}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="h-8 w-8 flex-shrink-0">
-                                <img class="h-8 w-8 rounded-full" src="${task.user.avatar}" alt="${task.user.name}">
-                            </div>
-                            <div class="ml-3">
-                                <div class="text-sm font-medium text-gray-900">${task.user.name}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="h-8 w-8 flex-shrink-0">
-                                <img class="h-8 w-8 rounded-full" src="${task.provider.avatar}" alt="${task.provider.name}">
-                            </div>
-                            <div class="ml-3">
-                                <div class="text-sm font-medium text-gray-900">${task.provider.name}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="badge ${typeClass} capitalize">${task.type}</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="badge ${statusClass} capitalize">${task.status}</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">${formatDate(task.date)}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">${task.budget}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div class="flex space-x-2 justify-end">
-                            <button class="view-task text-primary hover:text-primary/80" data-id="${task.id}">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            ${task.status === 'dispute' ?
-                                `<button class="resolve-dispute text-warning hover:text-warning/80" data-id="${task.id}">
-                                        <i class="fas fa-gavel"></i>
-                                    </button>` : ''
-                            }
-                            ${task.status !== 'completed' && task.status !== 'cancelled' ?
-                                `<button class="cancel-task text-danger hover:text-danger/80" data-id="${task.id}">
-                                        <i class="fas fa-ban"></i>
-                                    </button>` : ''
-                            }
-                        </div>
-                    </td>
-                `;
-
-                taskTableBody.appendChild(row);
-            });
-
-            // Render pagination
-            renderPagination();
-        }
-
-        // Apply filters to tasks
-        function applyFilters() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const statusValue = statusFilter.value;
-            const typeValue = typeFilter.value;
-            const dateValue = dateFilter.value;
-
-            filteredTasks = tasks.filter(task => {
-                const matchesSearch = searchTerm === '' ||
-                    task.title.toLowerCase().includes(searchTerm) ||
-                    task.id.toLowerCase().includes(searchTerm) ||
-                    task.user.name.toLowerCase().includes(searchTerm) ||
-                    task.provider.name.toLowerCase().includes(searchTerm);
-
-                const matchesStatus = statusValue === '' || task.status === statusValue;
-                const matchesType = typeValue === '' || task.type === typeValue;
-                const matchesDate = dateValue === '' || task.date === dateValue;
-
-                return matchesSearch && matchesStatus && matchesType && matchesDate;
-            });
-
-            // Reset to first page when filters change
-            currentPage = 1;
-        }
-
-        // Render pagination controls
-        function renderPagination() {
-            const totalPages = Math.ceil(filteredTasks.length / itemsPerPage);
-
-            // Clear pagination
-            paginationNumbers.innerHTML = '';
-
-            // Determine range of pages to show
-            let startPage = Math.max(1, currentPage - 2);
-            let endPage = Math.min(totalPages, startPage + 4);
-
-            // Adjust start if we're near the end
-            if (endPage - startPage < 4) {
-                startPage = Math.max(1, endPage - 4);
-            }
-
-            // Add first page if not included
-            if (startPage > 1) {
-                addPageButton(1);
-                if (startPage > 2) {
-                    addEllipsis();
-                }
-            }
-
-            // Add page numbers
-            for (let i = startPage; i <= endPage; i++) {
-                addPageButton(i);
-            }
-
-            // Add last page if not included
-            if (endPage < totalPages) {
-                if (endPage < totalPages - 1) {
-                    addEllipsis();
-                }
-                addPageButton(totalPages);
-            }
-
-            // Update prev/next buttons
-            prevPageBtn.disabled = currentPage === 1;
-            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
-
-            if (prevPageBtn.disabled) {
-                prevPageBtn.classList.add('disabled');
-            } else {
-                prevPageBtn.classList.remove('disabled');
-            }
-
-            if (nextPageBtn.disabled) {
-                nextPageBtn.classList.add('disabled');
-            } else {
-                nextPageBtn.classList.remove('disabled');
-            }
-        }
-
-        // Add a page button to pagination
-        function addPageButton(pageNum) {
-            const button = document.createElement('button');
-            button.className =
-                `pagination-btn px-3 py-1 rounded-md border ${currentPage === pageNum ? 'bg-primary text-white' : 'border-gray-300 text-gray-700'}`;
-            button.textContent = pageNum;
-            button.addEventListener('click', () => {
-                currentPage = pageNum;
-                renderTasks();
-            });
-            paginationNumbers.appendChild(button);
-        }
-
-        // Add ellipsis to pagination
-        function addEllipsis() {
-            const span = document.createElement('span');
-            span.className = 'px-3 py-1';
-            span.textContent = '...';
-            paginationNumbers.appendChild(span);
-        }
-
-        // Format date
-        function formatDate(dateString) {
-            const options = {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            };
-            return new Date(dateString).toLocaleDateString(undefined, options);
-        }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Sidebar toggle
-            const sidebarToggle = document.getElementById('sidebar-toggle');
+        // Check screen size on load and resize
+        function checkScreenSize() {
             const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
+            const content = document.getElementById('content');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
 
-            sidebarToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('collapsed');
-                if (sidebar.classList.contains('collapsed')) {
-                    mainContent.style.marginLeft = '0';
-                    sidebarToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                } else {
-                    mainContent.style.marginLeft = '16rem';
-                    sidebarToggle.innerHTML = '<i class="fas fa-times"></i>';
-                }
-            });
-
-            // Initialize sidebar as open for desktop and closed for mobile
-            function checkScreenSize() {
-                if (window.innerWidth < 1024) {
-                    sidebar.classList.add('collapsed');
-                    mainContent.style.marginLeft = '0';
-                    sidebarToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                } else {
-                    sidebar.classList.remove('collapsed');
-                    mainContent.style.marginLeft = '16rem';
-                    sidebarToggle.innerHTML = '<i class="fas fa-times"></i>';
-                }
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('collapsed');
+                content.classList.add('full-width');
+                sidebarToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            } else {
+                sidebar.classList.remove('collapsed');
+                sidebar.classList.remove('mobile-open');
+                content.classList.remove('full-width');
+                sidebarToggle.innerHTML = '<i class="fas fa-bars"></i>';
             }
+        }
 
-            // Check on load and resize
-            checkScreenSize();
-            window.addEventListener('resize', checkScreenSize);
+        // Check on load and resize
+        window.addEventListener('load', checkScreenSize);
+        window.addEventListener('resize', checkScreenSize);
 
-            // Pagination controls
-            prevPageBtn.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    renderTasks();
-                }
-            });
-
-            nextPageBtn.addEventListener('click', () => {
-                const totalPages = Math.ceil(filteredTasks.length / itemsPerPage);
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    renderTasks();
-                }
-            });
-
-            // Search and filters
-            searchInput.addEventListener('input', renderTasks);
-            statusFilter.addEventListener('change', renderTasks);
-            typeFilter.addEventListener('change', renderTasks);
-            dateFilter.addEventListener('change', renderTasks);
-
-            // View task buttons
-            document.addEventListener('click', (e) => {
-                if (e.target.closest('.view-task')) {
-                    const taskId = e.target.closest('.view-task').dataset.id;
-                    openTaskDetailsModal(taskId);
-                }
-            });
-
-            // Resolve dispute buttons
-            document.addEventListener('click', (e) => {
-                if (e.target.closest('.resolve-dispute')) {
-                    const taskId = e.target.closest('.resolve-dispute').dataset.id;
-                    openResolveDisputeModal(taskId);
-                }
-            });
-
-            // Cancel task buttons
-            document.addEventListener('click', (e) => {
-                if (e.target.closest('.cancel-task')) {
-                    const taskId = e.target.closest('.cancel-task').dataset.id;
-                    cancelTask(taskId);
-                }
-            });
-
-            // Modal close buttons
-            document.querySelectorAll('.close-modal').forEach(button => {
-                button.addEventListener('click', () => {
-                    taskDetailsModal.classList.add('hidden');
-                    resolveDisputeModal.classList.add('hidden');
-                    exportModal.classList.add('hidden');
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all tabs and buttons
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
                 });
-            });
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
 
-            // Resolve dispute form submission
-            document.getElementById('resolveDisputeForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                resolveDispute();
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                button.classList.add('active');
             });
+        });
 
-            // Export button
-            document.getElementById('exportBtn').addEventListener('click', () => {
-                exportModal.classList.remove('hidden');
-            });
-
-            // Confirm export
-            document.getElementById('confirmExport').addEventListener('click', () => {
-                exportTaskData();
-                exportModal.classList.add('hidden');
-            });
-
-            // Cancel task button in task details
-            document.getElementById('cancelTaskBtn').addEventListener('click', () => {
-                const taskId = document.getElementById('detailsTaskId').textContent;
-                cancelTask(taskId);
-                taskDetailsModal.classList.add('hidden');
-            });
-
-            // Resolve dispute button in task details
-            document.getElementById('resolveDisputeBtn').addEventListener('click', () => {
-                const taskId = document.getElementById('detailsTaskId').textContent;
-                openResolveDisputeModal(taskId);
-                taskDetailsModal.classList.add('hidden');
-            });
-
-            // Dropdowns
-            const userBtn = document.getElementById('user-btn');
-            const userDropdown = document.getElementById('user-dropdown');
-            const notificationsBtn = document.getElementById('notifications-btn');
-            const notificationsDropdown = document.getElementById('notifications-dropdown');
-
-            userBtn.addEventListener('click', function() {
-                userDropdown.classList.toggle('show');
-                notificationsDropdown.classList.remove('show');
-            });
-
-            notificationsBtn.addEventListener('click', function() {
-                notificationsDropdown.classList.toggle('show');
-                userDropdown.classList.remove('show');
-            });
-
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!userBtn.contains(event.target) && !userDropdown.contains(event.target)) {
-                    userDropdown.classList.remove('show');
-                }
-                if (!notificationsBtn.contains(event.target) && !notificationsDropdown.contains(event.target)) {
-                    notificationsDropdown.classList.remove('show');
-                }
-            });
-
-            // Scroll progress bar
-            const scrollProgress = document.getElementById('scroll-progress');
-            window.addEventListener('scroll', function() {
-                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrollPercentage = (scrollTop / scrollHeight) * 100;
-                scrollProgress.style.width = scrollPercentage + '%';
-            });
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
         }
 
-        // Open task details modal
-        function openTaskDetailsModal(taskId) {
-            const task = tasks.find(t => t.id === taskId);
-            if (task) {
-                // Populate basic info
-                document.getElementById('detailsTaskId').textContent = task.id;
-                document.getElementById('detailsTitle').textContent = task.title;
-                document.getElementById('detailsType').textContent = task.type;
-                document.getElementById('detailsStatus').textContent = task.status;
-                document.getElementById('detailsDate').textContent = formatDate(task.date);
-                document.getElementById('detailsBudget').textContent = task.budget;
-                document.getElementById('detailsPriority').textContent = task.priority;
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
 
-                // Populate user info
-                document.getElementById('detailsUserAvatar').src = task.user.avatar;
-                document.getElementById('detailsUserName').textContent = task.user.name;
-                document.getElementById('detailsUserEmail').textContent = task.user.email;
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                }
+            }
+        }
 
-                // Populate provider info
-                document.getElementById('detailsProviderAvatar').src = task.provider.avatar;
-                document.getElementById('detailsProviderName').textContent = task.provider.name;
-                document.getElementById('detailsProviderEmail').textContent = task.provider.email;
+        // Search functionality
+        document.getElementById('review-search').addEventListener('input', function() {
+            filterTable('reviews-table-body', this.value);
+        });
 
-                // Populate description and location
-                document.getElementById('detailsDescription').textContent = task.description;
-                document.getElementById('detailsLocation').textContent = task.location;
+        document.getElementById('report-search').addEventListener('input', function() {
+            filterTable('reports-table-body', this.value);
+        });
 
-                // Populate timeline
-                document.getElementById('timelineCreated').textContent = task.timeline.created;
-                document.getElementById('timelineAssigned').textContent = task.timeline.assigned;
-                document.getElementById('timelineStarted').textContent = task.timeline.started || 'Not started yet';
+        document.getElementById('flagged-search').addEventListener('input', function() {
+            filterTable('flagged-table-body', this.value);
+        });
 
-                // Show/hide completed step
-                const timelineCompletedContainer = document.getElementById('timelineCompletedContainer');
-                if (task.timeline.completed) {
-                    timelineCompletedContainer.classList.remove('hidden');
-                    document.getElementById('timelineCompleted').textContent = task.timeline.completed;
+        function filterTable(tableId, query) {
+            const table = document.getElementById(tableId);
+            const rows = table.getElementsByTagName('tr');
+            query = query.toLowerCase();
+
+            for (let i = 0; i < rows.length; i++) {
+                const rowText = rows[i].textContent.toLowerCase();
+                if (rowText.includes(query)) {
+                    rows[i].style.display = '';
                 } else {
-                    timelineCompletedContainer.classList.add('hidden');
+                    rows[i].style.display = 'none';
                 }
-
-                // Show/hide action buttons based on status
-                const cancelTaskBtn = document.getElementById('cancelTaskBtn');
-                const resolveDisputeBtn = document.getElementById('resolveDisputeBtn');
-
-                if (task.status === 'completed' || task.status === 'cancelled') {
-                    cancelTaskBtn.classList.add('hidden');
-                } else {
-                    cancelTaskBtn.classList.remove('hidden');
-                }
-
-                if (task.status === 'dispute') {
-                    resolveDisputeBtn.classList.remove('hidden');
-                } else {
-                    resolveDisputeBtn.classList.add('hidden');
-                }
-
-                // Show the modal
-                taskDetailsModal.classList.remove('hidden');
             }
         }
 
-        // Open resolve dispute modal
-        function openResolveDisputeModal(taskId) {
-            const task = tasks.find(t => t.id === taskId);
-            if (task && task.dispute) {
-                document.getElementById('disputeTaskId').value = task.id;
-                document.getElementById('disputeReason').textContent = task.dispute.reason;
-
-                // Show the modal
-                resolveDisputeModal.classList.remove('hidden');
-            }
-        }
-
-        // Resolve dispute
-        function resolveDispute() {
-            const taskId = document.getElementById('disputeTaskId').value;
-            const resolution = document.getElementById('disputeResolution').value;
-            const notes = document.getElementById('disputeNotes').value;
-
-            if (!resolution) {
-                alert('Please select a resolution');
-                return;
+        // Reset filters
+        function resetFilters(tabType) {
+            if (tabType === 'review') {
+                document.getElementById('review-search').value = '';
+                filterTable('reviews-table-body', '');
+            } else if (tabType === 'report') {
+                document.getElementById('report-search').value = '';
+                filterTable('reports-table-body', '');
+            } else if (tabType === 'flagged') {
+                document.getElementById('flagged-search').value = '';
+                filterTable('flagged-table-body', '');
             }
 
-            // In a real application, this would update the database
-            // For this demo, we'll just update the local data and show an alert
-            const taskIndex = tasks.findIndex(t => t.id === taskId);
-            if (taskIndex !== -1) {
-                tasks[taskIndex].status = 'completed';
-                tasks[taskIndex].dispute.resolution = resolution;
-                tasks[taskIndex].dispute.notes = notes;
-                tasks[taskIndex].dispute.resolvedAt = new Date().toLocaleString();
+            // Reset all select elements in the active tab
+            const activeTab = document.querySelector('.tab-content.active');
+            const selects = activeTab.querySelectorAll('select');
+            selects.forEach(select => {
+                select.selectedIndex = 0;
+            });
+        }
 
-                resolveDisputeModal.classList.add('hidden');
-                renderTasks();
+        // Export report functionality
+        function exportReport() {
+            const activeTab = document.querySelector('.tab-content.active');
+            const tabId = activeTab.id;
+            let reportType = '';
 
-                alert(`Dispute for task ${taskId} has been resolved with resolution: ${resolution}`);
+            if (tabId === 'reviews-tab') {
+                reportType = 'Reviews';
+            } else if (tabId === 'reports-tab') {
+                reportType = 'Reports';
+            } else if (tabId === 'flagged-tab') {
+                reportType = 'Flagged Users/Providers';
             }
+
+            const date = new Date().toISOString().slice(0, 10);
+            const filename = `${reportType}_Report_${date}.csv`;
+
+            // In a real application, this would generate a CSV file with the data
+            alert(`Exporting ${reportType} report as ${filename}`);
+
+            // Simulate download
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent('Sample CSV data for ' +
+                reportType));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
         }
 
-        // Cancel task
-        function cancelTask(taskId) {
-            // In a real application, this would update the database
-            // For this demo, we'll just update the local data and show an alert
-            const taskIndex = tasks.findIndex(t => t.id === taskId);
-            if (taskIndex !== -1) {
-                tasks[taskIndex].status = 'cancelled';
-                renderTasks();
-
-                alert(`Task ${taskId} has been cancelled`);
-            }
-        }
-
-        // Export task data
-        function exportTaskData() {
-            const format = document.querySelector('input[name="exportFormat"]:checked').value;
-            const includeBasic = document.getElementById('includeBasicInfo').checked;
-            const includeUser = document.getElementById('includeUserInfo').checked;
-            const includeProvider = document.getElementById('includeProviderInfo').checked;
-            const includeTimeline = document.getElementById('includeTimeline').checked;
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-
-            // In a real application, this would generate and download the file
-            // For this demo, we'll just show an alert
-            alert(
-                `Exporting task data in ${format.toUpperCase()} format\nIncluding: ${includeBasic ? 'Basic Info, ' : ''}${includeUser ? 'User Info, ' : ''}${includeProvider ? 'Provider Info, ' : ''}${includeTimeline ? 'Timeline' : ''}\nDate range: ${startDate || 'All'} to ${endDate || 'All'}`);
-        }
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scroll-progress').style.width = scrollPercentage + '%';
+        });
     </script>
 </body>
 
