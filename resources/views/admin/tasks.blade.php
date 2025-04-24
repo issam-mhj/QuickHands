@@ -372,7 +372,7 @@
                 <div class="flex items-center space-x-3 mb-4">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="user-avatar">
                     <div>
-                        <h4 class="font-medium">John Doe</h4>
+                        <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">Super Admin</p>
                     </div>
                 </div>
@@ -522,7 +522,7 @@
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
                                 <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
                                     class="w-8 h-8 rounded-full">
-                                <span class="hidden md:block">John Doe</span>
+                                <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                             <div id="user-dropdown" class="dropdown">
@@ -551,19 +551,10 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="text-lg font-medium text-gray-500">Total Tasks</h3>
-                            <p class="text-3xl font-bold mt-1">1,248</p>
+                            <p class="text-3xl font-bold mt-1">{{ $taskNum }}</p>
                         </div>
                         <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
                             <i class="fas fa-tasks text-accent"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This month</span>
-                            <span class="text-success">+12.5%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-accent" style="width: 75%"></div>
                         </div>
                     </div>
                 </div>
@@ -572,19 +563,10 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="text-lg font-medium text-gray-500">Active Tasks</h3>
-                            <p class="text-3xl font-bold mt-1">342</p>
+                            <p class="text-3xl font-bold mt-1">{{ $activeTaskNum }}</p>
                         </div>
                         <div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center">
                             <i class="fas fa-spinner text-secondary"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This week</span>
-                            <span class="text-success">+8.2%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-secondary" style="width: 65%"></div>
                         </div>
                     </div>
                 </div>
@@ -592,20 +574,11 @@
                 <div class="stat-card">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-lg font-medium text-gray-500">Disputes</h3>
-                            <p class="text-3xl font-bold mt-1">28</p>
+                            <h3 class="text-lg font-medium text-gray-500">Not started Tasks</h3>
+                            <p class="text-3xl font-bold mt-1">{{ $notStartedTasks }}</p>
                         </div>
                         <div class="w-10 h-10 rounded-full bg-warning/20 flex items-center justify-center">
                             <i class="fas fa-exclamation-triangle text-warning"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This month</span>
-                            <span class="text-danger">+3.7%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-warning" style="width: 28%"></div>
                         </div>
                     </div>
                 </div>
@@ -614,19 +587,10 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="text-lg font-medium text-gray-500">Completion Rate</h3>
-                            <p class="text-3xl font-bold mt-1">94.2%</p>
+                            <p class="text-3xl font-bold mt-1">{{ $rateCompleted }}%</p>
                         </div>
                         <div class="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center">
                             <i class="fas fa-check-circle text-success"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This month</span>
-                            <span class="text-success">+1.2%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-success" style="width: 94%"></div>
                         </div>
                     </div>
                 </div>
@@ -1474,13 +1438,13 @@
                             </button>
                             ${task.status === 'dispute' ?
                                 `<button class="resolve-dispute text-warning hover:text-warning/80" data-id="${task.id}">
-                                        <i class="fas fa-gavel"></i>
-                                    </button>` : ''
+                                                                                                <i class="fas fa-gavel"></i>
+                                                                                            </button>` : ''
                             }
                             ${task.status !== 'completed' && task.status !== 'cancelled' ?
                                 `<button class="cancel-task text-danger hover:text-danger/80" data-id="${task.id}">
-                                        <i class="fas fa-ban"></i>
-                                    </button>` : ''
+                                                                                                <i class="fas fa-ban"></i>
+                                                                                            </button>` : ''
                             }
                         </div>
                     </td>
@@ -1887,7 +1851,8 @@
             // In a real application, this would generate and download the file
             // For this demo, we'll just show an alert
             alert(
-                `Exporting task data in ${format.toUpperCase()} format\nIncluding: ${includeBasic ? 'Basic Info, ' : ''}${includeUser ? 'User Info, ' : ''}${includeProvider ? 'Provider Info, ' : ''}${includeTimeline ? 'Timeline' : ''}\nDate range: ${startDate || 'All'} to ${endDate || 'All'}`);
+                `Exporting task data in ${format.toUpperCase()} format\nIncluding: ${includeBasic ? 'Basic Info, ' : ''}${includeUser ? 'User Info, ' : ''}${includeProvider ? 'Provider Info, ' : ''}${includeTimeline ? 'Timeline' : ''}\nDate range: ${startDate || 'All'} to ${endDate || 'All'}`
+            );
         }
     </script>
 </body>
