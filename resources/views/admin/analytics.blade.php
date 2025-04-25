@@ -688,7 +688,7 @@
                 <!-- User Demographics -->
                 <div class="mt-6">
                     <h3 class="text-lg font-medium mb-4">User Demographics</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Age Distribution -->
                         <div class="chart-container shadow-md rounded-xl">
                             <h4 class="text-base font-medium mb-3">Age Distribution</h4>
@@ -705,23 +705,7 @@
                             </div>
                         </div>
 
-                        <!-- Location Distribution -->
-                        <div class="chart-container shadow-md rounded-xl">
-                            <h4 class="text-base font-medium mb-3">Top Locations</h4>
-                            <div class="h-64">
-                                <canvas id="locationDistributionChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- User Retention -->
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium mb-4">User Retention</h3>
-                    <div class="chart-container shadow-md rounded-xl">
-                        <div class="h-64">
-                            <canvas id="userRetentionChart"></canvas>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -730,15 +714,7 @@
             <div class="dashboard-card mb-6">
                 <h2 class="text-xl font-semibold mb-4">Provider Analytics</h2>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Provider Performance Chart -->
-                    <div class="chart-container shadow-md rounded-xl">
-                        <h3 class="text-lg font-medium mb-4">Provider Performance</h3>
-                        <div class="h-80">
-                            <canvas id="providerPerformanceChart"></canvas>
-                        </div>
-                    </div>
-
+                <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
                     <!-- Provider Earnings Chart -->
                     <div class="chart-container shadow-md rounded-xl">
                         <h3 class="text-lg font-medium mb-4">Provider Earnings</h3>
@@ -1225,7 +1201,10 @@
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
                     datasets: [{
                         label: 'New Users',
-                        data: [{{ $janUsersCount }}, {{ $febUsersCount }}, {{ $marUsersCount }}, {{ $aprUsersCount }}, {{ $maiUsersCount }}, {{ $junUsersCount }}, {{ $julUsersCount }}],
+                        data: [{{ $janUsersCount }}, {{ $febUsersCount }}, {{ $marUsersCount }},
+                            {{ $aprUsersCount }}, {{ $maiUsersCount }}, {{ $junUsersCount }},
+                            {{ $julUsersCount }}
+                        ],
                         borderColor: '#FF6B6B',
                         backgroundColor: 'rgba(255, 107, 107, 0.1)',
                         borderWidth: 2,
@@ -1262,28 +1241,23 @@
                 }
             });
 
-            // User Activity Chart
             const userActivityCtx = document.getElementById('userActivityChart').getContext('2d');
             const userActivityChart = new Chart(userActivityCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Tasks Posted', 'Reviews Given', 'Messages Sent', 'Logins', 'Profile Updates'],
+                    labels: ['Tasks Posted', 'Reviews Given', 'Messages Sent'],
                     datasets: [{
                         label: 'Activity Count',
-                        data: [4200, 3150, 8500, 12000, 1800],
+                        data: [{{ $serviceNum }}, {{ $reviewsNum }}, {{ $messageNum }}],
                         backgroundColor: [
                             'rgba(255, 107, 107, 0.7)',
                             'rgba(78, 205, 196, 0.7)',
-                            'rgba(255, 230, 109, 0.7)',
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(52, 152, 219, 0.7)'
+                            'rgba(255, 230, 109, 0.7)'
                         ],
                         borderColor: [
                             'rgba(255, 107, 107, 1)',
                             'rgba(78, 205, 196, 1)',
-                            'rgba(255, 230, 109, 1)',
-                            'rgba(46, 204, 113, 1)',
-                            'rgba(52, 152, 219, 1)'
+                            'rgba(255, 230, 109, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -1311,7 +1285,9 @@
                 data: {
                     labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
                     datasets: [{
-                        data: [15, 35, 25, 18, 7],
+                        data: [{{ $firstAge }}, {{ $secondAge }}, {{ $thirdAge }},
+                            {{ $fourthAge }}, {{ $fifthAge }}
+                        ],
                         backgroundColor: [
                             'rgba(255, 107, 107, 0.7)',
                             'rgba(78, 205, 196, 0.7)',
@@ -1345,18 +1321,16 @@
             const genderDistributionChart = new Chart(genderDistributionCtx, {
                 type: 'pie',
                 data: {
-                    labels: ['Male', 'Female', 'Other'],
+                    labels: ['Male', 'Female'],
                     datasets: [{
-                        data: [48, 46, 6],
+                        data: [{{ $male }}, {{ $female }}],
                         backgroundColor: [
                             'rgba(52, 152, 219, 0.7)',
                             'rgba(255, 107, 107, 0.7)',
-                            'rgba(78, 205, 196, 0.7)'
                         ],
                         borderColor: [
                             'rgba(52, 152, 219, 1)',
                             'rgba(255, 107, 107, 1)',
-                            'rgba(78, 205, 196, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -1371,133 +1345,6 @@
                     }
                 }
             });
-
-            // Location Distribution Chart
-            const locationDistributionCtx = document.getElementById('locationDistributionChart').getContext('2d');
-            const locationDistributionChart = new Chart(locationDistributionCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
-                    datasets: [{
-                        label: 'Users',
-                        data: [1250, 980, 720, 650, 580],
-                        backgroundColor: 'rgba(78, 205, 196, 0.7)',
-                        borderColor: 'rgba(78, 205, 196, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
-
-            // User Retention Chart
-            const userRetentionCtx = document.getElementById('userRetentionChart').getContext('2d');
-            const userRetentionChart = new Chart(userRetentionCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
-                    datasets: [{
-                        label: 'Retention Rate',
-                        data: [100, 85, 72, 65, 58, 52, 48, 45],
-                        borderColor: '#4ECDC4',
-                        backgroundColor: 'rgba(78, 205, 196, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Provider Performance Chart
-            const providerPerformanceCtx = document.getElementById('providerPerformanceChart').getContext('2d');
-            const providerPerformanceChart = new Chart(providerPerformanceCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                    datasets: [{
-                        label: 'Tasks Completed',
-                        data: [1200, 1350, 1500, 1680, 1820, 1950, 2100],
-                        borderColor: '#4ECDC4',
-                        backgroundColor: 'rgba(78, 205, 196, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true,
-                        yAxisID: 'y'
-                    }, {
-                        label: 'Avg. Rating',
-                        data: [4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8],
-                        borderColor: '#FFE66D',
-                        backgroundColor: 'rgba(255, 230, 109, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: false,
-                        yAxisID: 'y1'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: 'Tasks Completed'
-                            }
-                        },
-                        y1: {
-                            beginAtZero: true,
-                            position: 'right',
-                            min: 0,
-                            max: 5,
-                            title: {
-                                display: true,
-                                text: 'Average Rating'
-                            },
-                            grid: {
-                                drawOnChartArea: false
-                            }
-                        }
-                    }
-                }
-            });
-
             // Provider Earnings Chart
             const providerEarningsCtx = document.getElementById('providerEarningsChart').getContext('2d');
             const providerEarningsChart = new Chart(providerEarningsCtx, {
@@ -1506,7 +1353,10 @@
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
                     datasets: [{
                         label: 'Provider Earnings',
-                        data: [24500, 26800, 29700, 32400, 35800, 38200, 41500],
+                        data: [{{ $janProvearn }}, {{ $febProvearn }}, {{ $marProvearn }},
+                            {{ $avrProvearn }}, {{ $maiProvearn }}, {{ $junProvearn }},
+                            {{ $julProvearn }}
+                        ],
                         backgroundColor: 'rgba(78, 205, 196, 0.7)',
                         borderColor: 'rgba(78, 205, 196, 1)',
                         borderWidth: 1
