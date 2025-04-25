@@ -25,11 +25,11 @@ Route::get("/admin/providermanage", [UserController::class, "showproviderManage"
 Route::get("/admin/content", [UserController::class, "showContent"])->name("admin.content");
 Route::post("/solved/{id}", [UserController::class, "solvedflag"]);
 Route::post("/remove/{id}", [UserController::class, "deleteflag"]);
+Route::get("/admin/analytics", [UserController::class, "showAnalytics"])->name("admin.analytics");
 Route::get("/admin/task", [TaskController::class, "showTask"])->name("admin.tasks");
 Route::post("/removetask/{id}", [TaskController::class, "deleteTask"]);
 
 
-Route::get("/admin/analytics", [AuthController::class, "showAnalytics"])->name("admin.analytics");
 Route::get("/admin/notifications", [AuthController::class, "showNotifications"])->name("admin.notifications");
 Route::get("/admin/settings", [AuthController::class, "showSettings"])->name("admin.settings");
 Route::get("/todotask", [AuthController::class, "showAvailableTasks"]);

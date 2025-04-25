@@ -7,6 +7,7 @@ use App\Models\Offer;
 use App\Models\Provider;
 use App\Models\Service;
 use App\Models\ServiceCategory;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -126,5 +127,34 @@ class UserController extends Controller
     {
         $id->delete();
         return redirect()->back();
+    }
+    public function showAnalytics()
+    {
+        $user = auth()->user();
+        $users = User::where("role", "user")->count();
+        $providers = User::where("role", "provider")->count();
+        $tasks = Task::count();
+        $totalAmmount = Offer::where("status", "accepted")->sum("proposed_amount");
+        $janUsersCount = User::whereMonth('created_at', 1)->count();
+        $febUsersCount = User::whereMonth('created_at', 2)->count();
+        $marUsersCount = User::whereMonth('created_at', 3)->count();
+        $aprUsersCount = User::whereMonth('created_at', 4)->count();
+        $maiUsersCount = User::whereMonth('created_at', 5)->count();
+        $julUsersCount = User::whereMonth('created_at', 7)->count();
+        $junUsersCount = User::whereMonth('created_at', 6)->count();
+        return view("admin.analytics", [
+            "user" => $user,
+            "usersNum" => $users,
+            "provNum" => $providers,
+            "taskNum" => $tasks,
+            "totalRev" => $totalAmmount,
+            "janUsersCount" => $janUsersCount,
+            "febUsersCount" => $febUsersCount,
+            "marUsersCount" => $marUsersCount,
+            "aprUsersCount" => $aprUsersCount,
+            "maiUsersCount" => $maiUsersCount,
+            "julUsersCount" => $julUsersCount,
+            "junUsersCount" => $junUsersCount,
+        ]);
     }
 }
