@@ -72,11 +72,7 @@ class AuthController extends Controller
 
 
 
-    
-    public function showNotifications()
-    {
-        return view("admin.notification");
-    }
+
     public function showSettings()
     {
         return view("admin.settings");
