@@ -73,10 +73,6 @@ class AuthController extends Controller
 
 
 
-    public function showSettings()
-    {
-        return view("admin.settings");
-    }
     public function showAvailableTasks()
     {
         return view("provider.tasks");

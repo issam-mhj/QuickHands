@@ -212,4 +212,11 @@ class UserController extends Controller
             "allTasks" => $allTasks,
         ]);
     }
+    public function showSettings()
+    {
+        $user = auth()->user();
+        return view("admin.settings", [
+            "user" => $user,
+        ]);
+    }
 }

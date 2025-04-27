@@ -27,13 +27,13 @@ Route::get("/admin/content", [UserController::class, "showContent"])->name("admi
 Route::post("/solved/{id}", [UserController::class, "solvedflag"]);
 Route::post("/remove/{id}", [UserController::class, "deleteflag"]);
 Route::get("/admin/analytics", [UserController::class, "showAnalytics"])->name("admin.analytics");
+Route::get("/admin/settings", [UserController::class, "showSettings"])->name("admin.settings");
 Route::get("/admin/task", [TaskController::class, "showTask"])->name("admin.tasks");
 Route::post("/removetask/{id}", [TaskController::class, "deleteTask"]);
 Route::get("/admin/notifications", [NotificationController::class, "showNotifications"])->name("admin.notifications");
 Route::post("/markasread", [NotificationController::class, "markasread"]);
 
 
-Route::get("/admin/settings", [AuthController::class, "showSettings"])->name("admin.settings");
 Route::get("/todotask", [AuthController::class, "showAvailableTasks"]);
 Route::get("/taskmanage", [AuthController::class, "showTaskManage"]);
 Route::get("/payment", [AuthController::class, "showPayment"]);
