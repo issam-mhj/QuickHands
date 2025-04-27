@@ -161,6 +161,16 @@ class UserController extends Controller
         $maiProvearn = offer::whereMonth('created_at', 5)->where("status", "accepted")->count();
         $junProvearn = offer::whereMonth('created_at', 6)->where("status", "accepted")->count();
         $julProvearn = offer::whereMonth('created_at', 7)->where("status", "accepted")->count();
+        $oneRate = review::where('rating', '>=', 1.0)->where('rating', '<', 2.0)->count();
+        $twoRate = review::where('rating', '>=', 2.0)->where('rating', '<', 3.0)->count();
+        $threeRate = review::where('rating', '>=', 3.0)->where('rating', '<', 4.0)->count();
+        $fourRate = review::where('rating', '>=', 4.0)->where('rating', '<', 5.0)->count();
+        $fiveRate = review::where('rating', '>=', 5.0)->count();
+        $providerStats = provider::all();
+        $reviews = Review::all();
+        $tasksCom = task::where("status", "completed")->get();
+        $allTasks = task::all();
+        // dd($oneRate);
         return view("admin.analytics", [
             "user" => $user,
             "usersNum" => $users,
@@ -191,6 +201,15 @@ class UserController extends Controller
             "maiProvearn" => $maiProvearn,
             "junProvearn" => $junProvearn,
             "julProvearn" => $julProvearn,
+            "oneRate" => $oneRate,
+            "twoRate" => $twoRate,
+            "threeRate" => $threeRate,
+            "fourRate" => $fourRate,
+            "fiveRate" => $fiveRate,
+            "providerStats" => $providerStats,
+            "tasks" => $tasksCom,
+            "reviews" => $reviews,
+            "allTasks" => $allTasks,
         ]);
     }
 }
