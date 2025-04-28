@@ -28,6 +28,7 @@ Route::post("/solved/{id}", [UserController::class, "solvedflag"]);
 Route::post("/remove/{id}", [UserController::class, "deleteflag"]);
 Route::get("/admin/analytics", [UserController::class, "showAnalytics"])->name("admin.analytics");
 Route::get("/admin/settings", [UserController::class, "showSettings"])->name("admin.settings");
+Route::post("updateprofile", [UserController::class, "updateProfile"]);
 Route::get("/admin/task", [TaskController::class, "showTask"])->name("admin.tasks");
 Route::post("/removetask/{id}", [TaskController::class, "deleteTask"]);
 Route::get("/admin/notifications", [NotificationController::class, "showNotifications"])->name("admin.notifications");
