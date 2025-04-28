@@ -6,8 +6,10 @@ use App\Models\Provider;
 use App\Http\Requests\StoreProviderRequest;
 use App\Http\Requests\UpdateProviderRequest;
 use App\Models\Review;
+use App\Models\Service;
 use App\Models\Task;
 use App\Models\User;
+use League\OAuth1\Client\Server\Server;
 
 class ProviderController extends Controller
 {
@@ -66,6 +68,18 @@ class ProviderController extends Controller
             "myCompletedTasks" => $mycompletedTasks,
             "skills" => $skills,
             "reviews" => $reviews,
+        ]);
+    }
+
+    public function showAvailableTasks()
+    {
+        $user = auth()->user();
+        $servicesNum = Service::where("status", "open")->count();
+        $services = Service::where("status", "open")->get();
+        return view("provider.tasks", [
+            "user" => $user,
+            "servicesNum" => $servicesNum,
+            "services" => $services,
         ]);
     }
 

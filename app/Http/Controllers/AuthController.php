@@ -78,10 +78,7 @@ class AuthController extends Controller
 
 
 
-    public function showAvailableTasks()
-    {
-        return view("provider.tasks");
-    }
+
     public function showTaskManage()
     {
         return view("provider.taskmanage");

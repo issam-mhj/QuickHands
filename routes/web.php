@@ -38,11 +38,11 @@ Route::post("/markasread", [NotificationController::class, "markasread"]);
 
 
 Route::get("/provider/dashboard", [ProviderController::class, "showProviderDashboard"])->name("provider.dashboard");
+Route::get("/provider/task", [ProviderController::class, "showAvailableTasks"]);
 
 
 
 
-Route::get("/todotask", [AuthController::class, "showAvailableTasks"]);
 Route::get("/taskmanage", [AuthController::class, "showTaskManage"]);
 Route::get("/payment", [AuthController::class, "showPayment"]);
 Route::get("/reviews", [AuthController::class, "showReviews"]);
