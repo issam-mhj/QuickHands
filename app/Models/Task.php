@@ -19,7 +19,7 @@ class Task extends Model
         'status',
         'offer_id',
     ];
-    public function Offer(): BelongsTo
+    public function offer(): BelongsTo
     {
         return $this->belongsTo(Offer::class);
     }

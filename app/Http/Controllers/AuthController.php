@@ -50,7 +50,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->role === 'admin') {
-                return redirect("admindashboard");
+                return redirect("admin/dashboard");
             } elseif ($user->role === 'provider') {
                 if ($user->provider->status === 'pending') {
                     Auth::logout();
@@ -58,7 +58,7 @@ class AuthController extends Controller
                         'email' => 'Your account is still pending approval.',
                     ]);
                 }
-                return view('/provider/dashboard');
+                return redirect("provider/dashboard");
             } else {
                 return view('/user/dashboard');
             }

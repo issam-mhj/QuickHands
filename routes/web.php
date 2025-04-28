@@ -6,6 +6,7 @@ use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\TaskController;
 
 Route::get("/", [VisitController::class, "home"]);
@@ -34,6 +35,11 @@ Route::get("/admin/task", [TaskController::class, "showTask"])->name("admin.task
 Route::post("/removetask/{id}", [TaskController::class, "deleteTask"]);
 Route::get("/admin/notifications", [NotificationController::class, "showNotifications"])->name("admin.notifications");
 Route::post("/markasread", [NotificationController::class, "markasread"]);
+
+
+Route::get("/provider/dashboard", [ProviderController::class, "showProviderDashboard"])->name("provider.dashboard");
+
+
 
 
 Route::get("/todotask", [AuthController::class, "showAvailableTasks"]);
