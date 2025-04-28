@@ -17,6 +17,7 @@ Route::get("/join", [VisitController::class, "join"]);
 
 Route::post("/register", [AuthController::class, "register"])->name("signup");
 Route::post("/login", [AuthController::class, "login"])->name("login");
+Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
 Route::get("/admin/dashboard", [UserController::class, "showAdminDashboard"])->name("admin.dashboard");
 Route::get("/admin/usermanage", [UserController::class, "showUserManage"])->name("admin.users");
