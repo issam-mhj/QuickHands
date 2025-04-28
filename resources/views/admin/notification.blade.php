@@ -362,7 +362,7 @@
                 <div class="flex items-center space-x-3 mb-4">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="user-avatar">
                     <div>
-                        <h4 class="font-medium">John Doe</h4>
+                        <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">Super Admin</p>
                     </div>
                 </div>
@@ -511,7 +511,7 @@
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
                                 <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
                                     class="w-8 h-8 rounded-full">
-                                <span class="hidden md:block">John Doe</span>
+                                <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                             <div id="user-dropdown" class="dropdown">
@@ -535,24 +535,15 @@
             </header>
 
             <!-- Notification Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
                 <div class="stat-card">
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="text-lg font-medium text-gray-500">Total Notifications</h3>
-                            <p class="text-3xl font-bold mt-1">124</p>
+                            <p class="text-3xl font-bold mt-1">{{ $notifNum }}</p>
                         </div>
                         <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                             <i class="fas fa-bell text-primary"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>This week</span>
-                            <span class="text-success">+12.5%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-primary" style="width: 75%"></div>
                         </div>
                     </div>
                 </div>
@@ -561,61 +552,10 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="text-lg font-medium text-gray-500">Unread</h3>
-                            <p class="text-3xl font-bold mt-1">8</p>
+                            <p class="text-3xl font-bold mt-1">{{ $UnNotifNum }}</p>
                         </div>
                         <div class="w-10 h-10 rounded-full bg-warning/20 flex items-center justify-center">
                             <i class="fas fa-envelope text-warning"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>Since yesterday</span>
-                            <span class="text-danger">+3</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-warning" style="width: 25%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-500">Urgent</h3>
-                            <p class="text-3xl font-bold mt-1">3</p>
-                        </div>
-                        <div class="w-10 h-10 rounded-full bg-danger/20 flex items-center justify-center">
-                            <i class="fas fa-exclamation-circle text-danger"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>Require action</span>
-                            <span class="text-danger">All unresolved</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-danger" style="width: 100%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-500">Resolved</h3>
-                            <p class="text-3xl font-bold mt-1">116</p>
-                        </div>
-                        <div class="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center">
-                            <i class="fas fa-check-circle text-success"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span>Resolution rate</span>
-                            <span class="text-success">93.5%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress bg-success" style="width: 93.5%"></div>
                         </div>
                     </div>
                 </div>
@@ -626,285 +566,35 @@
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
                     <div class="mb-4 md:mb-0">
                         <h2 class="text-xl font-semibold text-gray-800">Notification Center</h2>
-                        <p class="text-sm text-gray-500">Manage and respond to important platform activity</p>
                     </div>
 
                     <div class="flex flex-wrap gap-3">
-                        <button id="markAllReadBtn"
-                            class="px-4 py-2 bg-secondary text-white rounded-lg flex items-center">
-                            <i class="fas fa-check-double mr-2"></i> Mark All Read
-                        </button>
-                        <button id="settingsBtn"
-                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg flex items-center">
-                            <i class="fas fa-cog mr-2"></i> Settings
-                        </button>
+                        <form action="/markasread" method="post">
+                            @csrf
+                            <button type="submit"
+                                class="px-4 py-2 bg-secondary text-white rounded-lg flex items-center">
+                                <i class="fas fa-check-double mr-2"></i> Mark All Read
+                            </button>
+                        </form>
                     </div>
-                </div>
-
-                <!-- Notification Filters -->
-                <div class="flex flex-wrap gap-2 mb-6">
-                    <div class="notification-filter active" data-filter="all">All</div>
-                    <div class="notification-filter" data-filter="reports">Reports</div>
-                    <div class="notification-filter" data-filter="system">System</div>
-                    <div class="notification-filter" data-filter="users">Users</div>
-                    <div class="notification-filter" data-filter="providers">Providers</div>
-                    <div class="notification-filter" data-filter="tasks">Tasks</div>
-                    <div class="notification-filter" data-filter="payments">Payments</div>
                 </div>
 
                 <!-- Notification List -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-md">
-                    <!-- Urgent Notifications -->
-                    <div class="notification-category">Urgent - Requires Immediate Action</div>
-                    <div class="notification-item unread" data-type="system">
-                        <div class="icon-container bg-danger/20">
-                            <i class="fas fa-exclamation-triangle text-danger"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Payment Gateway Down</div>
-                            <div class="message">The payment gateway is currently experiencing issues. Users are unable
-                                to make payments.</div>
-                            <div class="time">10 minutes ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Details</button>
-                                <button class="action-btn resolve">Resolve</button>
-                                <button class="action-btn mark-read">Mark as Read</button>
+                    @foreach ($notifs as $notif)
+                        <div class="notification-item {{ $notif->read_status == 0 ? 'unread' : '' }} "
+                            data-type="system">
+                            <div class="icon-container bg-info/20">
+                                <i class="fas fa-database text-info"></i>
+                            </div>
+                            <div class="content">
+                                <div class="title">{{ $notif->type }}</div>
+                                <div class="message">{{ $notif->message }}</div>
+                                <div class="time">{{ \Carbon\Carbon::parse($notif->created_at)->diffForHumans() }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="notification-item unread" data-type="reports">
-                        <div class="icon-container bg-danger/20">
-                            <i class="fas fa-flag text-danger"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Critical User Report</div>
-                            <div class="message">A provider has been reported for inappropriate behavior by multiple
-                                users.</div>
-                            <div class="time">45 minutes ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Report</button>
-                                <button class="action-btn resolve">Investigate</button>
-                                <button class="action-btn mark-read">Mark as Read</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notification-item unread" data-type="system">
-                        <div class="icon-container bg-danger/20">
-                            <i class="fas fa-server text-danger"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Server Load Critical</div>
-                            <div class="message">The main application server is experiencing unusually high load (95%
-                                CPU usage).</div>
-                            <div class="time">1 hour ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Metrics</button>
-                                <button class="action-btn resolve">Scale Resources</button>
-                                <button class="action-btn mark-read">Mark as Read</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- New Reports -->
-                    <div class="notification-category">New Reports</div>
-                    <div class="notification-item unread" data-type="reports">
-                        <div class="icon-container bg-warning/20">
-                            <i class="fas fa-flag text-warning"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Content Reported</div>
-                            <div class="message">A user has reported a task description for containing inappropriate
-                                content.</div>
-                            <div class="time">2 hours ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Content</button>
-                                <button class="action-btn resolve">Review</button>
-                                <button class="action-btn mark-read">Mark as Read</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notification-item unread" data-type="reports">
-                        <div class="icon-container bg-warning/20">
-                            <i class="fas fa-comment-slash text-warning"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Review Dispute</div>
-                            <div class="message">A provider has disputed a negative review claiming it contains false
-                                information.</div>
-                            <div class="time">3 hours ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Dispute</button>
-                                <button class="action-btn resolve">Investigate</button>
-                                <button class="action-btn mark-read">Mark as Read</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- System Issues -->
-                    <div class="notification-category">System Issues</div>
-                    <div class="notification-item unread" data-type="system">
-                        <div class="icon-container bg-info/20">
-                            <i class="fas fa-database text-info"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Database Performance</div>
-                            <div class="message">Database queries are taking longer than usual to complete. Average
-                                query time has increased by 35%.</div>
-                            <div class="time">4 hours ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Metrics</button>
-                                <button class="action-btn resolve">Optimize</button>
-                                <button class="action-btn mark-read">Mark as Read</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notification-item" data-type="system">
-                        <div class="icon-container bg-info/20">
-                            <i class="fas fa-sync text-info"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Scheduled Maintenance</div>
-                            <div class="message">Reminder: Scheduled maintenance will begin tonight at 2:00 AM EST and
-                                last approximately 2 hours.</div>
-                            <div class="time">5 hours ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Schedule</button>
-                                <button class="action-btn dismiss">Dismiss</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Provider Registrations -->
-                    <div class="notification-category">Provider Registrations</div>
-                    <div class="notification-item unread" data-type="providers">
-                        <div class="icon-container bg-secondary/20">
-                            <i class="fas fa-user-tie text-secondary"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">New Provider Registration</div>
-                            <div class="message">Sarah Johnson has registered as a new service provider and requires
-                                approval.</div>
-                            <div class="time">6 hours ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Profile</button>
-                                <button class="action-btn resolve">Approve</button>
-                                <button class="action-btn mark-read">Mark as Read</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notification-item" data-type="providers">
-                        <div class="icon-container bg-secondary/20">
-                            <i class="fas fa-user-tie text-secondary"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">New Provider Registration</div>
-                            <div class="message">Michael Brown has registered as a new service provider and requires
-                                approval.</div>
-                            <div class="time">8 hours ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Profile</button>
-                                <button class="action-btn resolve">Approve</button>
-                                <button class="action-btn dismiss">Dismiss</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- User Activity -->
-                    <div class="notification-category">User Activity</div>
-                    <div class="notification-item" data-type="users">
-                        <div class="icon-container bg-primary/20">
-                            <i class="fas fa-user-plus text-primary"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">New User Registration</div>
-                            <div class="message">10 new users have registered in the last 24 hours.</div>
-                            <div class="time">12 hours ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Users</button>
-                                <button class="action-btn dismiss">Dismiss</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notification-item" data-type="users">
-                        <div class="icon-container bg-primary/20">
-                            <i class="fas fa-user-shield text-primary"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Account Verification</div>
-                            <div class="message">5 users have requested manual account verification.</div>
-                            <div class="time">1 day ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Requests</button>
-                                <button class="action-btn dismiss">Dismiss</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Task Updates -->
-                    <div class="notification-category">Task Updates</div>
-                    <div class="notification-item" data-type="tasks">
-                        <div class="icon-container bg-accent/20">
-                            <i class="fas fa-tasks text-accent"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">High-Value Task Created</div>
-                            <div class="message">A new task worth $500+ has been created and is awaiting provider
-                                assignment.</div>
-                            <div class="time">1 day ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Task</button>
-                                <button class="action-btn dismiss">Dismiss</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notification-item" data-type="tasks">
-                        <div class="icon-container bg-accent/20">
-                            <i class="fas fa-exclamation-circle text-accent"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Task Cancellation Rate</div>
-                            <div class="message">Task cancellation rate has increased by 5% this week. May require
-                                investigation.</div>
-                            <div class="time">2 days ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Analytics</button>
-                                <button class="action-btn dismiss">Dismiss</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Payment Updates -->
-                    <div class="notification-category">Payment Updates</div>
-                    <div class="notification-item" data-type="payments">
-                        <div class="icon-container bg-success/20">
-                            <i class="fas fa-dollar-sign text-success"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Payment Dispute</div>
-                            <div class="message">A user has disputed a payment of $120 for a cleaning service.</div>
-                            <div class="time">2 days ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Details</button>
-                                <button class="action-btn resolve">Investigate</button>
-                                <button class="action-btn dismiss">Dismiss</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notification-item" data-type="payments">
-                        <div class="icon-container bg-success/20">
-                            <i class="fas fa-credit-card text-success"></i>
-                        </div>
-                        <div class="content">
-                            <div class="title">Payout Processed</div>
-                            <div class="message">Weekly provider payouts have been successfully processed. Total:
-                                $12,450.</div>
-                            <div class="time">3 days ago</div>
-                            <div class="actions">
-                                <button class="action-btn view">View Report</button>
-                                <button class="action-btn dismiss">Dismiss</button>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
                 <!-- Pagination -->
@@ -928,126 +618,6 @@
                         <button id="nextPage" class="pagination-btn px-3 py-1 rounded-md border border-gray-300">
                             <i class="fas fa-chevron-right"></i>
                         </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Notification Settings Modal -->
-            <div id="settingsModal" class="fixed inset-0 z-50 hidden flex items-center justify-center">
-                <div class="absolute inset-0 bg-black opacity-50"></div>
-                <div class="relative bg-white w-full max-w-md mx-4 rounded-lg shadow-lg p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold text-gray-800">Notification Settings</h3>
-                        <button class="close-modal text-gray-400 hover:text-gray-600">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="mb-6">
-                        <h4 class="font-medium text-gray-700 mb-2">Email Notifications</h4>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <label for="emailUrgent" class="text-gray-700">Urgent Notifications</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="emailUrgent" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <label for="emailReports" class="text-gray-700">New Reports</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="emailReports" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <label for="emailSystem" class="text-gray-700">System Issues</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="emailSystem" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <label for="emailProviders" class="text-gray-700">Provider Registrations</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="emailProviders">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <label for="emailUsers" class="text-gray-700">User Activity</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="emailUsers">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-6">
-                        <h4 class="font-medium text-gray-700 mb-2">Push Notifications</h4>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <label for="pushUrgent" class="text-gray-700">Urgent Notifications</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="pushUrgent" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <label for="pushReports" class="text-gray-700">New Reports</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="pushReports" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <label for="pushSystem" class="text-gray-700">System Issues</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="pushSystem" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <label for="pushProviders" class="text-gray-700">Provider Registrations</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="pushProviders" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <label for="pushUsers" class="text-gray-700">User Activity</label>
-                                <label class="switch">
-                                    <input type="checkbox" id="pushUsers">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-6">
-                        <h4 class="font-medium text-gray-700 mb-2">Auto-Archive Settings</h4>
-                        <div class="mb-4">
-                            <label for="archiveDays" class="block text-sm text-gray-700 mb-1">Auto-archive read
-                                notifications after</label>
-                            <select id="archiveDays"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option value="1">1 day</option>
-                                <option value="3">3 days</option>
-                                <option value="7" selected>7 days</option>
-                                <option value="14">14 days</option>
-                                <option value="30">30 days</option>
-                                <option value="never">Never</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end space-x-3">
-                        <button
-                            class="close-modal px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                        <button id="saveSettings"
-                            class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">Save
-                            Settings</button>
                     </div>
                 </div>
             </div>
@@ -1147,13 +717,6 @@
                 });
             });
 
-            // Mark all as read button
-            document.getElementById('markAllReadBtn').addEventListener('click', markAllAsRead);
-
-            // Settings button
-            document.getElementById('settingsBtn').addEventListener('click', () => {
-                document.getElementById('settingsModal').classList.remove('hidden');
-            });
 
             // Close modal buttons
             document.querySelectorAll('.close-modal').forEach(button => {
@@ -1162,20 +725,6 @@
                 });
             });
 
-            // Save settings button
-            document.getElementById('saveSettings').addEventListener('click', () => {
-                saveNotificationSettings();
-                document.getElementById('settingsModal').classList.add('hidden');
-            });
-
-            // Mark as read buttons
-            document.querySelectorAll('.mark-read').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const notificationItem = e.target.closest('.notification-item');
-                    markAsRead(notificationItem);
-                    e.stopPropagation();
-                });
-            });
 
             // Dismiss buttons
             document.querySelectorAll('.dismiss').forEach(button => {

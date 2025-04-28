@@ -688,7 +688,7 @@
                 <!-- User Demographics -->
                 <div class="mt-6">
                     <h3 class="text-lg font-medium mb-4">User Demographics</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Age Distribution -->
                         <div class="chart-container shadow-md rounded-xl">
                             <h4 class="text-base font-medium mb-3">Age Distribution</h4>
@@ -705,23 +705,7 @@
                             </div>
                         </div>
 
-                        <!-- Location Distribution -->
-                        <div class="chart-container shadow-md rounded-xl">
-                            <h4 class="text-base font-medium mb-3">Top Locations</h4>
-                            <div class="h-64">
-                                <canvas id="locationDistributionChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- User Retention -->
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium mb-4">User Retention</h3>
-                    <div class="chart-container shadow-md rounded-xl">
-                        <div class="h-64">
-                            <canvas id="userRetentionChart"></canvas>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -730,15 +714,7 @@
             <div class="dashboard-card mb-6">
                 <h2 class="text-xl font-semibold mb-4">Provider Analytics</h2>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Provider Performance Chart -->
-                    <div class="chart-container shadow-md rounded-xl">
-                        <h3 class="text-lg font-medium mb-4">Provider Performance</h3>
-                        <div class="h-80">
-                            <canvas id="providerPerformanceChart"></canvas>
-                        </div>
-                    </div>
-
+                <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
                     <!-- Provider Earnings Chart -->
                     <div class="chart-container shadow-md rounded-xl">
                         <h3 class="text-lg font-medium mb-4">Provider Earnings</h3>
@@ -773,258 +749,105 @@
                                 </tr>
                             </thead>
                             <tbody id="topProvidersTableBody">
-                                <tr>
-                                    <td class="flex items-center space-x-2">
-                                        <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Provider"
-                                            class="w-8 h-8 rounded-full">
-                                        <span>Robert Johnson</span>
-                                    </td>
-                                    <td>187</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <span class="mr-1">4.9</span>
-                                            <div class="text-yellow-400 text-sm">★★★★★</div>
-                                        </div>
-                                    </td>
-                                    <td>$8,742</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                                                <div class="bg-success rounded-full h-2" style="width: 98%"></div>
+                                @foreach ($providerStats as $provider)
+                                    @php
+                                        // Calculate completed tasks count
+                                        $completedTasksCount = 0;
+                                        foreach ($tasks as $task) {
+                                            if ($task->offer->provider_id == $provider->id) {
+                                                $completedTasksCount++;
+                                            }
+                                        }
+
+                                        // Calculate average rating
+                                        $reviewSum = 0;
+                                        $reviewCount = 0;
+                                        foreach ($reviews as $review) {
+                                            if ($review->offer->provider_id == $provider->id) {
+                                                $reviewSum += $review->rating;
+                                                $reviewCount++;
+                                            }
+                                        }
+                                        $averageRating =
+                                            $reviewCount > 0 ? number_format($reviewSum / $reviewCount, 1) : 0;
+
+                                        // Calculate earnings
+                                        $totalEarnings = 0;
+                                        foreach ($tasks as $task) {
+                                            if ($task->offer->provider_id == $provider->id) {
+                                                $totalEarnings += $task->offer->proposed_amount;
+                                            }
+                                        }
+
+                                        // Calculate completion rate
+                                        $completedCount = 0;
+                                        $totalAssignedTasks = 0;
+                                        foreach ($allTasks as $task) {
+                                            if ($task->offer->provider_id == $provider->id) {
+                                                $totalAssignedTasks++;
+                                                if ($task->status == 'completed') {
+                                                    $completedCount++;
+                                                }
+                                            }
+                                        }
+                                        $completionRate =
+                                            $totalAssignedTasks > 0
+                                                ? round(($completedCount * 100) / $totalAssignedTasks)
+                                                : 0;
+                                    @endphp
+
+                                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                        <td class="px-4 py-3 border-b">
+                                            <div class="flex items-center space-x-3">
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600">
+                                                    {{ substr($provider->user->name, 0, 1) }}
+                                                </div>
+                                                <span class="font-medium">{{ $provider->user->name }}</span>
                                             </div>
-                                            <span>98%</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="flex items-center space-x-2">
-                                        <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Provider"
-                                            class="w-8 h-8 rounded-full">
-                                        <span>Emily Davis</span>
-                                    </td>
-                                    <td>165</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <span class="mr-1">4.8</span>
-                                            <div class="text-yellow-400 text-sm">★★★★★</div>
-                                        </div>
-                                    </td>
-                                    <td>$7,890</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                                                <div class="bg-success rounded-full h-2" style="width: 96%"></div>
+                                        </td>
+                                        <td class="px-4 py-3 border-b text-center">
+                                            <span class="font-medium">{{ $completedTasksCount }}</span>
+                                            <div class="text-xs text-gray-500">Tasks</div>
+                                        </td>
+                                        <td class="px-4 py-3 border-b">
+                                            <div class="flex items-center justify-center">
+                                                <span class="font-medium mr-2">{{ $averageRating }}</span>
+                                                <div class="flex text-sm">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= floor($averageRating))
+                                                            <span class="text-yellow-400">★</span>
+                                                        @elseif ($i - 0.5 <= $averageRating)
+                                                            <span class="text-yellow-400">★</span>
+                                                        @else
+                                                            <span class="text-gray-300">★</span>
+                                                        @endif
+                                                    @endfor
+                                                </div>
                                             </div>
-                                            <span>96%</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="flex items-center space-x-2">
-                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider"
-                                            class="w-8 h-8 rounded-full">
-                                        <span>Michael Brown</span>
-                                    </td>
-                                    <td>152</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <span class="mr-1">4.7</span>
-                                            <div class="text-yellow-400 text-sm">★★★★★</div>
-                                        </div>
-                                    </td>
-                                    <td>$7,245</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                                                <div class="bg-success rounded-full h-2" style="width: 95%"></div>
+                                        </td>
+                                        <td class="px-4 py-3 border-b text-center">
+                                            <span class="font-medium">${{ number_format($totalEarnings, 2) }}</span>
+                                            <div class="text-xs text-gray-500">Earnings</div>
+                                        </td>
+                                        <td class="px-4 py-3 border-b">
+                                            <div class="flex flex-col items-center">
+                                                <div class="flex items-center w-full mb-1">
+                                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                                        <div class="bg-green-500 rounded-full h-2"
+                                                            style="width: {{ $completionRate }}%"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex justify-between w-full text-xs">
+                                                    <span class="font-medium">{{ $completionRate }}%</span>
+                                                    <span
+                                                        class="text-gray-500">{{ $completedCount }}/{{ $totalAssignedTasks }}
+                                                        tasks</span>
+                                                </div>
                                             </div>
-                                            <span>95%</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="flex items-center space-x-2">
-                                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Provider"
-                                            class="w-8 h-8 rounded-full">
-                                        <span>Jessica Wilson</span>
-                                    </td>
-                                    <td>143</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <span class="mr-1">4.8</span>
-                                            <div class="text-yellow-400 text-sm">★★★★★</div>
-                                        </div>
-                                    </td>
-                                    <td>$6,890</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                                                <div class="bg-success rounded-full h-2" style="width: 94%"></div>
-                                            </div>
-                                            <span>94%</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="flex items-center space-x-2">
-                                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Provider"
-                                            class="w-8 h-8 rounded-full">
-                                        <span>David Miller</span>
-                                    </td>
-                                    <td>138</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <span class="mr-1">4.6</span>
-                                            <div class="text-yellow-400 text-sm">★★★★★</div>
-                                        </div>
-                                    </td>
-                                    <td>$6,540</td>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                                                <div class="bg-success rounded-full h-2" style="width: 92%"></div>
-                                            </div>
-                                            <span>92%</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Task Analytics Section -->
-            <div class="dashboard-card mb-6">
-                <h2 class="text-xl font-semibold mb-4">Task Analytics</h2>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Task Type Distribution -->
-                    <div class="chart-container shadow-md rounded-xl">
-                        <h3 class="text-lg font-medium mb-4">Task Type Distribution</h3>
-                        <div class="h-80">
-                            <canvas id="taskTypeChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Task Completion Rates -->
-                    <div class="chart-container shadow-md rounded-xl">
-                        <h3 class="text-lg font-medium mb-4">Task Completion Rates</h3>
-                        <div class="h-80">
-                            <canvas id="taskCompletionChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Task Duration -->
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium mb-4">Average Task Duration by Type</h3>
-                    <div class="chart-container shadow-md rounded-xl">
-                        <div class="h-64">
-                            <canvas id="taskDurationChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Task Trends -->
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium mb-4">Task Trends Over Time</h3>
-                    <div class="chart-container shadow-md rounded-xl">
-                        <div class="h-64">
-                            <canvas id="taskTrendsChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Revenue Analytics Section -->
-            <div class="dashboard-card mb-6">
-                <h2 class="text-xl font-semibold mb-4">Revenue Analytics</h2>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Revenue Trends -->
-                    <div class="chart-container shadow-md rounded-xl">
-                        <h3 class="text-lg font-medium mb-4">Revenue Trends</h3>
-                        <div class="h-80">
-                            <canvas id="revenueTrendsChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Revenue by Task Type -->
-                    <div class="chart-container shadow-md rounded-xl">
-                        <h3 class="text-lg font-medium mb-4">Revenue by Task Type</h3>
-                        <div class="h-80">
-                            <canvas id="revenueByTaskTypeChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Revenue by Region -->
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium mb-4">Revenue by Region</h3>
-                    <div class="chart-container shadow-md rounded-xl">
-                        <div class="h-64">
-                            <canvas id="revenueByRegionChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Monthly Revenue Breakdown -->
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium mb-4">Monthly Revenue Breakdown</h3>
-                    <div class="overflow-x-auto">
-                        <table class="data-table min-w-full">
-                            <thead>
-                                <tr>
-                                    <th>Month</th>
-                                    <th>Gross Revenue</th>
-                                    <th>Platform Fees</th>
-                                    <th>Provider Payouts</th>
-                                    <th>Net Revenue</th>
-                                    <th>Growth</th>
-                                </tr>
-                            </thead>
-                            <tbody id="revenueTableBody">
-                                <tr>
-                                    <td>March 2023</td>
-                                    <td>$42,568</td>
-                                    <td>$8,513</td>
-                                    <td>$29,797</td>
-                                    <td>$12,771</td>
-                                    <td class="text-success">+8.2%</td>
-                                </tr>
-                                <tr>
-                                    <td>February 2023</td>
-                                    <td>$39,342</td>
-                                    <td>$7,868</td>
-                                    <td>$27,539</td>
-                                    <td>$11,803</td>
-                                    <td class="text-success">+5.7%</td>
-                                </tr>
-                                <tr>
-                                    <td>January 2023</td>
-                                    <td>$37,218</td>
-                                    <td>$7,443</td>
-                                    <td>$26,052</td>
-                                    <td>$11,166</td>
-                                    <td class="text-success">+3.2%</td>
-                                </tr>
-                                <tr>
-                                    <td>December 2022</td>
-                                    <td>$36,054</td>
-                                    <td>$7,210</td>
-                                    <td>$25,237</td>
-                                    <td>$10,817</td>
-                                    <td class="text-danger">-1.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>November 2022</td>
-                                    <td>$36,602</td>
-                                    <td>$7,320</td>
-                                    <td>$25,621</td>
-                                    <td>$10,981</td>
-                                    <td class="text-success">+4.8%</td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -1225,7 +1048,10 @@
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
                     datasets: [{
                         label: 'New Users',
-                        data: [{{ $janUsersCount }}, {{ $febUsersCount }}, {{ $marUsersCount }}, {{ $aprUsersCount }}, {{ $maiUsersCount }}, {{ $junUsersCount }}, {{ $julUsersCount }}],
+                        data: [{{ $janUsersCount }}, {{ $febUsersCount }}, {{ $marUsersCount }},
+                            {{ $aprUsersCount }}, {{ $maiUsersCount }}, {{ $junUsersCount }},
+                            {{ $julUsersCount }}
+                        ],
                         borderColor: '#FF6B6B',
                         backgroundColor: 'rgba(255, 107, 107, 0.1)',
                         borderWidth: 2,
@@ -1262,28 +1088,23 @@
                 }
             });
 
-            // User Activity Chart
             const userActivityCtx = document.getElementById('userActivityChart').getContext('2d');
             const userActivityChart = new Chart(userActivityCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Tasks Posted', 'Reviews Given', 'Messages Sent', 'Logins', 'Profile Updates'],
+                    labels: ['Tasks Posted', 'Reviews Given', 'Messages Sent'],
                     datasets: [{
                         label: 'Activity Count',
-                        data: [4200, 3150, 8500, 12000, 1800],
+                        data: [{{ $serviceNum }}, {{ $reviewsNum }}, {{ $messageNum }}],
                         backgroundColor: [
                             'rgba(255, 107, 107, 0.7)',
                             'rgba(78, 205, 196, 0.7)',
-                            'rgba(255, 230, 109, 0.7)',
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(52, 152, 219, 0.7)'
+                            'rgba(255, 230, 109, 0.7)'
                         ],
                         borderColor: [
                             'rgba(255, 107, 107, 1)',
                             'rgba(78, 205, 196, 1)',
-                            'rgba(255, 230, 109, 1)',
-                            'rgba(46, 204, 113, 1)',
-                            'rgba(52, 152, 219, 1)'
+                            'rgba(255, 230, 109, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -1311,7 +1132,9 @@
                 data: {
                     labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
                     datasets: [{
-                        data: [15, 35, 25, 18, 7],
+                        data: [{{ $firstAge }}, {{ $secondAge }}, {{ $thirdAge }},
+                            {{ $fourthAge }}, {{ $fifthAge }}
+                        ],
                         backgroundColor: [
                             'rgba(255, 107, 107, 0.7)',
                             'rgba(78, 205, 196, 0.7)',
@@ -1345,18 +1168,16 @@
             const genderDistributionChart = new Chart(genderDistributionCtx, {
                 type: 'pie',
                 data: {
-                    labels: ['Male', 'Female', 'Other'],
+                    labels: ['Male', 'Female'],
                     datasets: [{
-                        data: [48, 46, 6],
+                        data: [{{ $male }}, {{ $female }}],
                         backgroundColor: [
                             'rgba(52, 152, 219, 0.7)',
                             'rgba(255, 107, 107, 0.7)',
-                            'rgba(78, 205, 196, 0.7)'
                         ],
                         borderColor: [
                             'rgba(52, 152, 219, 1)',
                             'rgba(255, 107, 107, 1)',
-                            'rgba(78, 205, 196, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -1371,133 +1192,6 @@
                     }
                 }
             });
-
-            // Location Distribution Chart
-            const locationDistributionCtx = document.getElementById('locationDistributionChart').getContext('2d');
-            const locationDistributionChart = new Chart(locationDistributionCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
-                    datasets: [{
-                        label: 'Users',
-                        data: [1250, 980, 720, 650, 580],
-                        backgroundColor: 'rgba(78, 205, 196, 0.7)',
-                        borderColor: 'rgba(78, 205, 196, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
-
-            // User Retention Chart
-            const userRetentionCtx = document.getElementById('userRetentionChart').getContext('2d');
-            const userRetentionChart = new Chart(userRetentionCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
-                    datasets: [{
-                        label: 'Retention Rate',
-                        data: [100, 85, 72, 65, 58, 52, 48, 45],
-                        borderColor: '#4ECDC4',
-                        backgroundColor: 'rgba(78, 205, 196, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Provider Performance Chart
-            const providerPerformanceCtx = document.getElementById('providerPerformanceChart').getContext('2d');
-            const providerPerformanceChart = new Chart(providerPerformanceCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                    datasets: [{
-                        label: 'Tasks Completed',
-                        data: [1200, 1350, 1500, 1680, 1820, 1950, 2100],
-                        borderColor: '#4ECDC4',
-                        backgroundColor: 'rgba(78, 205, 196, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true,
-                        yAxisID: 'y'
-                    }, {
-                        label: 'Avg. Rating',
-                        data: [4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8],
-                        borderColor: '#FFE66D',
-                        backgroundColor: 'rgba(255, 230, 109, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: false,
-                        yAxisID: 'y1'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: 'Tasks Completed'
-                            }
-                        },
-                        y1: {
-                            beginAtZero: true,
-                            position: 'right',
-                            min: 0,
-                            max: 5,
-                            title: {
-                                display: true,
-                                text: 'Average Rating'
-                            },
-                            grid: {
-                                drawOnChartArea: false
-                            }
-                        }
-                    }
-                }
-            });
-
             // Provider Earnings Chart
             const providerEarningsCtx = document.getElementById('providerEarningsChart').getContext('2d');
             const providerEarningsChart = new Chart(providerEarningsCtx, {
@@ -1506,7 +1200,10 @@
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
                     datasets: [{
                         label: 'Provider Earnings',
-                        data: [24500, 26800, 29700, 32400, 35800, 38200, 41500],
+                        data: [{{ $janProvearn }}, {{ $febProvearn }}, {{ $marProvearn }},
+                            {{ $avrProvearn }}, {{ $maiProvearn }}, {{ $junProvearn }},
+                            {{ $julProvearn }}
+                        ],
                         backgroundColor: 'rgba(78, 205, 196, 0.7)',
                         borderColor: 'rgba(78, 205, 196, 1)',
                         borderWidth: 1
@@ -1541,7 +1238,9 @@
                     labels: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'],
                     datasets: [{
                         label: 'Number of Ratings',
-                        data: [120, 350, 980, 2450, 3200],
+                        data: [{{ $oneRate }}, {{ $twoRate }}, {{ $threeRate }},
+                            {{ $fourRate }}, {{ $fiveRate }}
+                        ],
                         backgroundColor: [
                             'rgba(231, 76, 60, 0.7)',
                             'rgba(243, 156, 18, 0.7)',
@@ -1574,258 +1273,6 @@
                     }
                 }
             });
-
-            // Task Type Chart
-            const taskTypeCtx = document.getElementById('taskTypeChart').getContext('2d');
-            const taskTypeChart = new Chart(taskTypeCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Deliveries', 'Cleaning', 'Handyman', 'Moving', 'Errands', 'Other'],
-                    datasets: [{
-                        data: [35, 25, 15, 10, 10, 5],
-                        backgroundColor: [
-                            'rgba(255, 107, 107, 0.7)',
-                            'rgba(78, 205, 196, 0.7)',
-                            'rgba(255, 230, 109, 0.7)',
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(155, 89, 182, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 107, 107, 1)',
-                            'rgba(78, 205, 196, 1)',
-                            'rgba(255, 230, 109, 1)',
-                            'rgba(46, 204, 113, 1)',
-                            'rgba(52, 152, 219, 1)',
-                            'rgba(155, 89, 182, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        }
-                    }
-                }
-            });
-
-            // Task Completion Chart
-            const taskCompletionCtx = document.getElementById('taskCompletionChart').getContext('2d');
-            const taskCompletionChart = new Chart(taskCompletionCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Deliveries', 'Cleaning', 'Handyman', 'Moving', 'Errands', 'Other'],
-                    datasets: [{
-                        label: 'Completion Rate',
-                        data: [95, 92, 88, 90, 94, 85],
-                        backgroundColor: 'rgba(46, 204, 113, 0.7)',
-                        borderColor: 'rgba(46, 204, 113, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Task Duration Chart
-            const taskDurationCtx = document.getElementById('taskDurationChart').getContext('2d');
-            const taskDurationChart = new Chart(taskDurationCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Deliveries', 'Cleaning', 'Handyman', 'Moving', 'Errands', 'Other'],
-                    datasets: [{
-                        label: 'Average Duration (hours)',
-                        data: [1.5, 3.2, 4.5, 5.8, 2.1, 3.7],
-                        backgroundColor: 'rgba(255, 230, 109, 0.7)',
-                        borderColor: 'rgba(255, 230, 109, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + ' hrs';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Task Trends Chart
-            const taskTrendsCtx = document.getElementById('taskTrendsChart').getContext('2d');
-            const taskTrendsChart = new Chart(taskTrendsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                    datasets: [{
-                        label: 'Deliveries',
-                        data: [520, 580, 650, 720, 780, 850, 920],
-                        borderColor: 'rgba(255, 107, 107, 1)',
-                        backgroundColor: 'rgba(255, 107, 107, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: false
-                    }, {
-                        label: 'Cleaning',
-                        data: [380, 420, 460, 510, 550, 590, 640],
-                        borderColor: 'rgba(78, 205, 196, 1)',
-                        backgroundColor: 'rgba(78, 205, 196, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: false
-                    }, {
-                        label: 'Handyman',
-                        data: [220, 250, 280, 310, 340, 370, 410],
-                        borderColor: 'rgba(255, 230, 109, 1)',
-                        backgroundColor: 'rgba(255, 230, 109, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-
-            // Revenue Trends Chart
-            const revenueTrendsCtx = document.getElementById('revenueTrendsChart').getContext('2d');
-            const revenueTrendsChart = new Chart(revenueTrendsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                    datasets: [{
-                        label: 'Gross Revenue',
-                        data: [32000, 35000, 39000, 42000, 46000, 49000, 53000],
-                        borderColor: '#2ECC71',
-                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }, {
-                        label: 'Net Revenue',
-                        data: [9600, 10500, 11700, 12600, 13800, 14700, 15900],
-                        borderColor: '#3498DB',
-                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '$' + value;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Revenue by Task Type Chart
-            const revenueByTaskTypeCtx = document.getElementById('revenueByTaskTypeChart').getContext('2d');
-            const revenueByTaskTypeChart = new Chart(revenueByTaskTypeCtx, {
-                type: 'pie',
-                data: {
-                    labels: ['Deliveries', 'Cleaning', 'Handyman', 'Moving', 'Errands', 'Other'],
-                    datasets: [{
-                        data: [38, 22, 18, 12, 7, 3],
-                        backgroundColor: [
-                            'rgba(255, 107, 107, 0.7)',
-                            'rgba(78, 205, 196, 0.7)',
-                            'rgba(255, 230, 109, 0.7)',
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(155, 89, 182, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 107, 107, 1)',
-                            'rgba(78, 205, 196, 1)',
-                            'rgba(255, 230, 109, 1)',
-                            'rgba(46, 204, 113, 1)',
-                            'rgba(52, 152, 219, 1)',
-                            'rgba(155, 89, 182, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total) * 100);
-                                    return `${label}: ${percentage}% (${value}%)`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
             // Revenue by Region Chart
             const revenueByRegionCtx = document.getElementById('revenueByRegionChart').getContext('2d');
             const revenueByRegionChart = new Chart(revenueByRegionCtx, {

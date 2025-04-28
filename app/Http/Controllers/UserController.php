@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Flag;
+use App\Models\Message;
 use App\Models\Offer;
 use App\Models\Provider;
+use App\Models\Review;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\Task;
@@ -142,6 +144,33 @@ class UserController extends Controller
         $maiUsersCount = User::whereMonth('created_at', 5)->count();
         $julUsersCount = User::whereMonth('created_at', 7)->count();
         $junUsersCount = User::whereMonth('created_at', 6)->count();
+        $postedServ = Service::count();
+        $reviewsNum = Review::count();
+        $messageNum = Message::count();
+        $firstAge = user::where("age", "<=", "24")->count();
+        $secondAge = User::where('age', '<=', 34)->where('age', '>=', 25)->count();
+        $thirdAge = User::where('age', '<=', 44)->where('age', '>=', 35)->count();
+        $fourthAge = User::where('age', '<=', 54)->where('age', '>=', 45)->count();
+        $fifthAge = User::where('age', '<=', 55)->count();
+        $male = User::where('gender', 'm')->count();
+        $female = User::where('gender', 'f')->count();
+        $janProvearn = offer::whereMonth('created_at', 1)->where("status", "accepted")->count();
+        $febProvearn = offer::whereMonth('created_at', 2)->where("status", "accepted")->count();
+        $marProvearn = offer::whereMonth('created_at', 3)->where("status", "accepted")->count();
+        $avrProvearn = offer::whereMonth('created_at', 4)->where("status", "accepted")->count();
+        $maiProvearn = offer::whereMonth('created_at', 5)->where("status", "accepted")->count();
+        $junProvearn = offer::whereMonth('created_at', 6)->where("status", "accepted")->count();
+        $julProvearn = offer::whereMonth('created_at', 7)->where("status", "accepted")->count();
+        $oneRate = review::where('rating', '>=', 1.0)->where('rating', '<', 2.0)->count();
+        $twoRate = review::where('rating', '>=', 2.0)->where('rating', '<', 3.0)->count();
+        $threeRate = review::where('rating', '>=', 3.0)->where('rating', '<', 4.0)->count();
+        $fourRate = review::where('rating', '>=', 4.0)->where('rating', '<', 5.0)->count();
+        $fiveRate = review::where('rating', '>=', 5.0)->count();
+        $providerStats = provider::all();
+        $reviews = Review::all();
+        $tasksCom = task::where("status", "completed")->get();
+        $allTasks = task::all();
+        // dd($oneRate);
         return view("admin.analytics", [
             "user" => $user,
             "usersNum" => $users,
@@ -155,6 +184,39 @@ class UserController extends Controller
             "maiUsersCount" => $maiUsersCount,
             "julUsersCount" => $julUsersCount,
             "junUsersCount" => $junUsersCount,
+            "serviceNum" => $postedServ,
+            "reviewsNum" => $reviewsNum,
+            "messageNum" => $messageNum,
+            "firstAge" => $firstAge,
+            "secondAge" => $secondAge,
+            "thirdAge" => $thirdAge,
+            "fourthAge" => $fourthAge,
+            "fifthAge" => $fifthAge,
+            "male" => $male,
+            "female" => $female,
+            "janProvearn" => $janProvearn,
+            "febProvearn" => $febProvearn,
+            "marProvearn" => $marProvearn,
+            "avrProvearn" => $avrProvearn,
+            "maiProvearn" => $maiProvearn,
+            "junProvearn" => $junProvearn,
+            "julProvearn" => $julProvearn,
+            "oneRate" => $oneRate,
+            "twoRate" => $twoRate,
+            "threeRate" => $threeRate,
+            "fourRate" => $fourRate,
+            "fiveRate" => $fiveRate,
+            "providerStats" => $providerStats,
+            "tasks" => $tasksCom,
+            "reviews" => $reviews,
+            "allTasks" => $allTasks,
+        ]);
+    }
+    public function showSettings()
+    {
+        $user = auth()->user();
+        return view("admin.settings", [
+            "user" => $user,
         ]);
     }
 }

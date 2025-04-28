@@ -11,9 +11,28 @@ class NotificationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function showNotifications()
     {
-        //
+        $user = auth()->user();
+        $allNotif = Notification::count();
+        $notif = Notification::all();
+        $unreadNotif = Notification::where("read_status", "0")->count();
+        return view("admin.notification", [
+            "user" => $user,
+            "notifNum" => $allNotif,
+            "UnNotifNum" => $unreadNotif,
+            "notifs" => $notif,
+        ]);
+    }
+
+    public function markasread()
+    {
+        $notifs = Notification::all();
+        foreach ($notifs as $notif) {
+            $notif->update(["read_status" => "1"]);
+        }
+        return redirect()->back();
     }
 
     /**
