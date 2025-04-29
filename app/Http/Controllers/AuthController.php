@@ -77,15 +77,6 @@ class AuthController extends Controller
 
 
 
-
-    public function showPayment()
-    {
-        return view("provider.payment");
-    }
-    public function showReviews()
-    {
-        return view("provider.reviews");
-    }
     public function showProfile()
     {
         return view("provider.profile");

@@ -253,15 +253,11 @@
                     </a>
                     <a href="#"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
-                        <i class="fas fa-dollar-sign mr-2"></i> Earnings
+                        <i class="fas fa-star mr-2"></i> Reviews
                     </a>
                 </div>
 
                 <div class="hidden md:flex space-x-2">
-                    <a href="#"
-                        class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
-                        <i class="fas fa-star mr-2"></i> Reviews
-                    </a>
                     <a href="#"
                         class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
                         <i class="fas fa-user-circle mr-2"></i> Profile

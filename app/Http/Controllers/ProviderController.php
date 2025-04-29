@@ -89,7 +89,6 @@ class ProviderController extends Controller
 
     public function showTaskManage()
     {
-
         $user = auth()->user();
         $today = Carbon::today()->toDateString();
 
@@ -142,6 +141,31 @@ class ProviderController extends Controller
     {
         $id->update(["status" => "in-progress"]);
         return redirect()->back();
+    }
+    public function showReviews()
+    {
+        $user = auth()->user();
+        $userRVW = Review::with(['offer.provider'])
+            ->whereHas('offer.provider', function ($query) {
+                $query->where('user_id', auth()->id());
+            })->get();
+        $countRV = 0;
+        $rvNum = 0;
+        $fiveStar = 0;
+        foreach ($userRVW as $rvw) {
+            $countRV += $rvw->rating;
+            $rvNum++;
+            if($rvw->rating >= 5){
+                $fiveStar++;
+            }
+        }
+        // dd($userRVW);
+        return view("provider.reviews", [
+            "user" => $user,
+            "ratingAvg" => $countRV / $rvNum,
+            "totalRv" => $rvNum,
+            "fiveStar" => $fiveStar,
+        ]);
     }
 
     /**

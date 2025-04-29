@@ -5,9 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Provider Reviews & Ratings | QuickHands</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B', // Coral red
+                        secondary: '#4ECDC4', // Teal
+                        accent: '#FFE66D', // Yellow
+                        dark: '#1A535C', // Dark teal
+                        light: '#F7FFF7', // Off-white
+                        'dark-blue': '#2C3E50',
+                        'light-blue': '#3498DB',
+                        'success': '#2ECC71',
+                        'warning': '#F39C12',
+                        'danger': '#E74C3C',
+                        'info': '#3498DB',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Clash Display', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         :root {
             --primary: #FF6B6B;
@@ -816,34 +846,92 @@
     </style>
 </head>
 
-<body>
-    <header>
-        <div class="header-container">
-            <a href="#" class="logo">
-                <i class="fas fa-hands-helping"></i>
-                QuickHands
-            </a>
-            <nav class="nav-links">
-                <a href="provider-dashboard.html">Dashboard</a>
-                <a href="provider-available-tasks.html">Available Tasks</a>
-                <a href="provider-task-management.html">Task Management</a>
-                <a href="provider-earnings-payments.html">Earnings & Payments</a>
-                <a href="provider-reviews-ratings.html" class="active">Reviews & Ratings</a>
-                <a href="#">Messages</a>
-                <a href="#">Profile</a>
-            </nav>
-            <div class="user-actions">
-                <div class="notification-bell">
-                    <i class="far fa-bell"></i>
-                    <span class="notification-count">3</span>
+<body class="font-sans bg-gray-50 text-dark">
+    <header class="bg-gradient-to-r from-primary/10 to-secondary/10 py-8 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                <div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center mr-4">
+                            <i class="fas fa-hands-helping text-primary text-xl"></i>
+                        </div>
+                        <h1 class="font-display text-2xl font-bold">QuickHands</h1>
+                    </div>
+                    <p class="text-gray-600 mt-1">Provider Dashboard</p>
                 </div>
-                <div class="user-profile">
-                    <div class="avatar">JS</div>
-                    <span class="user-name">John Smith</span>
+
+                <div class="mt-4 md:mt-0 flex items-center space-x-4">
+                    <div class="relative">
+                        <button
+                            class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
+                            <i class="fas fa-bell"></i>
+                            <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
+                        </button>
+                    </div>
+
+                    <div class="relative">
+                        <button
+                            class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
+                            <i class="fas fa-envelope"></i>
+                            <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider"
+                            class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                        <div class="ml-3">
+                            <p class="font-medium">{{ $user->name }}</p>
+                            <p class="text-xs text-gray-500">Professional Handyman</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-30 bg-white shadow-md py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between overflow-x-auto hide-scrollbar">
+                <div class="flex space-x-1 md:space-x-4">
+                    <a href="#"
+                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
+                        <i class="fas fa-chart-line mr-2"></i> Dashboard
+                    </a>
+                    <a href="#"
+                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
+                        <i class="fas fa-tasks mr-2"></i> Available Tasks
+                    </a>
+                    <a href="#"
+                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
+                        <i class="fas fa-clipboard-list mr-2"></i> Task Management
+                    </a>
+                    <a href="#"
+                        class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
+                        <i class="fas fa-star mr-2"></i> Reviews
+                    </a>
+                </div>
+
+                <div class="hidden md:flex space-x-2">
+                    <a href="#"
+                        class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
+                        <i class="fas fa-user-circle mr-2"></i> Profile
+                    </a>
+                    <a href="#"
+                        class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
+                        <i class="fas fa-question-circle mr-2"></i> Help
+                    </a>
+                </div>
+
+                <div class="md:hidden">
+                    <button class="p-2 rounded-lg hover:bg-gray-100 text-gray-700">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
         <div class="main-content">
@@ -859,174 +947,17 @@
             <div class="stats-grid fade-in">
                 <div class="stats-card primary delay-1">
                     <div class="stats-label">Overall Rating</div>
-                    <div class="stats-value">4.8</div>
-                    <div class="stats-trend trend-up">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>0.2 from last month</span>
-                    </div>
+                    <div class="stats-value">{{ $ratingAvg }}</div>
                 </div>
                 <div class="stats-card secondary delay-2">
                     <div class="stats-label">Total Reviews</div>
-                    <div class="stats-value">127</div>
-                    <div class="stats-trend trend-up">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>15 new this month</span>
-                    </div>
+                    <div class="stats-value">{{ $totalRv }}</div>
                 </div>
                 <div class="stats-card success delay-3">
                     <div class="stats-label">5-Star Reviews</div>
-                    <div class="stats-value">92</div>
-                    <div class="stats-trend">
-                        <i class="fas fa-percentage"></i>
-                        <span>72% of all reviews</span>
-                    </div>
-                </div>
-                <div class="stats-card warning delay-4">
-                    <div class="stats-label">Response Rate</div>
-                    <div class="stats-value">95%</div>
-                    <div class="stats-trend trend-up">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>5% from last month</span>
-                    </div>
+                    <div class="stats-value">{{ $fiveStar }}</div>
                 </div>
             </div>
-
-            <div class="card fade-in delay-1">
-                <div class="card-header">
-                    <h2 class="card-title">Rating Summary</h2>
-                    <div class="card-actions">
-                        <select class="select-control">
-                            <option>All Time</option>
-                            <option>Last 30 Days</option>
-                            <option>Last 3 Months</option>
-                            <option>Last 6 Months</option>
-                            <option>Last Year</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="rating-summary">
-                    <div class="rating-average">
-                        <div class="average-value">4.8</div>
-                        <div class="average-stars">
-                            <i class="fas fa-star star"></i>
-                            <i class="fas fa-star star"></i>
-                            <i class="fas fa-star star"></i>
-                            <i class="fas fa-star star"></i>
-                            <i class="fas fa-star-half-alt star"></i>
-                        </div>
-                        <div class="average-count">Based on 127 reviews</div>
-                    </div>
-
-                    <div class="rating-distribution">
-                        <div class="distribution-item">
-                            <div class="distribution-label">
-                                <span>5</span>
-                                <i class="fas fa-star star" style="font-size: 12px;"></i>
-                            </div>
-                            <div class="distribution-bar-container">
-                                <div class="distribution-bar" style="width: 72%;"></div>
-                            </div>
-                            <div class="distribution-count">92</div>
-                        </div>
-                        <div class="distribution-item">
-                            <div class="distribution-label">
-                                <span>4</span>
-                                <i class="fas fa-star star" style="font-size: 12px;"></i>
-                            </div>
-                            <div class="distribution-bar-container">
-                                <div class="distribution-bar" style="width: 18%;"></div>
-                            </div>
-                            <div class="distribution-count">23</div>
-                        </div>
-                        <div class="distribution-item">
-                            <div class="distribution-label">
-                                <span>3</span>
-                                <i class="fas fa-star star" style="font-size: 12px;"></i>
-                            </div>
-                            <div class="distribution-bar-container">
-                                <div class="distribution-bar" style="width: 6%;"></div>
-                            </div>
-                            <div class="distribution-count">8</div>
-                        </div>
-                        <div class="distribution-item">
-                            <div class="distribution-label">
-                                <span>2</span>
-                                <i class="fas fa-star star" style="font-size: 12px;"></i>
-                            </div>
-                            <div class="distribution-bar-container">
-                                <div class="distribution-bar" style="width: 2%;"></div>
-                            </div>
-                            <div class="distribution-count">3</div>
-                        </div>
-                        <div class="distribution-item">
-                            <div class="distribution-label">
-                                <span>1</span>
-                                <i class="fas fa-star star" style="font-size: 12px;"></i>
-                            </div>
-                            <div class="distribution-bar-container">
-                                <div class="distribution-bar" style="width: 1%;"></div>
-                            </div>
-                            <div class="distribution-count">1</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="rating-breakdown">
-                    <div class="rating-item">
-                        <div class="rating-label">Punctuality</div>
-                        <div class="rating-bar-container">
-                            <div class="rating-bar" style="width: 96%;"></div>
-                        </div>
-                        <div class="rating-value">4.8</div>
-                    </div>
-                    <div class="rating-item">
-                        <div class="rating-label">Communication</div>
-                        <div class="rating-bar-container">
-                            <div class="rating-bar" style="width: 94%;"></div>
-                        </div>
-                        <div class="rating-value">4.7</div>
-                    </div>
-                    <div class="rating-item">
-                        <div class="rating-label">Quality</div>
-                        <div class="rating-bar-container">
-                            <div class="rating-bar" style="width: 98%;"></div>
-                        </div>
-                        <div class="rating-value">4.9</div>
-                    </div>
-                    <div class="rating-item">
-                        <div class="rating-label">Professionalism</div>
-                        <div class="rating-bar-container">
-                            <div class="rating-bar" style="width: 100%;"></div>
-                        </div>
-                        <div class="rating-value">5.0</div>
-                    </div>
-                    <div class="rating-item">
-                        <div class="rating-label">Value</div>
-                        <div class="rating-bar-container">
-                            <div class="rating-bar" style="width: 92%;"></div>
-                        </div>
-                        <div class="rating-value">4.6</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card fade-in delay-2">
-                <div class="card-header">
-                    <h2 class="card-title">Rating Trends</h2>
-                    <div class="card-actions">
-                        <select class="select-control">
-                            <option>Last 6 Months</option>
-                            <option>Last Year</option>
-                            <option>Last 2 Years</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <canvas id="ratingTrendsChart"></canvas>
-                </div>
-            </div>
-
             <div class="card fade-in delay-3">
                 <div class="card-header">
                     <h2 class="card-title">User Reviews</h2>
@@ -1226,96 +1157,6 @@
     </div>
 
     <script>
-        // Initialize rating trends chart
-        const ratingTrendsCtx = document.getElementById('ratingTrendsChart').getContext('2d');
-        const ratingTrendsChart = new Chart(ratingTrendsCtx, {
-            type: 'line',
-            data: {
-                labels: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
-                datasets: [{
-                        label: 'Overall Rating',
-                        data: [4.5, 4.6, 4.5, 4.7, 4.7, 4.8],
-                        backgroundColor: 'rgba(78, 205, 196, 0.2)',
-                        borderColor: 'rgba(78, 205, 196, 1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        pointBackgroundColor: 'rgba(78, 205, 196, 1)',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    },
-                    {
-                        label: 'Punctuality',
-                        data: [4.6, 4.7, 4.6, 4.7, 4.8, 4.8],
-                        backgroundColor: 'rgba(255, 107, 107, 0.2)',
-                        borderColor: 'rgba(255, 107, 107, 1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        pointBackgroundColor: 'rgba(255, 107, 107, 1)',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    },
-                    {
-                        label: 'Communication',
-                        data: [4.4, 4.5, 4.5, 4.6, 4.6, 4.7],
-                        backgroundColor: 'rgba(255, 209, 102, 0.2)',
-                        borderColor: 'rgba(255, 209, 102, 1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        pointBackgroundColor: 'rgba(255, 209, 102, 1)',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    },
-                    {
-                        label: 'Quality',
-                        data: [4.7, 4.8, 4.8, 4.8, 4.9, 4.9],
-                        backgroundColor: 'rgba(107, 203, 119, 0.2)',
-                        borderColor: 'rgba(107, 203, 119, 1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        pointBackgroundColor: 'rgba(107, 203, 119, 1)',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        min: 4.0,
-                        max: 5.0,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            boxWidth: 12,
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    }
-                }
-            }
-        });
-
         // Reply button functionality
         document.querySelectorAll('.btn-outline').forEach(button => {
             button.addEventListener('click', function() {
