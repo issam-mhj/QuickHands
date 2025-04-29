@@ -462,7 +462,7 @@
                         Task History
                     </button>
                     <button class="tab-button mx-6" data-tab="disputes">
-                        Disputes
+                        flags
                     </button>
                 </div>
             </div>
@@ -736,7 +736,6 @@
                                 <th class="pb-3 text-left font-medium text-gray-500">Date</th>
                                 <th class="pb-3 text-left font-medium text-gray-500">Status</th>
                                 <th class="pb-3 text-left font-medium text-gray-500">Earnings</th>
-                                <th class="pb-3 text-left font-medium text-gray-500">Rating</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -771,16 +770,6 @@
                                     <td class="py-4">
                                         <p class="font-medium">${{ $task->offer->proposed_amount }}</p>
                                     </td>
-                                    <td class="py-4">
-                                        <div class="flex text-yellow-400">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <span class="ml-1 text-gray-700">5.0</span>
-                                        </div>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -810,193 +799,161 @@
 
         <!-- Disputes Tab Content -->
         <div id="disputes" class="tab-content hidden">
-            <div class="dashboard-card mb-8">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="font-display text-xl font-semibold">Dispute Resolution</h3>
-                    <button
-                        class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
-                        <i class="fas fa-question-circle mr-2 text-primary"></i>
-                        <span>Dispute Guidelines</span>
-                    </button>
-                </div>
-
-                <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
-                    <div class="flex items-start">
-                        <div class="p-2 bg-yellow-100 rounded-lg text-yellow-700 mr-3">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <!-- Header with Stats Summary -->
+                <div class="mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
                         <div>
-                            <h4 class="font-medium mb-1">About Disputes</h4>
-                            <p class="text-sm text-gray-600">Disputes are created when there's a disagreement between
-                                you and the client about a task. Our support team will review all evidence and make a
-                                fair decision. Most disputes are resolved within 48 hours.</p>
+                            <h2 class="text-2xl font-bold text-gray-800">Flags</h2>
+                            <p class="text-sm text-gray-500">Monitor all flag notifications in one place</p>
                         </div>
+                        <div class="flex items-center bg-gray-50 rounded-lg p-2">
+                            <div class="flex items-center gap-2">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center text-sm font-medium">
+                                    {{ $flagsNum }}
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">Total Flags</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Indicator -->
+                    <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-red-500 rounded-full" style="width: 100%;"></div>
                     </div>
                 </div>
 
-                <!-- Active Disputes -->
-                <div class="mb-8">
-                    <h4 class="font-medium mb-4">Active Disputes (1)</h4>
+                <!-- Filter Controls -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Flag Details</h3>
+                    <div class="flex items-center space-x-2">
+                        <label for="sort" class="text-sm text-gray-500">Sort by:</label>
+                        <select id="sort"
+                            class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 hover:border-gray-300 transition-colors">
+                            <option>Date (Newest First)</option>
+                            <option>Date (Oldest First)</option>
+                            <option>Status</option>
+                            <option>Content Type</option>
+                        </select>
+                    </div>
+                </div>
 
-                    <div class="border border-gray-200 rounded-xl overflow-hidden">
-                        <div class="p-6 bg-white">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                                <div class="flex items-center mb-4 md:mb-0">
-                                    <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center mr-4">
-                                        <i class="fas fa-door-open text-red-500 text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="font-medium">Door Repair</h5>
-                                        <p class="text-sm text-gray-500">Sep 28, 2023</p>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center">
-                                    <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Client"
-                                        class="w-8 h-8 rounded-full mr-2">
-                                    <div>
-                                        <p class="text-sm font-medium">Patricia H.</p>
-                                        <div class="flex text-xs text-yellow-400">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
+                <!-- Flag Table -->
+                <div class="overflow-x-auto -mx-6">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Content</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Reason</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Date</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 bg-white">
+                            @foreach ($flags as $flag)
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center mr-3
+                              {{ $flag->content_type == 'comment'
+                                  ? 'bg-blue-100 text-blue-600'
+                                  : ($flag->content_type == 'post'
+                                      ? 'bg-purple-100 text-purple-600'
+                                      : 'bg-gray-100 text-gray-600') }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-900">{{ $flag->content_type }}</p>
+                                                <p class="text-xs text-gray-500">ID: {{ substr($flag->id, 0, 8) }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                            {{ $flag->reason == 'spam'
+                                ? 'bg-red-100 text-red-800'
+                                : ($flag->reason == 'inappropriate'
+                                    ? 'bg-orange-100 text-orange-800'
+                                    : 'bg-gray-100 text-gray-800') }}">
+                                            {{ $flag->reason }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">
+                                                {{ \Carbon\Carbon::parse($flag->created_at)->format('M d, Y') }}</p>
+                                            <p class="text-xs text-gray-500">
+                                                {{ \Carbon\Carbon::parse($flag->created_at)->format('h:i A') }}</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                            {{ $flag->status == 'resolved'
+                                ? 'bg-green-100 text-green-800'
+                                : ($flag->status == 'pending'
+                                    ? 'bg-yellow-100 text-yellow-800'
+                                    : 'bg-blue-100 text-blue-800') }}">
+                                            {{ $flag->status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                            <div class="p-4 bg-gray-50 rounded-lg mb-4">
-                                <h5 class="font-medium mb-2">Dispute Reason</h5>
-                                <p class="text-sm text-gray-600">Client claims the door still sticks after repair and
-                                    is requesting a refund or additional service at no cost.</p>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <h5 class="font-medium mb-2">Dispute Status</h5>
-                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Under
-                                        Review</span>
-                                    <p class="text-xs text-gray-500 mt-1">Submitted on Oct 1, 2023</p>
-                                </div>
-
-                                <div>
-                                    <h5 class="font-medium mb-2">Payment Status</h5>
-                                    <p class="text-sm">$60.00 <span class="text-yellow-600">(on hold)</span></p>
-                                </div>
-                            </div>
-
-                            <div class="border-t border-gray-200 pt-4">
-                                <h5 class="font-medium mb-3">Timeline</h5>
-
-                                <div class="timeline">
-                                    <div class="timeline-item">
-                                        <p class="font-medium">Dispute Submitted</p>
-                                        <p class="text-sm text-gray-500">Oct 1, 2023 at 10:23 AM</p>
-                                        <p class="text-sm mt-1">Client submitted a dispute claiming the door still
-                                            sticks after repair.</p>
-                                    </div>
-
-                                    <div class="timeline-item">
-                                        <p class="font-medium">Your Response</p>
-                                        <p class="text-sm text-gray-500">Oct 1, 2023 at 2:45 PM</p>
-                                        <p class="text-sm mt-1">You provided evidence that the door was working
-                                            properly when you left.</p>
-                                    </div>
-
-                                    <div class="timeline-item">
-                                        <p class="font-medium">Support Team Review</p>
-                                        <p class="text-sm text-gray-500">Oct 2, 2023 at 9:15 AM</p>
-                                        <p class="text-sm mt-1">Our support team is reviewing the evidence from both
-                                            parties.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-6 flex flex-col md:flex-row md:justify-between items-center">
-                                <div class="mb-4 md:mb-0">
-                                    <button class="text-primary hover:underline text-sm flex items-center">
-                                        <i class="fas fa-paperclip mr-1"></i>
-                                        <span>View Attached Evidence (3 files)</span>
-                                    </button>
-                                </div>
-
-                                <div class="flex space-x-3">
-                                    <button
-                                        class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                                        <i class="fas fa-comment-alt mr-2"></i>
-                                        <span>Message Support</span>
-                                    </button>
-                                    <button
-                                        class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                        <i class="fas fa-plus mr-2"></i>
-                                        <span>Add Evidence</span>
-                                    </button>
-                                </div>
-                            </div>
+                    <!-- Empty State -->
+                    @if (count($flags) === 0)
+                        <div class="flex flex-col items-center justify-center py-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                            </svg>
+                            <p class="mt-2 text-gray-500">No flags to display</p>
                         </div>
-                    </div>
+                    @endif
                 </div>
 
-                <!-- Past Disputes -->
-                <div>
-                    <h4 class="font-medium mb-4">Past Disputes (2)</h4>
-
-                    <div class="space-y-4">
-                        <!-- Past Dispute 1 -->
-                        <div
-                            class="p-4 border border-gray-200 rounded-xl hover:border-primary/30 hover:bg-primary/5 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between">
-                                <div class="flex items-center mb-4 md:mb-0">
-                                    <div
-                                        class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
-                                        <i class="fas fa-paint-roller text-blue-500"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="font-medium">Wall Painting</h5>
-                                        <p class="text-xs text-gray-500">Aug 15, 2023</p>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Resolved
-                                        in Your Favor</span>
-                                    <button
-                                        class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Past Dispute 2 -->
-                        <div
-                            class="p-4 border border-gray-200 rounded-xl hover:border-primary/30 hover:bg-primary/5 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between">
-                                <div class="flex items-center mb-4 md:mb-0">
-                                    <div
-                                        class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
-                                        <i class="fas fa-couch text-purple-500"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="font-medium">Furniture Assembly</h5>
-                                        <p class="text-xs text-gray-500">Jul 22, 2023</p>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">Resolved in
-                                        Client's Favor</span>
-                                    <button
-                                        class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Pagination (if needed) -->
+                @if (count($flags) > 0)
+                    <div class="flex justify-center sm:justify-end mt-6">
+                        <nav class="inline-flex rounded-md shadow-sm">
+                            <a href="#"
+                                class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                Previous
+                            </a>
+                            <a href="#"
+                                class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                1
+                            </a>
+                            <a href="#"
+                                class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                2
+                            </a>
+                            <a href="#"
+                                class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                Next
+                            </a>
+                        </nav>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </main>

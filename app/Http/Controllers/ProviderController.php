@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Provider;
 use App\Http\Requests\StoreProviderRequest;
 use App\Http\Requests\UpdateProviderRequest;
+use App\Models\Flag;
 use App\Models\Offer;
 use App\Models\Review;
 use App\Models\Service;
@@ -121,6 +122,9 @@ class ProviderController extends Controller
             ->whereHas('offer.provider', function ($query) {
                 $query->where('user_id', auth()->id());
             })->where('status', '=', 'completed')->get();
+
+        $recievedFlags = Flag::where('user_id', auth()->id())->count();
+        $flags = Flag::where('user_id', auth()->id())->get();
         return view("provider.taskmanage", [
             "user" => $user,
             "todayTasks" => $todayTasks,
@@ -129,6 +133,8 @@ class ProviderController extends Controller
             "tasks" => $currentTasks,
             "pendingOffers" => $pendingOffers,
             "finishedTasks" => $finishedTasks,
+            "flagsNum" => $recievedFlags,
+            "flags" => $flags,
         ]);
     }
 
