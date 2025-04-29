@@ -117,6 +117,10 @@ class ProviderController extends Controller
             ->where('status', '!=', 'completed')
             ->get();
         $pendingOffers = Offer::where("provider_id", $user->provider->id)->where("status", "!=", "accepted")->get();
+        $finishedTasks = Task::with(['offer.provider'])
+            ->whereHas('offer.provider', function ($query) {
+                $query->where('user_id', auth()->id());
+            })->where('status', '=', 'completed')->get();
         return view("provider.taskmanage", [
             "user" => $user,
             "todayTasks" => $todayTasks,
@@ -124,6 +128,7 @@ class ProviderController extends Controller
             "notstarted" => $notstarted,
             "tasks" => $currentTasks,
             "pendingOffers" => $pendingOffers,
+            "finishedTasks" => $finishedTasks,
         ]);
     }
 

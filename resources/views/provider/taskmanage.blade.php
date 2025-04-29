@@ -456,7 +456,7 @@
                         Active Tasks
                     </button>
                     <button class="tab-button mx-6" data-tab="calendar">
-                        Calendar View
+                        pending offers
                     </button>
                     <button class="tab-button mx-6" data-tab="task-history">
                         Task History
@@ -724,18 +724,6 @@
                             <i
                                 class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
-
-                        <button
-                            class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
-                            <i class="fas fa-filter mr-2 text-primary"></i>
-                            <span>Filter</span>
-                        </button>
-
-                        <button
-                            class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
-                            <i class="fas fa-file-export mr-2 text-primary"></i>
-                            <span>Export</span>
-                        </button>
                     </div>
                 </div>
 
@@ -749,299 +737,52 @@
                                 <th class="pb-3 text-left font-medium text-gray-500">Status</th>
                                 <th class="pb-3 text-left font-medium text-gray-500">Earnings</th>
                                 <th class="pb-3 text-left font-medium text-gray-500">Rating</th>
-                                <th class="pb-3 text-left font-medium text-gray-500">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Task 1 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-paint-roller text-green-500"></i>
+                            @foreach ($finishedTasks as $task)
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
+                                                <i class="fas fa-paint-roller text-green-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">{{ $task->offer->service->title }}</p>
+                                                <p class="text-xs text-gray-500">
+                                                    {{ $task->offer->service->servicecategory->name }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p class="font-medium">Interior Painting</p>
-                                            <p class="text-xs text-gray-500">Bedroom walls and ceiling</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <span>{{ $task->offer->service->user->name }}</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Sarah M.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Oct 10, 2023</p>
-                                    <p class="text-xs text-gray-500">9:00 AM - 5:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill completed">Completed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$320.00</p>
-                                    <p class="text-xs text-gray-500">+ $40.00 tip</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span class="ml-1 text-gray-700">5.0</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Download Invoice">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Task 2 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-faucet text-blue-500"></i>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">
+                                            {{ \Carbon\Carbon::parse($task->end_date)->format('M d, Y') }}</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <span class="status-pill completed">{{ $task->status }}</span>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">${{ $task->offer->proposed_amount }}</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <span class="ml-1 text-gray-700">5.0</span>
                                         </div>
-                                        <div>
-                                            <p class="font-medium">Kitchen Sink Installation</p>
-                                            <p class="text-xs text-gray-500">New sink and disposal</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>James W.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Oct 8, 2023</p>
-                                    <p class="text-xs text-gray-500">1:00 PM - 4:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill completed">Completed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$180.00</p>
-                                    <p class="text-xs text-gray-500">+ $20.00 tip</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span class="ml-1 text-gray-700">4.5</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Download Invoice">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Task 3 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-couch text-purple-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Furniture Assembly</p>
-                                            <p class="text-xs text-gray-500">Dresser and nightstands</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Emily R.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Oct 5, 2023</p>
-                                    <p class="text-xs text-gray-500">10:00 AM - 1:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill completed">Completed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$120.00</p>
-                                    <p class="text-xs text-gray-500">No tip</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <span class="ml-1 text-gray-700">4.0</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Download Invoice">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Task 4 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-bolt text-yellow-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Light Fixture Installation</p>
-                                            <p class="text-xs text-gray-500">Dining room chandelier</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Thomas B.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Oct 2, 2023</p>
-                                    <p class="text-xs text-gray-500">3:00 PM - 5:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill completed">Completed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$110.00</p>
-                                    <p class="text-xs text-gray-500">+ $15.00 tip</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span class="ml-1 text-gray-700">5.0</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Download Invoice">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Task 5 -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-door-open text-red-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Door Repair</p>
-                                            <p class="text-xs text-gray-500">Fix sticking bathroom door</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Patricia H.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Sep 28, 2023</p>
-                                    <p class="text-xs text-gray-500">11:00 AM - 12:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill disputed">Disputed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$60.00</p>
-                                    <p class="text-xs text-gray-500">In dispute</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <span class="ml-1 text-gray-700">2.0</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Dispute">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
