@@ -15,7 +15,7 @@ class OfferController extends Controller
     {
         $validated = $request->validate([
             'amount' => 'required|numeric|min:1',
-            'estimated_time' => 'required|integer|min:0.1',
+            'estimated_time' => 'required|integer|min:1',
             'message' => 'nullable|string|max:1000',
         ]);
 
@@ -25,7 +25,8 @@ class OfferController extends Controller
             "provider_id" => auth()->user()->provider->id,
             "service_id" => $id->id,
         ]);
-        return redirect()->back()->with('success', 'Your offer has been submitted successfully.');
+
+        return redirect()->back()->with('success', 'Offer submitted!');
     }
     /**
      * Show the form for creating a new resource.
@@ -72,6 +73,7 @@ class OfferController extends Controller
      */
     public function destroy(Offer $offer)
     {
-        //
+        $offer->delete();
+        return redirect()->back();
     }
 }

@@ -78,11 +78,6 @@ class AuthController extends Controller
 
 
 
-
-    public function showTaskManage()
-    {
-        return view("provider.taskmanage");
-    }
     public function showPayment()
     {
         return view("provider.payment");

@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Provider;
 use App\Http\Requests\StoreProviderRequest;
 use App\Http\Requests\UpdateProviderRequest;
+use App\Models\Offer;
 use App\Models\Review;
 use App\Models\Service;
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use League\OAuth1\Client\Server\Server;
 
 class ProviderController extends Controller
@@ -81,6 +84,53 @@ class ProviderController extends Controller
             "servicesNum" => $servicesNum,
             "services" => $services,
         ]);
+    }
+
+    public function showTaskManage()
+    {
+
+        $user = auth()->user();
+        $today = Carbon::today()->toDateString();
+
+        $todayTasks = DB::table('tasks')
+            ->join('offers', 'tasks.offer_id', '=', 'offers.id')
+            ->join('providers', 'offers.provider_id', '=', 'providers.id')
+            ->whereDate('tasks.end_date', $today)
+            ->where('providers.user_id', auth()->id())
+            ->count();
+        $futureTasks = DB::table('tasks')
+            ->join('offers', 'tasks.offer_id', '=', 'offers.id')
+            ->join('providers', 'offers.provider_id', '=', 'providers.id')
+            ->whereDate('tasks.end_date', '>', Carbon::today())
+            ->where('providers.user_id', auth()->id())
+            ->count();
+        $notstarted = DB::table('tasks')
+            ->join('offers', 'tasks.offer_id', '=', 'offers.id')
+            ->join('providers', 'offers.provider_id', '=', 'providers.id')
+            ->whereDate('tasks.end_date', '>', Carbon::today())
+            ->where('providers.user_id', auth()->id())->where('tasks.status', 'not-started')
+            ->count();
+        $currentTasks = Task::with(['offer.provider'])
+            ->whereHas('offer.provider', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->where('status', '!=', 'completed')
+            ->get();
+        $pendingOffers = Offer::where("provider_id", $user->provider->id)->where("status", "!=", "accepted")->get();
+        return view("provider.taskmanage", [
+            "user" => $user,
+            "todayTasks" => $todayTasks,
+            "futureTasks" => $futureTasks,
+            "notstarted" => $notstarted,
+            "tasks" => $currentTasks,
+            "pendingOffers" => $pendingOffers,
+        ]);
+    }
+
+    public function turntostarted(Task $id)
+    {
+        $id->update(["status" => "in-progress"]);
+        return redirect()->back();
     }
 
     /**

@@ -41,11 +41,13 @@ Route::post("/markasread", [NotificationController::class, "markasread"]);
 Route::get("/provider/dashboard", [ProviderController::class, "showProviderDashboard"])->name("provider.dashboard");
 Route::get("/provider/task", [ProviderController::class, "showAvailableTasks"]);
 Route::post("/provider/task/giveoffer/{id}", [OfferController::class, "sendOffer"]);
+Route::get("/provider/taskmanage", [ProviderController::class, "showTaskManage"]);
+Route::post("/startedTask/{service}", [ProviderController::class, "turntostarted"]);
+Route::delete("/offer/delete/{offer}", [OfferController::class, "destroy"]);
 
 
 
 
-Route::get("/taskmanage", [AuthController::class, "showTaskManage"]);
 Route::get("/payment", [AuthController::class, "showPayment"]);
 Route::get("/reviews", [AuthController::class, "showReviews"]);
 Route::get("/profile", [AuthController::class, "showProfile"]);

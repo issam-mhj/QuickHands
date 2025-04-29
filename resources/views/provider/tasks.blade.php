@@ -337,7 +337,7 @@
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider"
                             class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
                         <div class="ml-3">
-                            <p class="font-medium">Michael Rodriguez</p>
+                            <p class="font-medium">{{ $user->name }}</p>
                             <p class="text-xs text-gray-500">Professional Handyman</p>
                         </div>
                     </div>
@@ -536,87 +536,84 @@
                                 <i class="fas fa-tools text-6xl"></i>
                             </div>
                         </div>
-                        <!-- Bid Modal -->
-                        <div id="bidModal"
-                            class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-                            <div class="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4 animate-fadeIn">
-                                <!-- Modal Header -->
-                                <div class="p-6 border-b border-gray-100">
-                                    <div class="flex justify-between items-center">
-                                        <h3 class="text-xl font-bold text-gray-800">Place Your Bid</h3>
-                                        <button onclick="closeBidModal()" class="text-gray-400 hover:text-gray-600">
-                                            <i class="fas fa-times text-xl"></i>
-                                        </button>
-                                    </div>
-                                    <p id="modalServiceTitle" class="text-gray-600 mt-2 text-sm"></p>
-                                </div>
-
-                                <!-- Modal Body -->
-                                <form id="bidForm" action="task/giveoffer/{{$service->id}}" method="POST" class="p-6">
-                                    @csrf
-                                    <input type="hidden" id="service_id" name="service_id">
-
-                                    <div class="space-y-5">
-                                        <!-- Amount Field -->
-                                        <div>
-                                            <label for="amount"
-                                                class="block text-sm font-medium text-gray-700 mb-1">Proposed
-                                                Amount ($)</label>
-                                            <div class="relative">
-                                                <div
-                                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <span class="text-gray-500">$</span>
-                                                </div>
-                                                <input type="number" id="amount" name="amount" min="1"
-                                                    step="0.01"
-                                                    class="pl-8 block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                                    placeholder="0.00" required>
-                                            </div>
-                                        </div>
-
-                                        <!-- Estimated Time Field -->
-                                        <div>
-                                            <label for="estimated_time"
-                                                class="block text-sm font-medium text-gray-700 mb-1">Estimated Time
-                                                (hours)
-                                            </label>
-                                            <div class="relative">
-                                                <div
-                                                    class="absolute inset-y-0 right-0 pr-10 flex items-center pointer-events-none">
-                                                    <span class="text-gray-500">hours</span>
-                                                </div>
-                                                <input type="number" id="estimated_time" name="estimated_time"
-                                                    min="1" step="1"
-                                                    class="block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                                    placeholder="Enter estimated hours" required>
-                                            </div>
-                                        </div>
-
-                                        <!-- Notes/Message Field (Optional) -->
-                                        <div>
-                                            <label for="message"
-                                                class="block text-sm font-medium text-gray-700 mb-1">Additional
-                                                Notes (Optional)</label>
-                                            <textarea id="message" name="message" rows="3"
-                                                class="block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                                placeholder="Any additional details about your offer..."></textarea>
-                                        </div>
-                                    </div>
-
-                                    <!-- Submit Button -->
-                                    <div class="mt-6">
-                                        <button type="submit"
-                                            class="w-full bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors font-medium">
-                                            Submit Bid
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                     @endforeach
                 </div>
             </div>
 
+            <!-- Bid Modal -->
+            <div id="bidModal"
+                class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+                <div class="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4 animate-fadeIn">
+                    <!-- Modal Header -->
+                    <div class="p-6 border-b border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-bold text-gray-800">Place Your Bid</h3>
+                            <button onclick="closeBidModal()" class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+                        <p id="modalServiceTitle" class="text-gray-600 mt-2 text-sm"></p>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <form id="bidForm" action="task/giveoffer/{{ $service->id }}" method="POST" class="p-6">
+                        @csrf
+                        <input type="hidden" id="service_id" name="service_id">
+
+                        <div class="space-y-5">
+                            <!-- Amount Field -->
+                            <div>
+                                <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Proposed
+                                    Amount ($)</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">$</span>
+                                    </div>
+                                    <input type="number" id="amount" name="amount" min="1"
+                                        step="0.01"
+                                        class="pl-8 block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="0.00" required>
+                                </div>
+                            </div>
+
+                            <!-- Estimated Time Field -->
+                            <div>
+                                <label for="estimated_time"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Estimated Time
+                                    (hours)
+                                </label>
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-y-0 right-0 pr-10 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">hours</span>
+                                    </div>
+                                    <input type="number" id="estimated_time" name="estimated_time" min="1"
+                                        step="1"
+                                        class="block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="Enter estimated hours" required>
+                                </div>
+                            </div>
+
+                            <!-- Notes/Message Field (Optional) -->
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Additional
+                                    Notes (Optional)</label>
+                                <textarea id="message" name="message" rows="3"
+                                    class="block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                    placeholder="Any additional details about your offer..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-6">
+                            <button type="submit"
+                                class="w-full bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors font-medium">
+                                Submit Bid
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- Pagination -->
             <div class="mt-8 flex justify-center">
