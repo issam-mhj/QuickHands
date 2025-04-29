@@ -489,46 +489,67 @@
             </div>
 
             <div>
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
-                    @foreach ($reviews as $review)
-                        <div class="p-4 bg-gray-50 rounded-xl">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 rounded-full mr-3">
-                                        {{ $review->offer->service->user->name[0] }}
-                                        <div>
-                                            <h5 class="font-medium">{{ $review->offer->service->user->name }}</h5>
-                                            <p class="text-xs text-gray-500">{{ $review->created_at }} days ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex text-accent">
-                                        {{-- @foreach ($review->intrating as $star) --}}
-                                        <i class="fas fa-star"></i>
-                                        {{-- @endforeach --}}
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-600">{{ $review->comment }}</p>
-                                <div class="mt-3 text-xs text-gray-500">
-                                    <span class="font-medium">Task:</span> {{ $review->offer->service->title }}
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-
-                    <div class="mt-6 pt-4 border-t border-gray-100 text-center">
-                        <div class="flex items-center justify-center">
-                            <div class="flex text-accent mr-2">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Summary section - moved to top -->
+                    <div class="mb-8 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-center flex-col md:flex-row gap-4">
+                            <div class="flex text-yellow-500 text-xl mr-3">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                             </div>
-                            <span class="font-medium">{{ $reviewsAVG }} average from {{ $reviewsNum }}
+                            <span class="font-medium text-lg">{{ $reviewsAVG }} average from {{ $reviewsNum }}
                                 reviews</span>
                         </div>
                     </div>
+
+                    <!-- Reviews -->
+                    <div class="grid grid-cols-1 gap-6">
+                        @foreach ($reviews as $review)
+                            <div
+                                class="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                                <div class="flex flex-col md:flex-row md:items-start gap-4">
+                                    <!-- User info and rating -->
+                                    <div class="flex flex-col items-start md:w-1/3">
+                                        <div class="flex items-center mb-3">
+                                            <div
+                                                class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-semibold text-lg mr-3">
+                                                {{ $review->offer->service->user->name[0] }}
+                                            </div>
+                                            <div>
+                                                <h5 class="font-medium text-gray-900">
+                                                    {{ $review->offer->service->user->name }}</h5>
+                                                <p class="text-xs text-gray-500">
+                                                    {{ \Carbon\Carbon::parse($review->created_at)->diffForHumans() }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="flex text-yellow-500 mb-2">
+                                            @for ($i = 0; $i < (int) $review->rating; $i++)
+                                                <i class="fas fa-star"></i>
+                                            @endfor
+
+                                        </div>
+                                        <div class="text-xs text-gray-500">
+                                            <span class="font-medium">Task:</span>
+                                            {{ $review->offer->service->title }}
+                                        </div>
+                                    </div>
+
+                                    <!-- Review comment -->
+                                    <div class="md:w-2/3">
+                                        <p class="text-gray-700">{{ $review->comment }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Pagination can be added here if needed -->
                 </div>
+            </div>
         </section>
     </main>
 

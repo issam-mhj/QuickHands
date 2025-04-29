@@ -6,6 +6,7 @@ use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\TaskController;
 
@@ -39,6 +40,7 @@ Route::post("/markasread", [NotificationController::class, "markasread"]);
 
 Route::get("/provider/dashboard", [ProviderController::class, "showProviderDashboard"])->name("provider.dashboard");
 Route::get("/provider/task", [ProviderController::class, "showAvailableTasks"]);
+Route::post("/provider/task/giveoffer/{id}", [OfferController::class, "sendOffer"]);
 
 
 

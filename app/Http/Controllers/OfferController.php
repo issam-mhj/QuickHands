@@ -5,17 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Offer;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
+use App\Models\Service;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OfferController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function sendOffer(Request $request, Service $id)
     {
-        //
-    }
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:1',
+            'estimated_time' => 'required|integer|min:0.1',
+            'message' => 'nullable|string|max:1000',
+        ]);
 
+        Offer::create([
+            "proposed_amount" => $request->amount,
+            "estimated_time" => $request->estimated_time,
+            "provider_id" => auth()->user()->provider->id,
+            "service_id" => $id->id,
+        ]);
+        return redirect()->back()->with('success', 'Your offer has been submitted successfully.');
+    }
     /**
      * Show the form for creating a new resource.
      */
