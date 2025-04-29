@@ -6,6 +6,7 @@ use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\TaskController;
 
 Route::get("/", [VisitController::class, "home"]);
@@ -17,6 +18,7 @@ Route::get("/join", [VisitController::class, "join"]);
 
 Route::post("/register", [AuthController::class, "register"])->name("signup");
 Route::post("/login", [AuthController::class, "login"])->name("login");
+Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
 Route::get("/admin/dashboard", [UserController::class, "showAdminDashboard"])->name("admin.dashboard");
 Route::get("/admin/usermanage", [UserController::class, "showUserManage"])->name("admin.users");
@@ -28,13 +30,19 @@ Route::post("/solved/{id}", [UserController::class, "solvedflag"]);
 Route::post("/remove/{id}", [UserController::class, "deleteflag"]);
 Route::get("/admin/analytics", [UserController::class, "showAnalytics"])->name("admin.analytics");
 Route::get("/admin/settings", [UserController::class, "showSettings"])->name("admin.settings");
+Route::post("updateprofile", [UserController::class, "updateProfile"]);
 Route::get("/admin/task", [TaskController::class, "showTask"])->name("admin.tasks");
 Route::post("/removetask/{id}", [TaskController::class, "deleteTask"]);
 Route::get("/admin/notifications", [NotificationController::class, "showNotifications"])->name("admin.notifications");
 Route::post("/markasread", [NotificationController::class, "markasread"]);
 
 
-Route::get("/todotask", [AuthController::class, "showAvailableTasks"]);
+Route::get("/provider/dashboard", [ProviderController::class, "showProviderDashboard"])->name("provider.dashboard");
+Route::get("/provider/task", [ProviderController::class, "showAvailableTasks"]);
+
+
+
+
 Route::get("/taskmanage", [AuthController::class, "showTaskManage"]);
 Route::get("/payment", [AuthController::class, "showPayment"]);
 Route::get("/reviews", [AuthController::class, "showReviews"]);

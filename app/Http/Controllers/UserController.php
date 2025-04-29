@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash as FacadesHash;
+use Illuminate\Validation\Rule;
 use phpseclib3\Crypt\Hash;
 
 class UserController extends Controller
@@ -218,5 +219,31 @@ class UserController extends Controller
         return view("admin.settings", [
             "user" => $user,
         ]);
+    }
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'age' => ['nullable', 'integer', 'min:18', 'max:100'],
+            'gender' => ['nullable', 'in:m,f'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'password' => ['nullable', 'current_password'],
+            'new_password' => ['nullable', 'confirmed', 'min:8', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&]/'],
+        ]);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->age = $validated['age'] ?? null;
+        $user->gender = $validated['gender'] ?? null;
+        $user->location = $validated['location'] ?? null;
+
+        if (!empty($validated['new_password'])) {
+            $user->password = Hash::make($validated['new_password']);
+        }
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 }

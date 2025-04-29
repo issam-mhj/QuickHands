@@ -418,7 +418,7 @@
 
         <!-- Search and Filters -->
         <section class="mb-8">
-            <div class="dashboard-card gradient-border">
+            <div>
                 <div class="flex flex-col lg:flex-row lg:items-center gap-6">
                     <!-- Search Bar -->
                     <div class="lg:flex-1">
@@ -451,543 +451,64 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Expanded Filters -->
-                <div id="filterPanel" class="mt-6 pt-6 border-t border-gray-100">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Task Type Filter -->
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Task Type</label>
-                            <div class="space-y-2">
-                                <label class="custom-checkbox flex items-center">
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark mr-2"></span>
-                                    <span class="text-sm">Handyman</span>
-                                </label>
-                                <label class="custom-checkbox flex items-center">
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark mr-2"></span>
-                                    <span class="text-sm">Plumbing</span>
-                                </label>
-                                <label class="custom-checkbox flex items-center">
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark mr-2"></span>
-                                    <span class="text-sm">Electrical</span>
-                                </label>
-                                <label class="custom-checkbox flex items-center">
-                                    <input type="checkbox">
-                                    <span class="checkmark mr-2"></span>
-                                    <span class="text-sm">Moving</span>
-                                </label>
-                                <label class="custom-checkbox flex items-center">
-                                    <input type="checkbox">
-                                    <span class="checkmark mr-2"></span>
-                                    <span class="text-sm">Cleaning</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Location Filter -->
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Location</label>
-                            <select
-                                class="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
-                                <option>All Locations</option>
-                                <option>Within 5 miles</option>
-                                <option>Within 10 miles</option>
-                                <option>Within 20 miles</option>
-                                <option>Within 50 miles</option>
-                            </select>
-                            <div class="mt-3">
-                                <label class="custom-checkbox flex items-center">
-                                    <input type="checkbox">
-                                    <span class="checkmark mr-2"></span>
-                                    <span class="text-sm">Only show tasks in my service areas</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Budget Range Filter -->
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Budget Range</label>
-                            <div class="space-y-4">
-                                <div>
-                                    <input type="range" min="0" max="500" value="50"
-                                        class="w-full" id="minBudgetSlider">
-                                    <div class="flex justify-between mt-1">
-                                        <span class="text-xs text-gray-500">$0</span>
-                                        <span class="text-xs text-gray-500">$500+</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-sm mr-2">Min Budget:</span>
-                                    <div class="relative">
-                                        <span
-                                            class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
-                                        <input type="number" value="50" min="0" max="500"
-                                            class="w-24 pl-7 pr-2 py-1 border border-gray-200 rounded-lg text-sm">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Date Filter -->
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Task Deadline</label>
-                            <select
-                                class="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
-                                <option>Any Time</option>
-                                <option>Today</option>
-                                <option>This Week</option>
-                                <option>This Month</option>
-                                <option>Custom Range</option>
-                            </select>
-                            <div class="mt-3">
-                                <label class="custom-checkbox flex items-center">
-                                    <input type="checkbox">
-                                    <span class="checkmark mr-2"></span>
-                                    <span class="text-sm">Urgent tasks only</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 flex flex-col sm:flex-row sm:justify-between items-center">
-                        <div class="mb-3 sm:mb-0">
-                            <span class="text-sm text-gray-500">3 filters applied</span>
-                            <button class="ml-2 text-primary hover:underline text-sm">Clear All</button>
-                        </div>
-                        <div class="flex space-x-3">
-                            <button
-                                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                                Cancel
-                            </button>
-                            <button
-                                class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                Apply Filters
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
         <!-- Task Results -->
         <section class="mb-8">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="font-display text-xl font-semibold">24 Tasks Found</h3>
+                <h3 class="font-display text-xl font-semibold">{{ $servicesNum }} Tasks Found</h3>
                 <span class="text-sm text-gray-500">Showing 1-12 of 24</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Task Card 1 -->
-                <div class="task-card">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">New • 2h ago</span>
-                        <div class="flex space-x-1">
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
+                @foreach ($services as $service)
+                    <div class="task-card">
+                        <div class="flex justify-between items-start mb-3">
+                            <span
+                                class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">{{ \Carbon\Carbon::parse($service->created_at)->diffForHumans() }}</span>
                         </div>
-                    </div>
 
-                    <h4 class="text-lg font-semibold mb-1">Leaky Faucet Repair</h4>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <i class="fas fa-map-marker-alt mr-1"></i>
-                        <span>Downtown, 2.3 miles away</span>
-                    </div>
+                        <h4 class="text-lg font-semibold mb-1">{{ $service->title }}</h4>
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            <span>{{ $service->location }}</span>
+                        </div>
 
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Client"
-                            class="w-8 h-8 rounded-full mr-2">
-                        <div>
-                            <p class="text-sm font-medium">Jennifer L.</p>
-                            <div class="flex items-center">
-                                <div class="flex text-xs text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-1">(4.8)</span>
+                        <div class="flex items-center mb-4">
+                            <div class="w-8 h-8 rounded-full mr-2">{{ $service->user->name[0] }}</div>
+                            <div>
+                                <p class="text-sm font-medium">{{ $service->user->name }}</p>
                             </div>
                         </div>
-                    </div>
 
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-2">Kitchen sink has a slow drip that needs fixing.
-                        Already purchased replacement parts, just need installation.</p>
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ $service->description }}</p>
 
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Plumbing</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Quick Fix</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">1-2 hours</span>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div>
-                            <p class="text-sm text-gray-500">Budget</p>
-                            <p class="font-semibold">$75 - $100</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span
+                                class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">{{ $service->servicecategory->name }}</span>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Due Date</p>
-                            <p class="font-semibold">Tomorrow</p>
-                        </div>
-                        <button
-                            class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                            onclick="openTaskModal('task1')">
-                            Place Bid
-                        </button>
-                    </div>
 
-                    <i class="fas fa-wrench task-icon text-gray-100"></i>
-                </div>
-
-                <!-- Task Card 2 -->
-                <div class="task-card">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">New • 5h ago</span>
-                        <div class="flex space-x-1">
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <h4 class="text-lg font-semibold mb-1">TV Mounting - 65" OLED</h4>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <i class="fas fa-map-marker-alt mr-1"></i>
-                        <span>Westside, 4.7 miles away</span>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Client"
-                            class="w-8 h-8 rounded-full mr-2">
-                        <div>
-                            <p class="text-sm font-medium">Robert T.</p>
-                            <div class="flex items-center">
-                                <div class="flex text-xs text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-1">(5.0)</span>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <div>
+                                <p class="text-sm text-gray-500">Budget</p>
+                                <p class="font-semibold">open to discuss</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-2">Need to mount a new 65" OLED TV on drywall. Have
-                        the mount already. Would like cables concealed if possible.</p>
-
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Handyman</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">TV Mounting</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">2-3 hours</span>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div>
-                            <p class="text-sm text-gray-500">Budget</p>
-                            <p class="font-semibold">$120 - $150</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Due Date</p>
-                            <p class="font-semibold">This Weekend</p>
-                        </div>
-                        <button
-                            class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                            onclick="openTaskModal('task2')">
-                            Place Bid
-                        </button>
-                    </div>
-
-                    <i class="fas fa-tv task-icon text-gray-100"></i>
-                </div>
-
-                <!-- Task Card 3 -->
-                <div class="task-card">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Urgent • 1d
-                            ago</span>
-                        <div class="flex space-x-1">
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <h4 class="text-lg font-semibold mb-1">Ceiling Fan Installation</h4>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <i class="fas fa-map-marker-alt mr-1"></i>
-                        <span>North Hills, 1.8 miles away</span>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Client"
-                            class="w-8 h-8 rounded-full mr-2">
-                        <div>
-                            <p class="text-sm font-medium">Maria G.</p>
-                            <div class="flex items-center">
-                                <div class="flex text-xs text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-1">(4.0)</span>
+                            <div>
+                                <p class="text-sm text-gray-500">Due Date</p>
+                                <p class="font-semibold">
+                                    {{ \Carbon\Carbon::parse($service->desired_date)->format('M d, Y') }}</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-2">Need to replace old ceiling fan with new one in
-                        master bedroom. Have the new fan ready for installation.</p>
-
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Electrical</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Installation</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">1-2 hours</span>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div>
-                            <p class="text-sm text-gray-500">Budget</p>
-                            <p class="font-semibold">$80 - $120</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Due Date</p>
-                            <p class="font-semibold">Today</p>
-                        </div>
-                        <button
-                            class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                            onclick="openTaskModal('task3')">
-                            Place Bid
-                        </button>
-                    </div>
-
-                    <i class="fas fa-fan task-icon text-gray-100"></i>
-                </div>
-
-                <!-- Task Card 4 -->
-                <div class="task-card">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">1d ago</span>
-                        <div class="flex space-x-1">
                             <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-share-alt"></i>
+                                class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
+                                onclick="openTaskModal('task1')">
+                                Place Bid
                             </button>
                         </div>
+
+                        <i class="fas fa-wrench task-icon text-gray-100"></i>
                     </div>
-
-                    <h4 class="text-lg font-semibold mb-1">Furniture Assembly - IKEA</h4>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <i class="fas fa-map-marker-alt mr-1"></i>
-                        <span>Eastwood, 3.5 miles away</span>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Client"
-                            class="w-8 h-8 rounded-full mr-2">
-                        <div>
-                            <p class="text-sm font-medium">David K.</p>
-                            <div class="flex items-center">
-                                <div class="flex text-xs text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-1">(4.5)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-2">Need help assembling IKEA furniture: 1
-                        bookshelf, 1 desk, and 2 chairs. All items are still in boxes.</p>
-
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Handyman</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Furniture</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">3-4 hours</span>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div>
-                            <p class="text-sm text-gray-500">Budget</p>
-                            <p class="font-semibold">$150 - $200</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Due Date</p>
-                            <p class="font-semibold">This Week</p>
-                        </div>
-                        <button
-                            class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                            onclick="openTaskModal('task4')">
-                            Place Bid
-                        </button>
-                    </div>
-
-                    <i class="fas fa-couch task-icon text-gray-100"></i>
-                </div>
-
-                <!-- Task Card 5 -->
-                <div class="task-card">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">2d ago</span>
-                        <div class="flex space-x-1">
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <h4 class="text-lg font-semibold mb-1">Bathroom Sink Clog</h4>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <i class="fas fa-map-marker-alt mr-1"></i>
-                        <span>South Bay, 5.2 miles away</span>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Client"
-                            class="w-8 h-8 rounded-full mr-2">
-                        <div>
-                            <p class="text-sm font-medium">Patricia H.</p>
-                            <div class="flex items-center">
-                                <div class="flex text-xs text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-1">(4.0)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-2">Bathroom sink is completely clogged. Water won't
-                        drain at all. Tried liquid drain cleaner with no success.</p>
-
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Plumbing</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Repair</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">1 hour</span>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div>
-                            <p class="text-sm text-gray-500">Budget</p>
-                            <p class="font-semibold">$60 - $90</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Due Date</p>
-                            <p class="font-semibold">Tomorrow</p>
-                        </div>
-                        <button
-                            class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                            onclick="openTaskModal('task5')">
-                            Place Bid
-                        </button>
-                    </div>
-
-                    <i class="fas fa-sink task-icon text-gray-100"></i>
-                </div>
-
-                <!-- Task Card 6 -->
-                <div class="task-card">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">2d ago</span>
-                        <div class="flex space-x-1">
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                            <button
-                                class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <h4 class="text-lg font-semibold mb-1">Light Fixture Replacement</h4>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <i class="fas fa-map-marker-alt mr-1"></i>
-                        <span>Downtown, 1.5 miles away</span>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="Client"
-                            class="w-8 h-8 rounded-full mr-2">
-                        <div>
-                            <p class="text-sm font-medium">Thomas B.</p>
-                            <div class="flex items-center">
-                                <div class="flex text-xs text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-1">(5.0)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-2">Need to replace dining room chandelier with new
-                        pendant light fixture. Have the new fixture ready to install.</p>
-
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Electrical</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Installation</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">1-2 hours</span>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div>
-                            <p class="text-sm text-gray-500">Budget</p>
-                            <p class="font-semibold">$90 - $120</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Due Date</p>
-                            <p class="font-semibold">This Weekend</p>
-                        </div>
-                        <button
-                            class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                            onclick="openTaskModal('task6')">
-                            Place Bid
-                        </button>
-                    </div>
-
-                    <i class="fas fa-lightbulb task-icon text-gray-100"></i>
-                </div>
+                @endforeach
             </div>
 
             <!-- Pagination -->

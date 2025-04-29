@@ -50,7 +50,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->role === 'admin') {
-                return redirect("admindashboard");
+                return redirect("admin/dashboard");
             } elseif ($user->role === 'provider') {
                 if ($user->provider->status === 'pending') {
                     Auth::logout();
@@ -58,7 +58,7 @@ class AuthController extends Controller
                         'email' => 'Your account is still pending approval.',
                     ]);
                 }
-                return view('/provider/dashboard');
+                return redirect("provider/dashboard");
             } else {
                 return view('/user/dashboard');
             }
@@ -68,15 +68,17 @@ class AuthController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
-
-
-
-
-
-    public function showAvailableTasks()
+    public function logout()
     {
-        return view("provider.tasks");
+        Auth::logout();
+        return redirect('/join');
     }
+
+
+
+
+
+
     public function showTaskManage()
     {
         return view("provider.taskmanage");
