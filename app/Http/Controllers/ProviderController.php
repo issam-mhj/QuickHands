@@ -165,6 +165,7 @@ class ProviderController extends Controller
             "ratingAvg" => $countRV / $rvNum,
             "totalRv" => $rvNum,
             "fiveStar" => $fiveStar,
+            "userRVW" => $userRVW,
         ]);
     }
 
