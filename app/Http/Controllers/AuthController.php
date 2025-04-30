@@ -76,11 +76,6 @@ class AuthController extends Controller
 
 
 
-
-    public function showProfile()
-    {
-        return view("provider.profile");
-    }
     public function showMsg()
     {
         return view("provider.messages");

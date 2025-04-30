@@ -45,13 +45,14 @@ Route::get("/provider/taskmanage", [ProviderController::class, "showTaskManage"]
 Route::post("/startedTask/{service}", [ProviderController::class, "turntostarted"]);
 Route::delete("/offer/delete/{offer}", [OfferController::class, "destroy"]);
 Route::get("/provider/reviews", [ProviderController::class, "showReviews"]);
+Route::get("/provider/profile", [ProviderController::class, "showProfile"]);
+Route::post("/provider/updateprofile", [ProviderController::class, "updateProfile"]);
 
 
 
 
-Route::get("/profile", [AuthController::class, "showProfile"]);
-Route::get("/messages", [AuthController::class, "showMsg"]);
 Route::get("/support", [AuthController::class, "showSupport"]);
+Route::get("/messages", [AuthController::class, "showMsg"]);
 Route::get("/user", [AuthController::class, "showUserDashboard"]);
 Route::get("/user/task", [AuthController::class, "showPostTask"]);
 Route::get("/user/activetask", [AuthController::class, "showActiveTask"]);

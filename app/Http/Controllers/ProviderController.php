@@ -12,8 +12,11 @@ use App\Models\Service;
 use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use League\OAuth1\Client\Server\Server;
+use phpseclib3\Crypt\Hash;
 
 class ProviderController extends Controller
 {
@@ -155,7 +158,7 @@ class ProviderController extends Controller
         foreach ($userRVW as $rvw) {
             $countRV += $rvw->rating;
             $rvNum++;
-            if($rvw->rating >= 5){
+            if ($rvw->rating >= 5) {
                 $fiveStar++;
             }
         }
@@ -167,6 +170,56 @@ class ProviderController extends Controller
             "fiveStar" => $fiveStar,
             "userRVW" => $userRVW,
         ]);
+    }
+    public function showProfile()
+    {
+        $user = auth()->user();
+
+        return view("provider.profile", ["user" => $user]);
+    }
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $provider = Provider::where('user_id', $user->id)->first();
+
+        $validated = $request->validate([
+            'name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'age' => ['nullable', 'integer', 'min:18', 'max:100'],
+            'gender' => ['nullable', 'in:m,f'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'password' => ['nullable', 'current_password'],
+            'new_password' => [
+                'nullable',
+                'string',
+                'confirmed',
+                'min:8',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/'
+            ],
+            'skills' => ['nullable', 'string']
+        ]);
+
+        if (isset($validated['name'])) $user->name = $validated['name'];
+        if (isset($validated['email'])) $user->email = $validated['email'];
+        $user->age = $validated['age'] ?? null;
+        $user->gender = $validated['gender'] ?? null;
+        $user->location = $validated['location'] ?? null;
+
+        if (!empty($validated['new_password'])) {
+            $user->password = Hash::make($validated['new_password']);
+        }
+
+        $user->save();
+
+        if ($provider) {
+            $provider->skills = $validated['skills'] ?? $provider->skills;
+            $provider->save();
+        }
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
     /**
