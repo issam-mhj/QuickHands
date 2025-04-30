@@ -337,7 +337,7 @@
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider"
                             class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
                         <div class="ml-3">
-                            <p class="font-medium">Michael Rodriguez</p>
+                            <p class="font-medium">{{ $user->name }}</p>
                             <p class="text-xs text-gray-500">Professional Handyman</p>
                         </div>
                     </div>
@@ -365,15 +365,11 @@
                     </a>
                     <a href="#"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
-                        <i class="fas fa-dollar-sign mr-2"></i> Earnings
+                        <i class="fas fa-star mr-2"></i> Reviews
                     </a>
                 </div>
 
                 <div class="hidden md:flex space-x-2">
-                    <a href="#"
-                        class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
-                        <i class="fas fa-star mr-2"></i> Reviews
-                    </a>
                     <a href="#"
                         class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
                         <i class="fas fa-user-circle mr-2"></i> Profile
@@ -461,54 +457,158 @@
                 <span class="text-sm text-gray-500">Showing 1-12 of 24</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($services as $service)
-                    <div class="task-card">
-                        <div class="flex justify-between items-start mb-3">
-                            <span
-                                class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">{{ \Carbon\Carbon::parse($service->created_at)->diffForHumans() }}</span>
-                        </div>
+            <!-- Services Grid -->
+            <div class="container mx-auto py-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($services as $service)
+                        <div
+                            class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-100 relative">
+                            <!-- Service Category Badge -->
+                            <div class="absolute top-4 right-4">
+                                <span class="px-3 py-1.5 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                                    {{ $service->servicecategory->name }}
+                                </span>
+                            </div>
 
-                        <h4 class="text-lg font-semibold mb-1">{{ $service->title }}</h4>
-                        <div class="flex items-center text-sm text-gray-500 mb-3">
-                            <i class="fas fa-map-marker-alt mr-1"></i>
-                            <span>{{ $service->location }}</span>
-                        </div>
+                            <!-- Card Content -->
+                            <div class="p-6">
+                                <!-- Time Posted -->
+                                <span
+                                    class="inline-block px-2.5 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full mb-3">
+                                    <i
+                                        class="far fa-clock mr-1"></i>{{ \Carbon\Carbon::parse($service->created_at)->diffForHumans() }}
+                                </span>
 
-                        <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 rounded-full mr-2">{{ $service->user->name[0] }}</div>
-                            <div>
-                                <p class="text-sm font-medium">{{ $service->user->name }}</p>
+                                <!-- Title -->
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $service->title }}</h3>
+
+                                <!-- Location -->
+                                <div class="flex items-center text-sm text-gray-600 mb-4">
+                                    <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                    <span>{{ $service->location }}</span>
+                                </div>
+
+                                <!-- Description -->
+                                <p class="text-sm text-gray-600 mb-5 line-clamp-3">{{ $service->description }}</p>
+
+                                <!-- Provider Info -->
+                                <div class="flex items-center mb-5">
+                                    <div
+                                        class="w-10 h-10 flex items-center justify-center bg-blue-100 text-blue-700 rounded-full font-semibold mr-3">
+                                        {{ substr($service->user->name, 0, 1) }}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-800">{{ $service->user->name }}</p>
+                                        <p class="text-xs text-gray-500">Service Provider</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Footer -->
+                            <div class="bg-gray-50 p-4 border-t border-gray-100">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs text-gray-500 uppercase font-medium mb-1">Budget</p>
+                                        <p class="font-semibold text-gray-800">Open to discuss</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 uppercase font-medium mb-1">Due Date</p>
+                                        <p class="font-semibold text-gray-800">
+                                            {{ \Carbon\Carbon::parse($service->desired_date)->format('M d, Y') }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Action Button -->
+                                <button
+                                    class="mt-4 w-full px-4 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium flex items-center justify-center"
+                                    onclick="openBidModal('{{ $service->id }}', '{{ $service->title }}')">
+                                    <i class="fas fa-hand-paper mr-2"></i> Place Bid
+                                </button>
+                            </div>
+
+                            <!-- Background Icon -->
+                            <div class="absolute -bottom-4 -right-4 opacity-5">
+                                <i class="fas fa-tools text-6xl"></i>
                             </div>
                         </div>
+                    @endforeach
+                </div>
+            </div>
 
-                        <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ $service->description }}</p>
-
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span
-                                class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">{{ $service->servicecategory->name }}</span>
-                        </div>
-
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <div>
-                                <p class="text-sm text-gray-500">Budget</p>
-                                <p class="font-semibold">open to discuss</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Due Date</p>
-                                <p class="font-semibold">
-                                    {{ \Carbon\Carbon::parse($service->desired_date)->format('M d, Y') }}</p>
-                            </div>
-                            <button
-                                class="px-3 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                                onclick="openTaskModal('task1')">
-                                Place Bid
+            <!-- Bid Modal -->
+            <div id="bidModal"
+                class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+                <div class="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4 animate-fadeIn">
+                    <!-- Modal Header -->
+                    <div class="p-6 border-b border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-bold text-gray-800">Place Your Bid</h3>
+                            <button onclick="closeBidModal()" class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-times text-xl"></i>
                             </button>
                         </div>
-
-                        <i class="fas fa-wrench task-icon text-gray-100"></i>
+                        <p id="modalServiceTitle" class="text-gray-600 mt-2 text-sm"></p>
                     </div>
-                @endforeach
+
+                    <!-- Modal Body -->
+                    <form id="bidForm" action="task/giveoffer/{{ $service->id }}" method="POST" class="p-6">
+                        @csrf
+                        <input type="hidden" id="service_id" name="service_id">
+
+                        <div class="space-y-5">
+                            <!-- Amount Field -->
+                            <div>
+                                <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Proposed
+                                    Amount ($)</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">$</span>
+                                    </div>
+                                    <input type="number" id="amount" name="amount" min="1"
+                                        step="0.01"
+                                        class="pl-8 block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="0.00" required>
+                                </div>
+                            </div>
+
+                            <!-- Estimated Time Field -->
+                            <div>
+                                <label for="estimated_time"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Estimated Time
+                                    (hours)
+                                </label>
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-y-0 right-0 pr-10 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">hours</span>
+                                    </div>
+                                    <input type="number" id="estimated_time" name="estimated_time" min="1"
+                                        step="1"
+                                        class="block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="Enter estimated hours" required>
+                                </div>
+                            </div>
+
+                            <!-- Notes/Message Field (Optional) -->
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Additional
+                                    Notes (Optional)</label>
+                                <textarea id="message" name="message" rows="3"
+                                    class="block w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                    placeholder="Any additional details about your offer..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-6">
+                            <button type="submit"
+                                class="w-full bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors font-medium">
+                                Submit Bid
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- Pagination -->
@@ -596,165 +696,12 @@
             animateElements();
         });
 
-        // Task Modal Functions
-        function openTaskModal(taskId) {
-            const modal = document.getElementById('taskModal');
-            const modalContent = document.getElementById('taskModalContent');
 
-            // Set content based on task ID
-            if (taskId === 'task1') {
-                modalContent.innerHTML = `
-          <div class="mb-6">
-            <div class="flex items-center mb-4">
-              <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Client" class="w-12 h-12 rounded-full mr-3">
-              <div>
-                <h5 class="font-medium">Jennifer L.</h5>
-                <div class="flex items-center">
-                  <div class="flex text-yellow-400">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                  </div>
-                  <span class="text-sm text-gray-500 ml-1">(4.8)</span>
-                </div>
-              </div>
-              <span class="ml-auto px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">New • 2h ago</span>
-            </div>
-
-            <h4 class="text-xl font-semibold mb-2">Leaky Faucet Repair</h4>
-            <div class="flex items-center text-sm text-gray-500 mb-4">
-              <i class="fas fa-map-marker-alt mr-1"></i>
-              <span>Downtown, 2.3 miles away</span>
-            </div>
-
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Plumbing</span>
-              <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Quick Fix</span>
-              <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">1-2 hours</span>
-            </div>
-
-            <div class="bg-gray-50 p-4 rounded-xl mb-4">
-              <h5 class="font-medium mb-2">Task Description</h5>
-              <p class="text-gray-600">Kitchen sink has a slow drip that needs fixing. I've already purchased replacement parts (washer and O-ring), just need someone with the right tools and expertise to install them properly. The faucet is a standard Moen single-handle kitchen faucet, about 5 years old. The drip is coming from the spout when the handle is in the off position.</p>
-
-              <div class="mt-4 grid grid-cols-2 gap-4">
-                <img src="https://placeholder.svg?height=150&width=200" alt="Sink Photo" class="rounded-lg">
-                <img src="https://placeholder.svg?height=150&width=200" alt="Parts Photo" class="rounded-lg">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <h5 class="font-medium mb-2">Budget</h5>
-                <p class="text-xl font-semibold">$75 - $100</p>
-                <p class="text-sm text-gray-500">Client's budget range</p>
-              </div>
-
-              <div>
-                <h5 class="font-medium mb-2">Timeline</h5>
-                <p class="text-xl font-semibold">Tomorrow</p>
-                <p class="text-sm text-gray-500">Preferred completion date</p>
-              </div>
-            </div>
-
-            <div class="border-t border-gray-200 pt-6 mb-6">
-              <h5 class="font-medium mb-4">Client Requirements</h5>
-              <ul class="space-y-2">
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
-                  <span>Must have own tools</span>
-                </li>
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
-                  <span>Experience with Moen faucets</span>
-                </li>
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
-                  <span>Available tomorrow between 9am-5pm</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="border-t border-gray-200 pt-6">
-            <h5 class="font-medium mb-4">Submit Your Bid</h5>
-
-            <div class="space-y-4">
-              <div>
-                <label class="block text-sm font-medium mb-1">Your Bid Amount</label>
-                <div class="flex items-center">
-                  <span class="bg-gray-100 px-3 py-2 rounded-l-lg text-gray-500">$</span>
-                  <input type="number" class="flex-1 px-3 py-2 border-y border-r border-gray-200 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Enter amount" min="75" max="200">
-                </div>
-                <p class="text-xs text-gray-500 mt-1">Client's budget: $75 - $100</p>
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium mb-1">Estimated Completion Time</label>
-                <select class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20">
-                  <option>Less than 1 hour</option>
-                  <option selected>1-2 hours</option>
-                  <option>2-3 hours</option>
-                  <option>3-4 hours</option>
-                  <option>4+ hours</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium mb-1">Available Date/Time</label>
-                <div class="grid grid-cols-2 gap-4">
-                  <input type="date" class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20">
-                  <select class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20">
-                    <option>Morning (8am-12pm)</option>
-                    <option>Afternoon (12pm-5pm)</option>
-                    <option>Evening (5pm-8pm)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium mb-1">Message to Client</label>
-                <textarea class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 h-24" placeholder="Introduce yourself and explain why you're the right person for this task..."></textarea>
-              </div>
-
-              <div class="flex items-center">
-                <label class="custom-checkbox flex items-center">
-                  <input type="checkbox">
-                  <span class="checkmark mr-2"></span>
-                  <span class="text-sm">I have the necessary tools and expertise for this task</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="mt-6 flex justify-end space-x-3">
-              <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors" onclick="closeTaskModal()">
-                Cancel
-              </button>
-              <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                Submit Bid
-              </button>
-            </div>
-          </div>
-        `;
-            } else {
-                // Default content for other tasks
-                modalContent.innerHTML = `
-          <div class="p-6 text-center">
-            <p>Task details for ${taskId} would be shown here.</p>
-            <button class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors" onclick="closeTaskModal()">
-              Close
-            </button>
-          </div>
-        `;
-            }
-
-            // Show modal with animation
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
+        // Show modal with animation
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
         }
 
         function closeTaskModal() {
@@ -765,6 +712,59 @@
             }, 300);
         }
     </script>
+
+    <script>
+        // Functions to handle the bid modal
+        function openBidModal(serviceId, serviceTitle) {
+            // Set the service ID in the hidden form field
+            document.getElementById('service_id').value = serviceId;
+
+            // Set the service title in the modal
+            document.getElementById('modalServiceTitle').textContent = serviceTitle;
+
+            // Show the modal
+            document.getElementById('bidModal').classList.remove('hidden');
+
+            // Add no-scroll class to body
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeBidModal() {
+            // Hide the modal
+            document.getElementById('bidModal').classList.add('hidden');
+
+            // Remove no-scroll class from body
+            document.body.classList.remove('overflow-hidden');
+
+            // Reset form
+            document.getElementById('bidForm').reset();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('bidModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeBidModal();
+            }
+        });
+    </script>
+
+    <style>
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </body>
 
 </html>

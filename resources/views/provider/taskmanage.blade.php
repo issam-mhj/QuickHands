@@ -212,27 +212,6 @@
             opacity: 1;
         }
 
-        /* Calendar Styles */
-        .calendar-day {
-            @apply w-full aspect-square flex flex-col items-center justify-center rounded-lg border border-gray-200 transition-all duration-200;
-        }
-
-        .calendar-day:hover {
-            @apply bg-gray-50;
-        }
-
-        .calendar-day.has-task {
-            @apply border-primary/30 bg-primary/5;
-        }
-
-        .calendar-day.today {
-            @apply border-primary bg-primary/10;
-        }
-
-        .calendar-day.selected {
-            @apply border-primary bg-primary text-white;
-        }
-
         /* Task Status Pills */
         .status-pill {
             @apply px-2 py-1 rounded-full text-xs font-medium;
@@ -403,7 +382,7 @@
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider"
                             class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
                         <div class="ml-3">
-                            <p class="font-medium">Michael Rodriguez</p>
+                            <p class="font-medium">{{ $user->name }}</p>
                             <p class="text-xs text-gray-500">Professional Handyman</p>
                         </div>
                     </div>
@@ -431,15 +410,11 @@
                     </a>
                     <a href="#"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
-                        <i class="fas fa-dollar-sign mr-2"></i> Earnings
+                        <i class="fas fa-star mr-2"></i> Reviews
                     </a>
                 </div>
 
                 <div class="hidden md:flex space-x-2">
-                    <a href="#"
-                        class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
-                        <i class="fas fa-star mr-2"></i> Reviews
-                    </a>
                     <a href="#"
                         class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
                         <i class="fas fa-user-circle mr-2"></i> Profile
@@ -467,45 +442,23 @@
                 <h2 class="font-display text-2xl md:text-3xl font-bold">Task Management</h2>
                 <p class="text-gray-600">Organize and track your tasks</p>
             </div>
-
-            <div class="mt-4 md:mt-0 flex flex-wrap gap-3">
-                <button
-                    class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
-                    <i class="fas fa-calendar-alt mr-2 text-primary"></i>
-                    <span>Calendar View</span>
-                </button>
-
-                <button
-                    class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
-                    <i class="fas fa-file-export mr-2 text-primary"></i>
-                    <span>Export Tasks</span>
-                </button>
-
-                <button
-                    class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center">
-                    <i class="fas fa-plus mr-2"></i>
-                    <span>Add Manual Task</span>
-                </button>
-            </div>
         </div>
 
         <!-- Task Management Tabs -->
         <div class="mb-8">
             <div class="border-b border-gray-200">
                 <div class="flex overflow-x-auto hide-scrollbar">
-                    <button class="tab-button active" data-tab="active-tasks">
-                        Active Tasks <span
-                            class="ml-2 px-1.5 py-0.5 bg-primary/10 text-primary rounded text-xs">5</span>
+                    <button class="tab-button active mx-6" data-tab="active-tasks">
+                        Active Tasks
                     </button>
-                    <button class="tab-button" data-tab="calendar">
-                        Calendar View
+                    <button class="tab-button mx-6" data-tab="calendar">
+                        pending offers
                     </button>
-                    <button class="tab-button" data-tab="task-history">
-                        Task History <span
-                            class="ml-2 px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded text-xs">28</span>
+                    <button class="tab-button mx-6" data-tab="task-history">
+                        Task History
                     </button>
-                    <button class="tab-button" data-tab="disputes">
-                        Disputes <span class="ml-2 px-1.5 py-0.5 bg-red-100 text-red-600 rounded text-xs">1</span>
+                    <button class="tab-button mx-6" data-tab="disputes">
+                        flags
                     </button>
                 </div>
             </div>
@@ -514,16 +467,16 @@
         <!-- Active Tasks Tab Content -->
         <div id="active-tasks" class="tab-content">
             <!-- Task Categories -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="dashboard-card">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="font-medium">Today</h3>
                         <span
-                            class="w-6 h-6 rounded-full bg-primary text-white text-xs flex items-center justify-center">2</span>
+                            class="w-6 h-6 rounded-full bg-primary text-white text-xs flex items-center justify-center">{{ $todayTasks }}</span>
                     </div>
-                    <p class="text-sm text-gray-500 mb-2">Tasks scheduled for today</p>
+                    <p class="text-sm text-gray-500 mb-2">Tasks will finish today</p>
                     <div class="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-primary rounded-full" style="width: 40%;"></div>
+                        <div class="h-full bg-primary rounded-full" style="width: 100%;"></div>
                     </div>
                 </div>
 
@@ -531,35 +484,22 @@
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="font-medium">Upcoming</h3>
                         <span
-                            class="w-6 h-6 rounded-full bg-blue-500 text-white text-xs flex items-center justify-center">3</span>
+                            class="w-6 h-6 rounded-full bg-blue-500 text-white text-xs flex items-center justify-center">{{ $futureTasks }}</span>
                     </div>
-                    <p class="text-sm text-gray-500 mb-2">Tasks scheduled for future dates</p>
+                    <p class="text-sm text-gray-500 mb-2">Tasks will finish in the future</p>
                     <div class="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-blue-500 rounded-full" style="width: 60%;"></div>
+                        <div class="h-full bg-blue-500 rounded-full" style="width: 100%;"></div>
                     </div>
                 </div>
-
-                <div class="dashboard-card">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="font-medium">In Progress</h3>
-                        <span
-                            class="w-6 h-6 rounded-full bg-yellow-500 text-white text-xs flex items-center justify-center">1</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mb-2">Tasks currently in progress</p>
-                    <div class="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-yellow-500 rounded-full" style="width: 20%;"></div>
-                    </div>
-                </div>
-
                 <div class="dashboard-card">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="font-medium">Pending Review</h3>
                         <span
-                            class="w-6 h-6 rounded-full bg-purple-500 text-white text-xs flex items-center justify-center">2</span>
+                            class="w-6 h-6 rounded-full bg-purple-500 text-white text-xs flex items-center justify-center">{{ $notstarted }}</span>
                     </div>
                     <p class="text-sm text-gray-500 mb-2">Completed tasks awaiting review</p>
                     <div class="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-purple-500 rounded-full" style="width: 40%;"></div>
+                        <div class="h-full bg-purple-500 rounded-full" style="width: 100%;"></div>
                     </div>
                 </div>
             </div>
@@ -594,445 +534,69 @@
                         </thead>
                         <tbody>
                             <!-- Task 1 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-wrench text-blue-500"></i>
+                            @foreach ($tasks as $task)
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
+                                                <i class="fas fa-wrench text-blue-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">{{ $task->offer->service->title }}</p>
+                                                <p class="text-xs text-gray-500">{{ $task->offer->service->location }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p class="font-medium">Leaky Faucet Repair</p>
-                                            <p class="text-xs text-gray-500">Downtown, 2.3 miles away</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <span>{{ $task->offer->service->user->name }}</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Jennifer L.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Today</p>
-                                    <p class="text-xs text-gray-500">2:00 PM - 4:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill in-progress">In Progress</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$85.00</p>
-                                    <p class="text-xs text-gray-500">Paid upfront</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Message Client">
-                                            <i class="fas fa-comment"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-green-100 hover:bg-green-200 rounded-lg text-green-600 transition-colors"
-                                            title="Mark as Complete">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Task 2 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-tv text-yellow-500"></i>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">
+                                            {{ \Carbon\Carbon::parse($task->created_at)->format('M d, Y') }}</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <span class="status-pill in-progress">{{ $task->status }}</span>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">${{ $task->offer->proposed_amount }}</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <div class="flex space-x-2">
+                                            <button
+                                                class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
+                                                title="Message Client">
+                                                <i class="fas fa-comment"></i>
+                                            </button>
+                                            <form action="/startedTask/{{ $task->id }}" method="post">
+                                                @csrf
+                                                <button
+                                                    {{ $task->status == 'in-progress' || $task->status == 'completed' ? 'disabled' : '' }}
+                                                    class="p-2 bg-green-100 hover:bg-green-200 rounded-lg text-green-600 transition-colors"
+                                                    title="Mark as started">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </form>
                                         </div>
-                                        <div>
-                                            <p class="font-medium">TV Mounting - 65" OLED</p>
-                                            <p class="text-xs text-gray-500">Westside, 4.7 miles away</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Robert T.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Today</p>
-                                    <p class="text-xs text-gray-500">5:00 PM - 7:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill pending">Scheduled</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$135.00</p>
-                                    <p class="text-xs text-gray-500">Pending completion</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Message Client">
-                                            <i class="fas fa-comment"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-red-100 hover:bg-red-200 rounded-lg text-red-600 transition-colors"
-                                            title="Cancel Task">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Task 3 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-fan text-green-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Ceiling Fan Installation</p>
-                                            <p class="text-xs text-gray-500">North Hills, 1.8 miles away</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span> alt="Client" class="w-8 h-8 rounded-full mr-2">
-                                            <span>Maria G.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Tomorrow</p>
-                                    <p class="text-xs text-gray-500">10:00 AM - 12:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill pending">Scheduled</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$100.00</p>
-                                    <p class="text-xs text-gray-500">Pending completion</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Message Client">
-                                            <i class="fas fa-comment"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-red-100 hover:bg-red-200 rounded-lg text-red-600 transition-colors"
-                                            title="Cancel Task">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Task 4 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-couch text-purple-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Furniture Assembly - IKEA</p>
-                                            <p class="text-xs text-gray-500">Eastwood, 3.5 miles away</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>David K.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Saturday</p>
-                                    <p class="text-xs text-gray-500">1:00 PM - 5:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill pending">Scheduled</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$175.00</p>
-                                    <p class="text-xs text-gray-500">Pending completion</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Message Client">
-                                            <i class="fas fa-comment"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-red-100 hover:bg-red-200 rounded-lg text-red-600 transition-colors"
-                                            title="Cancel Task">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Task 5 -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-sink text-red-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Bathroom Sink Clog</p>
-                                            <p class="text-xs text-gray-500">South Bay, 5.2 miles away</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Patricia H.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Sunday</p>
-                                    <p class="text-xs text-gray-500">11:00 AM - 12:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill pending">Scheduled</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$75.00</p>
-                                    <p class="text-xs text-gray-500">Pending completion</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Message Client">
-                                            <i class="fas fa-comment"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-red-100 hover:bg-red-200 rounded-lg text-red-600 transition-colors"
-                                            title="Cancel Task">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- Calendar View Tab Content -->
         <div id="calendar" class="tab-content hidden">
             <div class="dashboard-card mb-8">
-                <div class="flex flex-col md:flex-row md:items-start gap-6">
-                    <!-- Calendar -->
-                    <div class="md:w-2/3">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-display text-xl font-semibold">October 2023</h3>
-                            <div class="flex space-x-2">
-                                <button
-                                    class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                                <button
-                                    class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Calendar Grid -->
-                        <div class="grid grid-cols-7 gap-2">
-                            <!-- Days of Week -->
-                            <div class="text-center font-medium text-gray-500 py-2">Sun</div>
-                            <div class="text-center font-medium text-gray-500 py-2">Mon</div>
-                            <div class="text-center font-medium text-gray-500 py-2">Tue</div>
-                            <div class="text-center font-medium text-gray-500 py-2">Wed</div>
-                            <div class="text-center font-medium text-gray-500 py-2">Thu</div>
-                            <div class="text-center font-medium text-gray-500 py-2">Fri</div>
-                            <div class="text-center font-medium text-gray-500 py-2">Sat</div>
-
-                            <!-- Week 1 -->
-                            <div class="calendar-day text-gray-400">24</div>
-                            <div class="calendar-day text-gray-400">25</div>
-                            <div class="calendar-day text-gray-400">26</div>
-                            <div class="calendar-day text-gray-400">27</div>
-                            <div class="calendar-day text-gray-400">28</div>
-                            <div class="calendar-day text-gray-400">29</div>
-                            <div class="calendar-day text-gray-400">30</div>
-
-                            <!-- Week 2 -->
-                            <div class="calendar-day">1</div>
-                            <div class="calendar-day">2</div>
-                            <div class="calendar-day">3</div>
-                            <div class="calendar-day">4</div>
-                            <div class="calendar-day">5</div>
-                            <div class="calendar-day">6</div>
-                            <div class="calendar-day">7</div>
-
-                            <!-- Week 3 -->
-                            <div class="calendar-day">8</div>
-                            <div class="calendar-day">9</div>
-                            <div class="calendar-day">10</div>
-                            <div class="calendar-day">11</div>
-                            <div class="calendar-day">12</div>
-                            <div class="calendar-day has-task">
-                                <span>13</span>
-                                <span class="w-1.5 h-1.5 bg-primary rounded-full mt-1"></span>
-                            </div>
-                            <div class="calendar-day">14</div>
-
-                            <!-- Week 4 -->
-                            <div class="calendar-day has-task">
-                                <span>15</span>
-                                <span class="w-1.5 h-1.5 bg-primary rounded-full mt-1"></span>
-                            </div>
-                            <div class="calendar-day today selected">
-                                <span>16</span>
-                                <span class="w-1.5 h-1.5 bg-white rounded-full mt-1"></span>
-                                <span class="w-1.5 h-1.5 bg-white rounded-full mt-0.5"></span>
-                            </div>
-                            <div class="calendar-day">17</div>
-                            <div class="calendar-day has-task">
-                                <span>18</span>
-                                <span class="w-1.5 h-1.5 bg-primary rounded-full mt-1"></span>
-                            </div>
-                            <div class="calendar-day">19</div>
-                            <div class="calendar-day">20</div>
-                            <div class="calendar-day has-task">
-                                <span>21</span>
-                                <span class="w-1.5 h-1.5 bg-primary rounded-full mt-1"></span>
-                            </div>
-
-                            <!-- Week 5 -->
-                            <div class="calendar-day">22</div>
-                            <div class="calendar-day">23</div>
-                            <div class="calendar-day">24</div>
-                            <div class="calendar-day">25</div>
-                            <div class="calendar-day">26</div>
-                            <div class="calendar-day">27</div>
-                            <div class="calendar-day">28</div>
-
-                            <!-- Week 6 -->
-                            <div class="calendar-day">29</div>
-                            <div class="calendar-day">30</div>
-                            <div class="calendar-day">31</div>
-                            <div class="calendar-day text-gray-400">1</div>
-                            <div class="calendar-day text-gray-400">2</div>
-                            <div class="calendar-day text-gray-400">3</div>
-                            <div class="calendar-day text-gray-400">4</div>
-                        </div>
-                    </div>
-
-                    <!-- Day Schedule -->
-                    <div class="md:w-1/3">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-display text-xl font-semibold">October 16, 2023</h3>
-                            <span class="px-2 py-1 bg-primary/10 text-primary rounded-full text-xs">Today</span>
-                        </div>
-
-                        <div class="space-y-4">
-                            <!-- Task 1 -->
-                            <div
-                                class="p-4 border border-gray-200 rounded-xl hover:border-primary/30 hover:bg-primary/5 transition-colors">
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium text-gray-500">2:00 PM - 4:00 PM</span>
-                                    <span class="status-pill in-progress">In Progress</span>
-                                </div>
-                                <h4 class="font-medium mb-1">Leaky Faucet Repair</h4>
-                                <div class="flex items-center text-sm text-gray-500 mb-3">
-                                    <i class="fas fa-map-marker-alt mr-1"></i>
-                                    <span>Downtown, 2.3 miles away</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Client"
-                                        class="w-6 h-6 rounded-full mr-2">
-                                    <span class="text-sm">Jennifer L.</span>
-                                </div>
-                            </div>
-
-                            <!-- Task 2 -->
-                            <div
-                                class="p-4 border border-gray-200 rounded-xl hover:border-primary/30 hover:bg-primary/5 transition-colors">
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium text-gray-500">5:00 PM - 7:00 PM</span>
-                                    <span class="status-pill pending">Scheduled</span>
-                                </div>
-                                <h4 class="font-medium mb-1">TV Mounting - 65" OLED</h4>
-                                <div class="flex items-center text-sm text-gray-500 mb-3">
-                                    <i class="fas fa-map-marker-alt mr-1"></i>
-                                    <span>Westside, 4.7 miles away</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Client"
-                                        class="w-6 h-6 rounded-full mr-2">
-                                    <span class="text-sm">Robert T.</span>
-                                </div>
-                            </div>
-
-                            <!-- Add Task Button -->
-                            <button
-                                class="w-full p-4 border border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-primary hover:text-primary transition-colors flex items-center justify-center">
-                                <i class="fas fa-plus mr-2"></i>
-                                <span>Add Task to This Day</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Task History Tab Content -->
-        <div id="task-history" class="tab-content hidden">
-            <div class="dashboard-card mb-8">
                 <div class="flex items-center justify-between mb-6">
-                    <h3 class="font-display text-xl font-semibold">Task History</h3>
+                    <h3 class="font-display text-xl font-semibold">Pending Offers</h3>
                     <div class="flex items-center space-x-3">
                         <div class="relative">
-                            <input type="text" placeholder="Search tasks..."
+                            <input type="text" placeholder="Search offers..."
                                 class="pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20">
                             <i
                                 class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -1058,303 +622,152 @@
                             <tr class="border-b border-gray-200">
                                 <th class="pb-3 text-left font-medium text-gray-500">Task</th>
                                 <th class="pb-3 text-left font-medium text-gray-500">Client</th>
-                                <th class="pb-3 text-left font-medium text-gray-500">Date</th>
+                                <th class="pb-3 text-left font-medium text-gray-500">Offered Amount</th>
+                                <th class="pb-3 text-left font-medium text-gray-500">Estimated Time</th>
+                                <th class="pb-3 text-left font-medium text-gray-500">Desired Time</th>
                                 <th class="pb-3 text-left font-medium text-gray-500">Status</th>
-                                <th class="pb-3 text-left font-medium text-gray-500">Earnings</th>
-                                <th class="pb-3 text-left font-medium text-gray-500">Rating</th>
                                 <th class="pb-3 text-left font-medium text-gray-500">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Task 1 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-paint-roller text-green-500"></i>
+                            @foreach ($pendingOffers as $offer)
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
+                                                <i class="fas fa-brush text-green-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">{{ $offer->service->title }}</p>
+                                                <p class="text-xs text-gray-500">
+                                                    {{ $offer->service->servicecategory->name }}</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p class="font-medium">Interior Painting</p>
-                                            <p class="text-xs text-gray-500">Bedroom walls and ceiling</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <span>{{ $offer->service->user->name }}</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Sarah M.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Oct 10, 2023</p>
-                                    <p class="text-xs text-gray-500">9:00 AM - 5:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill completed">Completed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$320.00</p>
-                                    <p class="text-xs text-gray-500">+ $40.00 tip</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span class="ml-1 text-gray-700">5.0</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Download Invoice">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">${{ $offer->proposed_amount }}</p>
+                                        <p class="text-xs text-gray-500">Materials included</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">{{ $offer->estimated_time }} hours</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">{{ $offer->service->desired_date }}</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <span class="status-pill pending">{{ $offer->status }}</span>
+                                    </td>
+                                    <td class="py-4">
+                                        <div class="flex space-x-2">
+                                            <a href="/provider/task"
+                                                class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
+                                                title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <form action="/offer/delete/{{ $offer->id }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button type="submit"
+                                                    class="p-2 bg-red-100 hover:bg-red-200 rounded-lg text-red-600 transition-colors"
+                                                    title="Withdraw Offer">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-                            <!-- Task 2 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-faucet text-blue-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Kitchen Sink Installation</p>
-                                            <p class="text-xs text-gray-500">New sink and disposal</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>James W.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Oct 8, 2023</p>
-                                    <p class="text-xs text-gray-500">1:00 PM - 4:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill completed">Completed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$180.00</p>
-                                    <p class="text-xs text-gray-500">+ $20.00 tip</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span class="ml-1 text-gray-700">4.5</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Download Invoice">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                <!-- Pagination -->
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center space-x-1">
+                        <button class="p-2 rounded-lg border border-gray-300 text-gray-500 hover:bg-gray-50">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button
+                            class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center">1</button>
+                        <button
+                            class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 flex items-center justify-center">2</button>
+                        <button
+                            class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 flex items-center justify-center">3</button>
+                        <span class="w-10 h-10 flex items-center justify-center">...</span>
+                        <button class="p-2 rounded-lg border border-gray-300 text-gray-500 hover:bg-gray-50">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
 
-                            <!-- Task 3 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-couch text-purple-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Furniture Assembly</p>
-                                            <p class="text-xs text-gray-500">Dresser and nightstands</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Emily R.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Oct 5, 2023</p>
-                                    <p class="text-xs text-gray-500">10:00 AM - 1:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill completed">Completed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$120.00</p>
-                                    <p class="text-xs text-gray-500">No tip</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <span class="ml-1 text-gray-700">4.0</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Download Invoice">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+        <!-- Task History Tab Content -->
+        <div id="task-history" class="tab-content hidden">
+            <div class="dashboard-card mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="font-display text-xl font-semibold">Task History</h3>
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <input type="text" placeholder="Search tasks..."
+                                class="pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20">
+                            <i
+                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- Task 4 -->
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-bolt text-yellow-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="font-medium">Light Fixture Installation</p>
-                                            <p class="text-xs text-gray-500">Dining room chandelier</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Thomas B.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Oct 2, 2023</p>
-                                    <p class="text-xs text-gray-500">3:00 PM - 5:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill completed">Completed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$110.00</p>
-                                    <p class="text-xs text-gray-500">+ $15.00 tip</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <span class="ml-1 text-gray-700">5.0</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="Download Invoice">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </button>
-                                    </div>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="pb-3 text-left font-medium text-gray-500">Task</th>
+                                <th class="pb-3 text-left font-medium text-gray-500">Client</th>
+                                <th class="pb-3 text-left font-medium text-gray-500">Date</th>
+                                <th class="pb-3 text-left font-medium text-gray-500">Status</th>
+                                <th class="pb-3 text-left font-medium text-gray-500">Earnings</th>
                             </tr>
-
-                            <!-- Task 5 -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <div
-                                            class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mr-3">
-                                            <i class="fas fa-door-open text-red-500"></i>
+                        </thead>
+                        <tbody>
+                            @foreach ($finishedTasks as $task)
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
+                                                <i class="fas fa-paint-roller text-green-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">{{ $task->offer->service->title }}</p>
+                                                <p class="text-xs text-gray-500">
+                                                    {{ $task->offer->service->servicecategory->name }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p class="font-medium">Door Repair</p>
-                                            <p class="text-xs text-gray-500">Fix sticking bathroom door</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <span>{{ $task->offer->service->user->name }}</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Client"
-                                            class="w-8 h-8 rounded-full mr-2">
-                                        <span>Patricia H.</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">Sep 28, 2023</p>
-                                    <p class="text-xs text-gray-500">11:00 AM - 12:00 PM</p>
-                                </td>
-                                <td class="py-4">
-                                    <span class="status-pill disputed">Disputed</span>
-                                </td>
-                                <td class="py-4">
-                                    <p class="font-medium">$60.00</p>
-                                    <p class="text-xs text-gray-500">In dispute</p>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <span class="ml-1 text-gray-700">2.0</span>
-                                    </div>
-                                </td>
-                                <td class="py-4">
-                                    <div class="flex space-x-2">
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Details">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button
-                                            class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors"
-                                            title="View Dispute">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">
+                                            {{ \Carbon\Carbon::parse($task->end_date)->format('M d, Y') }}</p>
+                                    </td>
+                                    <td class="py-4">
+                                        <span class="status-pill completed">{{ $task->status }}</span>
+                                    </td>
+                                    <td class="py-4">
+                                        <p class="font-medium">${{ $task->offer->proposed_amount }}</p>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -1382,193 +795,161 @@
 
         <!-- Disputes Tab Content -->
         <div id="disputes" class="tab-content hidden">
-            <div class="dashboard-card mb-8">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="font-display text-xl font-semibold">Dispute Resolution</h3>
-                    <button
-                        class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
-                        <i class="fas fa-question-circle mr-2 text-primary"></i>
-                        <span>Dispute Guidelines</span>
-                    </button>
-                </div>
-
-                <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
-                    <div class="flex items-start">
-                        <div class="p-2 bg-yellow-100 rounded-lg text-yellow-700 mr-3">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <!-- Header with Stats Summary -->
+                <div class="mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
                         <div>
-                            <h4 class="font-medium mb-1">About Disputes</h4>
-                            <p class="text-sm text-gray-600">Disputes are created when there's a disagreement between
-                                you and the client about a task. Our support team will review all evidence and make a
-                                fair decision. Most disputes are resolved within 48 hours.</p>
+                            <h2 class="text-2xl font-bold text-gray-800">Flags</h2>
+                            <p class="text-sm text-gray-500">Monitor all flag notifications in one place</p>
                         </div>
+                        <div class="flex items-center bg-gray-50 rounded-lg p-2">
+                            <div class="flex items-center gap-2">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center text-sm font-medium">
+                                    {{ $flagsNum }}
+                                </div>
+                                <span class="text-sm font-medium text-gray-700">Total Flags</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Indicator -->
+                    <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-red-500 rounded-full" style="width: 100%;"></div>
                     </div>
                 </div>
 
-                <!-- Active Disputes -->
-                <div class="mb-8">
-                    <h4 class="font-medium mb-4">Active Disputes (1)</h4>
+                <!-- Filter Controls -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Flag Details</h3>
+                    <div class="flex items-center space-x-2">
+                        <label for="sort" class="text-sm text-gray-500">Sort by:</label>
+                        <select id="sort"
+                            class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 hover:border-gray-300 transition-colors">
+                            <option>Date (Newest First)</option>
+                            <option>Date (Oldest First)</option>
+                            <option>Status</option>
+                            <option>Content Type</option>
+                        </select>
+                    </div>
+                </div>
 
-                    <div class="border border-gray-200 rounded-xl overflow-hidden">
-                        <div class="p-6 bg-white">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                                <div class="flex items-center mb-4 md:mb-0">
-                                    <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center mr-4">
-                                        <i class="fas fa-door-open text-red-500 text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="font-medium">Door Repair</h5>
-                                        <p class="text-sm text-gray-500">Sep 28, 2023</p>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center">
-                                    <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Client"
-                                        class="w-8 h-8 rounded-full mr-2">
-                                    <div>
-                                        <p class="text-sm font-medium">Patricia H.</p>
-                                        <div class="flex text-xs text-yellow-400">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
+                <!-- Flag Table -->
+                <div class="overflow-x-auto -mx-6">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Content</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Reason</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Date</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 bg-white">
+                            @foreach ($flags as $flag)
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center mr-3
+                              {{ $flag->content_type == 'comment'
+                                  ? 'bg-blue-100 text-blue-600'
+                                  : ($flag->content_type == 'post'
+                                      ? 'bg-purple-100 text-purple-600'
+                                      : 'bg-gray-100 text-gray-600') }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-900">{{ $flag->content_type }}</p>
+                                                <p class="text-xs text-gray-500">ID: {{ substr($flag->id, 0, 8) }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                            {{ $flag->reason == 'spam'
+                                ? 'bg-red-100 text-red-800'
+                                : ($flag->reason == 'inappropriate'
+                                    ? 'bg-orange-100 text-orange-800'
+                                    : 'bg-gray-100 text-gray-800') }}">
+                                            {{ $flag->reason }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">
+                                                {{ \Carbon\Carbon::parse($flag->created_at)->format('M d, Y') }}</p>
+                                            <p class="text-xs text-gray-500">
+                                                {{ \Carbon\Carbon::parse($flag->created_at)->format('h:i A') }}</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                            {{ $flag->status == 'resolved'
+                                ? 'bg-green-100 text-green-800'
+                                : ($flag->status == 'pending'
+                                    ? 'bg-yellow-100 text-yellow-800'
+                                    : 'bg-blue-100 text-blue-800') }}">
+                                            {{ $flag->status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                            <div class="p-4 bg-gray-50 rounded-lg mb-4">
-                                <h5 class="font-medium mb-2">Dispute Reason</h5>
-                                <p class="text-sm text-gray-600">Client claims the door still sticks after repair and
-                                    is requesting a refund or additional service at no cost.</p>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <h5 class="font-medium mb-2">Dispute Status</h5>
-                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Under
-                                        Review</span>
-                                    <p class="text-xs text-gray-500 mt-1">Submitted on Oct 1, 2023</p>
-                                </div>
-
-                                <div>
-                                    <h5 class="font-medium mb-2">Payment Status</h5>
-                                    <p class="text-sm">$60.00 <span class="text-yellow-600">(on hold)</span></p>
-                                </div>
-                            </div>
-
-                            <div class="border-t border-gray-200 pt-4">
-                                <h5 class="font-medium mb-3">Timeline</h5>
-
-                                <div class="timeline">
-                                    <div class="timeline-item">
-                                        <p class="font-medium">Dispute Submitted</p>
-                                        <p class="text-sm text-gray-500">Oct 1, 2023 at 10:23 AM</p>
-                                        <p class="text-sm mt-1">Client submitted a dispute claiming the door still
-                                            sticks after repair.</p>
-                                    </div>
-
-                                    <div class="timeline-item">
-                                        <p class="font-medium">Your Response</p>
-                                        <p class="text-sm text-gray-500">Oct 1, 2023 at 2:45 PM</p>
-                                        <p class="text-sm mt-1">You provided evidence that the door was working
-                                            properly when you left.</p>
-                                    </div>
-
-                                    <div class="timeline-item">
-                                        <p class="font-medium">Support Team Review</p>
-                                        <p class="text-sm text-gray-500">Oct 2, 2023 at 9:15 AM</p>
-                                        <p class="text-sm mt-1">Our support team is reviewing the evidence from both
-                                            parties.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-6 flex flex-col md:flex-row md:justify-between items-center">
-                                <div class="mb-4 md:mb-0">
-                                    <button class="text-primary hover:underline text-sm flex items-center">
-                                        <i class="fas fa-paperclip mr-1"></i>
-                                        <span>View Attached Evidence (3 files)</span>
-                                    </button>
-                                </div>
-
-                                <div class="flex space-x-3">
-                                    <button
-                                        class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                                        <i class="fas fa-comment-alt mr-2"></i>
-                                        <span>Message Support</span>
-                                    </button>
-                                    <button
-                                        class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                        <i class="fas fa-plus mr-2"></i>
-                                        <span>Add Evidence</span>
-                                    </button>
-                                </div>
-                            </div>
+                    <!-- Empty State -->
+                    @if (count($flags) === 0)
+                        <div class="flex flex-col items-center justify-center py-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                            </svg>
+                            <p class="mt-2 text-gray-500">No flags to display</p>
                         </div>
-                    </div>
+                    @endif
                 </div>
 
-                <!-- Past Disputes -->
-                <div>
-                    <h4 class="font-medium mb-4">Past Disputes (2)</h4>
-
-                    <div class="space-y-4">
-                        <!-- Past Dispute 1 -->
-                        <div
-                            class="p-4 border border-gray-200 rounded-xl hover:border-primary/30 hover:bg-primary/5 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between">
-                                <div class="flex items-center mb-4 md:mb-0">
-                                    <div
-                                        class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
-                                        <i class="fas fa-paint-roller text-blue-500"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="font-medium">Wall Painting</h5>
-                                        <p class="text-xs text-gray-500">Aug 15, 2023</p>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Resolved
-                                        in Your Favor</span>
-                                    <button
-                                        class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Past Dispute 2 -->
-                        <div
-                            class="p-4 border border-gray-200 rounded-xl hover:border-primary/30 hover:bg-primary/5 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between">
-                                <div class="flex items-center mb-4 md:mb-0">
-                                    <div
-                                        class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
-                                        <i class="fas fa-couch text-purple-500"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="font-medium">Furniture Assembly</h5>
-                                        <p class="text-xs text-gray-500">Jul 22, 2023</p>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">Resolved in
-                                        Client's Favor</span>
-                                    <button
-                                        class="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 transition-colors">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Pagination (if needed) -->
+                @if (count($flags) > 0)
+                    <div class="flex justify-center sm:justify-end mt-6">
+                        <nav class="inline-flex rounded-md shadow-sm">
+                            <a href="#"
+                                class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                Previous
+                            </a>
+                            <a href="#"
+                                class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                1
+                            </a>
+                            <a href="#"
+                                class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                2
+                            </a>
+                            <a href="#"
+                                class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                Next
+                            </a>
+                        </nav>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </main>
