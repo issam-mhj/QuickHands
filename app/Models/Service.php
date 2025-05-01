@@ -12,11 +12,13 @@ class Service extends Model
     /** @use HasFactory<\Database\Factories\ServiceFactory> */
     use HasFactory;
     protected $fillable = [
-        'proposed_amount',
-        'estimated_time',
-        'status',
-        'provider_id',
-        'service_id'
+        "title",
+        "description",
+        "desired_date",
+        "location",
+        "status",
+        "user_id",
+        "service_category_id",
     ];
     public function User(): BelongsTo
     {

@@ -55,6 +55,7 @@ Route::get("/provider/messages", [MessageController::class, "showMsg"]);
 
 Route::get("/user/dashboard", [UserController::class, "showUserDashboard"]);
 Route::get("/user/task", [TaskController::class, "showPostTask"]);
+Route::post("/user/postTask", [TaskController::class, "storeTask"]);
 
 
 
