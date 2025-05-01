@@ -76,11 +76,6 @@ class AuthController extends Controller
 
 
 
-
-    public function showActiveTask()
-    {
-        return view("user.activePost");
-    }
     public function showSelectProvider()
     {
         return view("user.selectProvider");

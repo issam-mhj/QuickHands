@@ -9,6 +9,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TaskController;
 
 Route::get("/", [VisitController::class, "home"]);
@@ -56,10 +57,11 @@ Route::get("/provider/messages", [MessageController::class, "showMsg"]);
 Route::get("/user/dashboard", [UserController::class, "showUserDashboard"]);
 Route::get("/user/task", [TaskController::class, "showPostTask"]);
 Route::post("/user/postTask", [TaskController::class, "storeTask"]);
+Route::get("/user/activetask", [TaskController::class, "showActiveTask"]);
+Route::get("/user/task/detail/{service}", [ServiceController::class, "showServiceDetail"]);
 
 
 
-Route::get("/user/activetask", [AuthController::class, "showActiveTask"]);
 Route::get("/user/selectprovider", [AuthController::class, "showSelectProvider"]);
 Route::get("/user/conversation", [AuthController::class, "showMessages"]);
 Route::get("/user/reviews", [AuthController::class, "showUserReviews"]);

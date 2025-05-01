@@ -65,6 +65,16 @@ class TaskController extends Controller
         ]);
         return redirect()->back()->with("done", "You have posted the task successfully");
     }
+    public function showActiveTask()
+    {
+        $user = auth()->user();
+        // Get the user's services
+        $services = Service::where("user_id", $user->id)->get();
+        return view("user.activePost", [
+            "user" => $user,
+            "services" => $services,
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
