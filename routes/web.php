@@ -59,6 +59,7 @@ Route::get("/user/task", [TaskController::class, "showPostTask"]);
 Route::post("/user/postTask", [TaskController::class, "storeTask"]);
 Route::get("/user/activetask", [TaskController::class, "showActiveTask"]);
 Route::get("/user/task/detail/{service}", [ServiceController::class, "showServiceDetail"]);
+Route::delete("/task/delete/{service}", [ServiceController::class, "deleteServiceDetail"]);
 
 
 

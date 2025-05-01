@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
+use App\Models\Conversation;
+use App\Models\Message;
 use App\Models\Offer;
 use App\Models\Review;
 
@@ -20,15 +22,32 @@ class ServiceController extends Controller
         $offers = Offer::where("service_id", $service->id)
             ->where("status", "accepted")
             ->get();
-        $review = Review::where("offer_id", $offers[0]->id)
-            ->get();
 
+        $review = collect();
+        $conversation = collect();
+        $messages = collect();
+
+        if ($offers->isNotEmpty()) {
+            $review = Review::where("offer_id", $offers[0]->id)
+                ->get();
+            $conversation = Conversation::where("offer_id", $offers[0]->id)->get();
+            $messages = Message::where("conversation_id", $conversation[0]->id)->get();
+        }
         return view("user.serviceDetails", [
             "user" => $user,
             "service" => $service,
             "offer" => $offers,
             "review" => $review,
+            "conversation" => $conversation,
+            "messages" => $messages,
+
         ]);
+    }
+
+    public function deleteServiceDetail(Service $service)
+    {
+        $service->delete();
+        return redirect('/user/activetask');
     }
 
     /**

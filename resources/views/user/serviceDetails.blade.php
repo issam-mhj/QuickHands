@@ -137,7 +137,8 @@
         <div class="container max-w-7xl mx-auto px-6">
             <!-- Page Header with Back Button -->
             <div class="flex items-center gap-4 mb-8">
-                <a href="#" class="flex items-center text-primary hover:text-primary-dark transition-all">
+                <a href="/user/activetask"
+                    class="flex items-center text-primary hover:text-primary-dark transition-all">
                     <i class="fas fa-arrow-left mr-2"></i>
                     <span>Back to Active Tasks</span>
                 </a>
@@ -160,15 +161,14 @@
                             </div>
                         </div>
                         <div class="flex gap-2">
-                            <!-- These buttons will only show if status is "Open" -->
-                            <button id="modifyTaskBtn"
-                                class="px-4 py-2 text-sm font-medium text-primary bg-transparent border border-primary rounded-md transition-all hover:bg-primary hover:text-white">
-                                Modify Task
-                            </button>
-                            <button id="cancelTaskBtn"
-                                class="px-4 py-2 text-sm font-medium text-white bg-danger border border-danger rounded-md transition-all hover:bg-red-600">
-                                Delete Task
-                            </button>
+                            <form action="/task/delete/{{ $service->id }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit"
+                                    class="px-4 py-2 text-sm font-medium text-white bg-danger border border-danger rounded-md transition-all hover:bg-red-600">
+                                    Delete Task
+                                </button>
+                            </form>
                         </div>
                     </div>
 
@@ -249,50 +249,34 @@
                     <div class="border-b border-border px-6 py-4">
                         <h2 class="text-lg font-semibold">Communication History</h2>
                     </div>
-                    <div class="p-6 max-h-[400px] overflow-y-auto">
-                        <div class="mb-4">
-                            <div class="flex justify-between mb-1">
-                                <p class="text-sm font-semibold">You</p>
-                                <p class="text-xs text-text-medium">May 7, 2025 - 11:23 AM</p>
-                            </div>
-                            <div class="bg-blue-50 rounded-lg p-3 text-sm">
-                                <p>Hi David, just wanted to confirm our appointment for May 10th at 10 AM.</p>
-                            </div>
+                    @if ($messages)
+                        <div class="p-6 max-h-[400px] overflow-y-auto">
+                            @foreach ($messages as $msg)
+                                @if ($msg->user_id == $user->id)
+                                    <div class="mb-4">
+                                        <div class="flex justify-between mb-1">
+                                            <p class="text-sm font-semibold">You</p>
+                                            <p class="text-xs text-text-medium"> {{ $msg->created_at }} </p>
+                                        </div>
+                                        <div class="bg-blue-50 rounded-lg p-3 text-sm">
+                                            <p> {{ $msg->content }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="mb-4">
+                                        <div class="flex justify-between mb-1">
+                                            <p class="text-sm font-semibold"> {{ $msg->user->name }} </p>
+                                            <p class="text-xs text-text-medium">{{ $msg->created_at }}</p>
+                                        </div>
+                                        <div class="bg-gray-50 rounded-lg p-3 text-sm">
+                                            <p>{{ $msg->content }}</p>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
-
-                        <div class="mb-4">
-                            <div class="flex justify-between mb-1">
-                                <p class="text-sm font-semibold">David Brown</p>
-                                <p class="text-xs text-text-medium">May 7, 2025 - 11:45 AM</p>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-3 text-sm">
-                                <p>Hello! Yes, I've got it on my calendar. I'll be there at 10 AM sharp. Looking forward
-                                    to helping with your furniture assembly.</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <div class="flex justify-between mb-1">
-                                <p class="text-sm font-semibold">You</p>
-                                <p class="text-xs text-text-medium">May 9, 2025 - 4:15 PM</p>
-                            </div>
-                            <div class="bg-blue-50 rounded-lg p-3 text-sm">
-                                <p>Great! Just a heads up, there's street parking available, or you can park in the
-                                    visitor spot in the garage.</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <div class="flex justify-between mb-1">
-                                <p class="text-sm font-semibold">David Brown</p>
-                                <p class="text-xs text-text-medium">May 9, 2025 - 4:30 PM</p>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-3 text-sm">
-                                <p>Thanks for the information! I'll probably use the street parking. See you tomorrow!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -321,66 +305,6 @@
                 <button
                     class="px-4 py-2 text-sm font-medium text-white bg-danger border border-danger rounded-md transition-all hover:bg-red-600"
                     id="confirmCancelBtn">Delete Task</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modify Task Modal -->
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity"
-        id="modifyTaskModal">
-        <div
-            class="bg-white rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto shadow-lg transform translate-y-5 transition-transform">
-            <div class="p-6 pt-6 pb-2">
-                <h3 class="text-xl font-semibold mb-2">Modify Task</h3>
-                <p class="text-sm text-text-medium">Update the details of your task below.</p>
-            </div>
-            <div class="px-6 py-4">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2" for="taskTitle">Task Title</label>
-                    <input type="text" value="Furniture Assembly"
-                        class="w-full p-3 border border-border rounded-md text-sm transition-all focus:outline-none focus:border-primary-light focus:ring-2 focus:ring-primary-light focus:ring-opacity-10"
-                        id="taskTitle">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2" for="taskDescription">Description</label>
-                    <textarea
-                        class="w-full p-3 border border-border rounded-md text-sm min-h-[100px] resize-y transition-all focus:outline-none focus:border-primary-light focus:ring-2 focus:ring-primary-light focus:ring-opacity-10"
-                        id="taskDescription">Need help assembling a new bookshelf and coffee table from IKEA. Both items are still in their original packaging. I have all the necessary tools but would appreciate someone with experience to ensure everything is assembled correctly. The bookshelf is approximately 6ft tall, and the coffee table is medium-sized.</textarea>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2" for="taskCategory">Category</label>
-                        <select
-                            class="w-full p-3 border border-border rounded-md text-sm transition-all focus:outline-none focus:border-primary-light focus:ring-2 focus:ring-primary-light focus:ring-opacity-10 appearance-none bg-[url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 24 24%27 stroke=%27%2364748b%27%3E%3Cpath stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M19 9l-7 7-7-7%27%3E%3C/path%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] bg-[length:1rem]"
-                            id="taskCategory">
-                            <option>Home Improvement</option>
-                            <option>Cleaning</option>
-                            <option>Moving & Delivery</option>
-                            <option>Handyman</option>
-                            <option>Computer & Tech</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2" for="desiredDate">Desired Date</label>
-                        <input type="datetime-local" value="2025-05-10T10:00"
-                            class="w-full p-3 border border-border rounded-md text-sm transition-all focus:outline-none focus:border-primary-light focus:ring-2 focus:ring-primary-light focus:ring-opacity-10"
-                            id="desiredDate">
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2" for="taskLocation">Location</label>
-                    <input type="text" value="123 Main Street, Apt 4B, San Francisco, CA 94102"
-                        class="w-full p-3 border border-border rounded-md text-sm transition-all focus:outline-none focus:border-primary-light focus:ring-2 focus:ring-primary-light focus:ring-opacity-10"
-                        id="taskLocation">
-                </div>
-            </div>
-            <div class="px-6 py-4 pb-6 flex justify-end gap-2">
-                <button
-                    class="px-4 py-2 text-sm font-medium text-primary bg-transparent border border-primary rounded-md transition-all hover:bg-primary hover:text-white"
-                    id="cancelModifyBtn">Cancel</button>
-                <button
-                    class="px-4 py-2 text-sm font-medium text-white bg-primary border border-primary rounded-md transition-all hover:bg-primary-dark"
-                    id="saveModifyBtn">Save Changes</button>
             </div>
         </div>
     </div>
