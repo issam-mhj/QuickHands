@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Provider Reviews & Ratings | QuickHands</title>
+    <title>QuickHands - Task Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -39,814 +42,312 @@
         }
     </script>
     <style>
-        :root {
-            --primary: #FF6B6B;
-            --primary-light: #FFD8D8;
-            --secondary: #4ECDC4;
-            --secondary-light: #C7F9F3;
-            --dark: #292F36;
-            --gray: #F7F7F7;
-            --gray-medium: #E0E0E0;
-            --gray-dark: #ADADAD;
-            --success: #6BCB77;
-            --warning: #FFD166;
-            --danger: #FF6B6B;
-            --white: #FFFFFF;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --shadow-large: 0 8px 24px rgba(0, 0, 0, 0.12);
-            --radius: 12px;
+        /* Custom Styles */
+        .dashboard-card {
+            @apply bg-white rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-100;
+            transform-origin: center;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .dashboard-card:hover {
+            @apply transform scale-[1.01];
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #F9FAFB;
-            color: var(--dark);
-            line-height: 1.6;
+        .gradient-border {
+            position: relative;
+            border-radius: 1rem;
+            background: white;
         }
 
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: 1.1rem;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+
+        .task-card {
+            @apply relative overflow-hidden rounded-2xl p-6 transition-all duration-300 bg-white border border-gray-100 shadow-sm hover:shadow-md;
+        }
+
+        .task-card:hover {
+            @apply transform scale-[1.01];
+        }
+
+        .task-card::after {
+            content: '';
+            position: absolute;
             top: 0;
-            z-index: 100;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo i {
-            color: var(--secondary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-links a.active {
-            color: var(--secondary);
-        }
-
-        .user-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .notification-bell {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .notification-bell i {
-            font-size: 20px;
-            color: var(--dark);
-        }
-
-        .notification-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .user-name {
-            font-weight: 500;
-        }
-
-        .main-content {
-            padding: 30px 0;
-        }
-
-        .page-header {
-            margin-bottom: 30px;
-        }
-
-        .page-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-
-        .breadcrumb {
-            display: flex;
-            gap: 8px;
-            color: var(--gray-dark);
-            font-size: 14px;
-        }
-
-        .breadcrumb a {
-            color: var(--secondary);
-            text-decoration: none;
-        }
-
-        .breadcrumb span {
-            color: var(--gray-dark);
-        }
-
-        .card {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 24px;
-            margin-bottom: 24px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-large);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #ff5252;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #3dbdb5;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--gray-medium);
-            color: var(--dark);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--gray);
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 12px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stats-card {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .stats-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-large);
-        }
-
-        .stats-card.primary {
-            border-left: 4px solid var(--primary);
-        }
-
-        .stats-card.secondary {
-            border-left: 4px solid var(--secondary);
-        }
-
-        .stats-card.success {
-            border-left: 4px solid var(--success);
-        }
-
-        .stats-card.warning {
-            border-left: 4px solid var(--warning);
-        }
-
-        .stats-label {
-            font-size: 14px;
-            color: var(--gray-dark);
-            margin-bottom: 5px;
-        }
-
-        .stats-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .stats-trend {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-        }
-
-        .trend-up {
-            color: var(--success);
-        }
-
-        .trend-down {
-            color: var(--danger);
-        }
-
-        .chart-container {
-            height: 300px;
-            margin-bottom: 20px;
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--gray-medium);
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            padding: 12px 24px;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--gray-dark);
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            color: var(--secondary);
-            border-bottom: 3px solid var(--secondary);
-        }
-
-        .tab:hover:not(.active) {
-            color: var(--dark);
-            border-bottom: 3px solid var(--gray-medium);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .filter-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .search-box {
-            position: relative;
-        }
-
-        .search-box input {
-            padding-left: 40px;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-dark);
-        }
-
-        .form-control {
+            left: 0;
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid var(--gray-medium);
-            border-radius: var(--radius);
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--secondary);
-        }
-
-        .select-control {
-            padding: 10px 16px;
-            border: 1px solid var(--gray-medium);
-            border-radius: var(--radius);
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            background-color: white;
-            cursor: pointer;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .page-item {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .page-item:hover:not(.active) {
-            background-color: var(--gray);
-        }
-
-        .page-item.active {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .review-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .review-item {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .review-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-large);
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-
-        .reviewer-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .reviewer-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark);
-            font-weight: 600;
-        }
-
-        .reviewer-details {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .reviewer-name {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .review-date {
-            font-size: 12px;
-            color: var(--gray-dark);
-        }
-
-        .review-rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .star {
-            color: var(--warning);
-            font-size: 16px;
-        }
-
-        .star.empty {
-            color: var(--gray-medium);
-        }
-
-        .review-content {
-            margin-bottom: 15px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .review-task {
-            font-size: 12px;
-            color: var(--gray-dark);
-            margin-bottom: 15px;
-        }
-
-        .review-task span {
-            color: var(--secondary);
-            font-weight: 500;
-        }
-
-        .review-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .review-reply {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: var(--gray);
-            border-radius: var(--radius);
-            font-size: 14px;
-        }
-
-        .reply-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .reply-title {
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .reply-date {
-            font-size: 12px;
-            color: var(--gray-dark);
-        }
-
-        .reply-content {
-            color: var(--dark);
-        }
-
-        .rating-breakdown {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .rating-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .rating-label {
-            width: 120px;
-            font-size: 14px;
-            color: var(--dark);
-        }
-
-        .rating-bar-container {
-            flex: 1;
-            height: 8px;
-            background-color: var(--gray);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .rating-bar {
             height: 100%;
-            background-color: var(--secondary);
-            border-radius: 4px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            z-index: 1;
         }
 
-        .rating-value {
-            width: 40px;
-            text-align: right;
-            font-weight: 600;
-            font-size: 14px;
+        .task-card .task-icon {
+            @apply absolute right-4 bottom-4 text-4xl opacity-20;
+            z-index: 0;
         }
 
-        .rating-summary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
+        /* Custom Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
-        .rating-average {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
+        .float {
+            animation: float 6s ease-in-out infinite;
         }
 
-        .average-value {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--dark);
+        .float-delay-1 {
+            animation-delay: 1s;
         }
 
-        .average-stars {
-            display: flex;
-            gap: 5px;
+        .float-delay-2 {
+            animation-delay: 2s;
         }
 
-        .average-count {
-            font-size: 14px;
-            color: var(--gray-dark);
+        .float-delay-3 {
+            animation-delay: 3s;
         }
 
-        .rating-distribution {
-            flex: 1;
-            max-width: 300px;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
 
-        .distribution-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
         }
 
-        .distribution-label {
-            width: 30px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 3px;
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
         }
 
-        .distribution-bar-container {
-            flex: 1;
-            height: 8px;
-            background-color: var(--gray);
-            border-radius: 4px;
-            overflow: hidden;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6B6B;
         }
 
-        .distribution-bar {
+        /* Tooltip */
+        .tooltip {
+            @apply invisible absolute;
+            width: max-content;
+        }
+
+        .has-tooltip:hover .tooltip {
+            @apply visible z-50;
+        }
+
+        /* Pulse Animation */
+        .pulse-dot {
+            position: relative;
+        }
+
+        .pulse-dot::after {
+            content: '';
+            position: absolute;
+            width: 100%;
             height: 100%;
-            background-color: var(--secondary);
-            border-radius: 4px;
+            top: 0;
+            left: 0;
+            background: inherit;
+            border-radius: inherit;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .distribution-count {
-            width: 40px;
-            text-align: right;
-            font-size: 12px;
-            color: var(--gray-dark);
-        }
+        @keyframes pulse {
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .badge-delivery {
-            background-color: #E3F5FF;
-            color: #0085FF;
-        }
-
-        .badge-errand {
-            background-color: #FFF3E0;
-            color: #FF9800;
-        }
-
-        .badge-cleaning {
-            background-color: #E8F5E9;
-            color: #4CAF50;
-        }
-
-        .badge-assembly {
-            background-color: #EDE7F6;
-            color: #673AB7;
-        }
-
-        .badge-other {
-            background-color: #F5F5F5;
-            color: #9E9E9E;
-        }
-
-        @media (max-width: 992px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .rating-summary {
-                flex-direction: column;
-                align-items: center;
-                gap: 30px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .review-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .card {
-                padding: 16px;
-            }
-
-            .page-title {
-                font-size: 24px;
-            }
-
-            .filter-bar {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            .filter-group {
-                width: 100%;
-            }
-
-            .search-box {
-                width: 100%;
-            }
-
-            .search-box input {
-                width: 100%;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
+            0%,
+            100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5);
             }
         }
 
-        .fade-in {
-            animation: fadeIn 0.5s ease forwards;
+        /* Glow Effect */
+        .glow-on-hover {
+            position: relative;
+            z-index: 1;
         }
 
-        .delay-1 {
-            animation-delay: 0.1s;
+        .glow-on-hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            border-radius: inherit;
         }
 
-        .delay-2 {
-            animation-delay: 0.2s;
+        .glow-on-hover:hover::after {
+            opacity: 1;
         }
 
-        .delay-3 {
-            animation-delay: 0.3s;
+        /* Task Status Pills */
+        .status-pill {
+            @apply px-2 py-1 rounded-full text-xs font-medium;
         }
 
-        .delay-4 {
-            animation-delay: 0.4s;
+        .status-pill.pending {
+            @apply bg-blue-100 text-blue-800;
+        }
+
+        .status-pill.in-progress {
+            @apply bg-yellow-100 text-yellow-800;
+        }
+
+        .status-pill.completed {
+            @apply bg-green-100 text-green-800;
+        }
+
+        .status-pill.cancelled {
+            @apply bg-red-100 text-red-800;
+        }
+
+        .status-pill.disputed {
+            @apply bg-purple-100 text-purple-800;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            @apply fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-backdrop.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            @apply bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal-backdrop.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Tab Styles */
+        .tab-button {
+            @apply px-4 py-2 font-medium text-gray-500 border-b-2 border-transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button:hover {
+            @apply text-gray-800;
+        }
+
+        .tab-button.active {
+            @apply text-primary border-primary;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            @apply w-full h-2 bg-gray-200 rounded-full overflow-hidden;
+        }
+
+        .progress-bar-fill {
+            @apply h-full rounded-full;
+            transition: width 0.5s ease;
+        }
+
+        /* Timeline */
+        .timeline {
+            @apply relative pl-8;
+        }
+
+        .timeline-item {
+            @apply relative pb-8;
+        }
+
+        .timeline-item:last-child {
+            @apply pb-0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            @apply absolute left-0 top-0 w-4 h-4 rounded-full bg-white border-2 border-primary transform -translate-x-1/2;
+            z-index: 1;
+        }
+
+        .timeline-item::after {
+            content: '';
+            @apply absolute left-0 top-4 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2;
+        }
+
+        .timeline-item:last-child::after {
+            @apply hidden;
+        }
+
+        /* Custom Checkbox */
+        .custom-checkbox {
+            @apply relative flex items-center;
+        }
+
+        .custom-checkbox input[type="checkbox"] {
+            @apply absolute opacity-0 w-0 h-0;
+        }
+
+        .custom-checkbox .checkmark {
+            @apply w-5 h-5 rounded border border-gray-300 flex items-center justify-center;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked~.checkmark {
+            @apply bg-primary border-primary;
+        }
+
+        .custom-checkbox .checkmark:after {
+            content: '';
+            @apply w-2 h-2 bg-white rounded-sm;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked~.checkmark:after {
+            opacity: 1;
+            transform: scale(1);
         }
     </style>
 </head>
 
 <body class="font-sans bg-gray-50 text-dark">
+    <!-- Header -->
     <header class="bg-gradient-to-r from-primary/10 to-secondary/10 py-8 px-6 md:px-12">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-center justify-between">
@@ -933,285 +434,175 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="main-content">
-            <div class="page-header">
-                <h1 class="page-title">Reviews & Ratings</h1>
-                <div class="breadcrumb">
-                    <a href="provider-dashboard.html">Dashboard</a>
-                    <span>/</span>
-                    <span>Reviews & Ratings</span>
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+        <section class="mb-8">
+            <h1 class="font-display text-3xl font-bold text-dark-blue">Reviews & Ratings</h1>
+            <nav class="text-sm text-gray-500 flex items-center space-x-2 mt-1">
+                <a href="provider-dashboard.html" class="hover:text-dark-blue">Dashboard</a>
+                <span>/</span>
+                <span>Reviews & Ratings</span>
+            </nav>
+        </section>
+
+
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition">
+                <div class="text-sm text-gray-500 uppercase">Overall Rating</div>
+                <div class="text-3xl font-semibold text-dark mt-2">{{ $ratingAvg }}</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition">
+                <div class="text-sm text-gray-500 uppercase">Total Reviews</div>
+                <div class="text-3xl font-semibold text-dark mt-2">{{ $totalRv }}</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition">
+                <div class="text-sm text-gray-500 uppercase">5-Star Reviews</div>
+                <div class="text-3xl font-semibold text-dark mt-2">{{ $fiveStar }}</div>
+            </div>
+        </section>
+        <section class="bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                <h2 class="text-2xl font-semibold text-dark">User Reviews</h2>
+                <div class="mt-4 md:mt-0">
+                    <select class="border-gray-300 rounded-lg px-4 py-2 text-gray-700">
+                        <option>All Reviews</option>
+                        <option>5 Star</option>
+                        <option>4 Star</option>
+                        <option>3 Star</option>
+                        <option>2 Star</option>
+                        <option>1 Star</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="stats-grid fade-in">
-                <div class="stats-card primary delay-1">
-                    <div class="stats-label">Overall Rating</div>
-                    <div class="stats-value">{{ $ratingAvg }}</div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between space-y-4 sm:space-y-0 mb-6">
+                <div class="flex items-center border border-gray-200 rounded-lg px-3 py-2 w-full sm:w-1/2">
+                    <i class="fas fa-search text-gray-400 mr-2"></i>
+                    <input type="text" class="w-full outline-none text-gray-700" placeholder="Search reviews…">
                 </div>
-                <div class="stats-card secondary delay-2">
-                    <div class="stats-label">Total Reviews</div>
-                    <div class="stats-value">{{ $totalRv }}</div>
-                </div>
-                <div class="stats-card success delay-3">
-                    <div class="stats-label">5-Star Reviews</div>
-                    <div class="stats-value">{{ $fiveStar }}</div>
+                <div class="flex space-x-4">
+                    <select class="border-gray-300 rounded-lg px-4 py-2 text-gray-700">
+                        <option>All Task Types</option>
+                        <option>Deliveries</option>
+                        <option>Errands</option>
+                        <option>Cleaning</option>
+                        <option>Assembly</option>
+                        <option>Other</option>
+                    </select>
+                    <select class="border-gray-300 rounded-lg px-4 py-2 text-gray-700">
+                        <option>Most Recent</option>
+                        <option>Highest Rated</option>
+                        <option>Lowest Rated</option>
+                    </select>
                 </div>
             </div>
-            <div class="card fade-in delay-3">
-                <div class="card-header">
-                    <h2 class="card-title">User Reviews</h2>
-                    <div class="card-actions">
-                        <select class="select-control">
-                            <option>All Reviews</option>
-                            <option>5 Star</option>
-                            <option>4 Star</option>
-                            <option>3 Star</option>
-                            <option>2 Star</option>
-                            <option>1 Star</option>
-                        </select>
+
+            <div class="space-y-6">
+                @foreach ($userRVW as $review)
+                    <div class="bg-gray-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white font-semibold">
+                                    {{ $review->offer->service->user->name[0] }}
+                                </div>
+                                <div>
+                                    <div class="font-medium text-dark-blue">{{ $review->offer->service->user->name }}
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        {{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-yellow-400">
+                                @for ($i = 0; $i < (int) $review->rating; $i++)
+                                    <i class="fas fa-star"></i>
+                                @endfor
+                            </div>
+                        </div>
+                        <div class="text-sm mb-2">
+                            <span class="font-medium">Task:</span>
+                            <span>{{ $review->offer->service->title }}</span>
+                            <span class="ml-2 inline-block bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
+                                {{ $review->offer->service->servicecategory->name }}
+                            </span>
+                        </div>
+                        <!-- Comment -->
+                        <p class="text-gray-700 mb-4">{{ $review->comment }}</p>
+                        <!-- Actions -->
                     </div>
+                @endforeach
+            </div>
+
+            <div class="flex items-center justify-center space-x-2 mt-8">
+                <button class="p-2 rounded hover:bg-gray-100"><i class="fas fa-chevron-left"></i></button>
+                <button class="px-3 py-1 bg-primary text-white rounded">1</button>
+                <button class="px-3 py-1 rounded hover:bg-gray-100">2</button>
+                <button class="px-3 py-1 rounded hover:bg-gray-100">3</button>
+                <span class="px-3 py-1 text-gray-500">…</span>
+                <button class="px-3 py-1 rounded hover:bg-gray-100">12</button>
+                <button class="p-2 rounded hover:bg-gray-100"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-6 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-gray-500">© 2023 QuickHands. All rights reserved.</p>
                 </div>
 
-                <div class="filter-bar">
-                    <div class="filter-group">
-                        <div class="search-box">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" class="form-control" placeholder="Search reviews...">
-                        </div>
-                    </div>
-                    <div class="filter-group">
-                        <select class="select-control">
-                            <option>All Task Types</option>
-                            <option>Deliveries</option>
-                            <option>Errands</option>
-                            <option>Cleaning</option>
-                            <option>Assembly</option>
-                            <option>Other</option>
-                        </select>
-                        <select class="select-control">
-                            <option>Most Recent</option>
-                            <option>Highest Rated</option>
-                            <option>Lowest Rated</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="review-list">
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-info">
-                                <div class="reviewer-avatar">EM</div>
-                                <div class="reviewer-details">
-                                    <div class="reviewer-name">Emily Martinez</div>
-                                    <div class="review-date">April 15, 2025</div>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                            </div>
-                        </div>
-                        <div class="review-task">
-                            Task: <span>Furniture Assembly</span> <span class="badge badge-assembly">Assembly</span>
-                        </div>
-                        <div class="review-content">
-                            John was absolutely amazing! He arrived right on time and assembled my IKEA bookshelf and
-                            desk in record time. Everything is sturdy and looks perfect. He even cleaned up all the
-                            packaging before leaving. I'll definitely be requesting him for all my future assembly
-                            needs!
-                        </div>
-                        <div class="review-actions">
-                            <button class="btn btn-outline btn-sm">Reply</button>
-                        </div>
-                        <div class="review-reply">
-                            <div class="reply-header">
-                                <div class="reply-title">Your Reply</div>
-                                <div class="reply-date">April 15, 2025</div>
-                            </div>
-                            <div class="reply-content">
-                                Thank you so much for your kind words, Emily! It was a pleasure helping you with your
-                                furniture assembly. I'm glad everything turned out to your satisfaction. Looking forward
-                                to assisting you with future projects!
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-info">
-                                <div class="reviewer-avatar">RJ</div>
-                                <div class="reviewer-details">
-                                    <div class="reviewer-name">Robert Johnson</div>
-                                    <div class="review-date">April 12, 2025</div>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                            </div>
-                        </div>
-                        <div class="review-task">
-                            Task: <span>Grocery Delivery</span> <span class="badge badge-delivery">Delivery</span>
-                        </div>
-                        <div class="review-content">
-                            John is incredibly reliable. He delivered my groceries exactly when promised and was very
-                            careful with all items. He even helped me bring everything inside since I have a bad back.
-                            The communication throughout was excellent - he texted me when he was at the store and on
-                            his way. Highly recommend!
-                        </div>
-                        <div class="review-actions">
-                            <button class="btn btn-outline btn-sm">Reply</button>
-                        </div>
-                    </div>
-
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-info">
-                                <div class="reviewer-avatar">SW</div>
-                                <div class="reviewer-details">
-                                    <div class="reviewer-name">Sarah Wilson</div>
-                                    <div class="review-date">April 10, 2025</div>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="far fa-star star empty"></i>
-                            </div>
-                        </div>
-                        <div class="review-task">
-                            Task: <span>House Cleaning</span> <span class="badge badge-cleaning">Cleaning</span>
-                        </div>
-                        <div class="review-content">
-                            John did a great job cleaning my apartment. Most areas were spotless, though I noticed a few
-                            spots under the furniture were missed. Overall, I'm satisfied with the service and would use
-                            John again. He was very professional and finished within the estimated time frame.
-                        </div>
-                        <div class="review-actions">
-                            <button class="btn btn-outline btn-sm">Reply</button>
-                        </div>
-                        <div class="review-reply">
-                            <div class="reply-header">
-                                <div class="reply-title">Your Reply</div>
-                                <div class="reply-date">April 10, 2025</div>
-                            </div>
-                            <div class="reply-content">
-                                Thank you for your feedback, Sarah! I appreciate you pointing out the missed spots -
-                                I'll be more thorough next time. I'm glad you were satisfied overall, and I look forward
-                                to providing an even better cleaning service in the future.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-info">
-                                <div class="reviewer-avatar">DT</div>
-                                <div class="reviewer-details">
-                                    <div class="reviewer-name">David Thompson</div>
-                                    <div class="review-date">April 8, 2025</div>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                                <i class="fas fa-star star"></i>
-                            </div>
-                        </div>
-                        <div class="review-task">
-                            Task: <span>Package Pickup</span> <span class="badge badge-errand">Errand</span>
-                        </div>
-                        <div class="review-content">
-                            John went above and beyond! I needed an urgent package pickup from across town during rush
-                            hour, and he managed to get it to me in record time. He kept me updated throughout and was
-                            extremely courteous. This level of service is rare these days. Thank you!
-                        </div>
-                        <div class="review-actions">
-                            <button class="btn btn-outline btn-sm">Reply</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pagination">
-                    <div class="page-item"><i class="fas fa-chevron-left"></i></div>
-                    <div class="page-item active">1</div>
-                    <div class="page-item">2</div>
-                    <div class="page-item">3</div>
-                    <div class="page-item">...</div>
-                    <div class="page-item">12</div>
-                    <div class="page-item"><i class="fas fa-chevron-right"></i></div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-sm text-gray-500 hover:text-primary">Help Center</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-primary">Privacy Policy</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-primary">Terms of Service</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-primary">Contact Support</a>
                 </div>
             </div>
         </div>
-    </div>
+    </footer>
 
     <script>
-        // Reply button functionality
-        document.querySelectorAll('.btn-outline').forEach(button => {
-            button.addEventListener('click', function() {
-                if (this.textContent === 'Reply') {
-                    const reviewItem = this.closest('.review-item');
-                    if (!reviewItem.querySelector('.review-reply')) {
-                        const replyForm = document.createElement('div');
-                        replyForm.className = 'review-reply';
-                        replyForm.style.padding = '15px';
-                        replyForm.innerHTML = `
-                            <div class="form-group">
-                                <label class="form-label">Your Reply</label>
-                                <textarea class="form-control" placeholder="Write your response here..."></textarea>
-                            </div>
-                            <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                                <button class="btn btn-outline btn-sm cancel-reply">Cancel</button>
-                                <button class="btn btn-secondary btn-sm submit-reply">Submit</button>
-                            </div>
-                        `;
-                        reviewItem.appendChild(replyForm);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-                        // Add event listeners to the new buttons
-                        reviewItem.querySelector('.cancel-reply').addEventListener('click', function() {
-                            reviewItem.removeChild(replyForm);
-                        });
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
 
-                        reviewItem.querySelector('.submit-reply').addEventListener('click', function() {
-                            const replyText = reviewItem.querySelector('textarea').value;
-                            if (replyText.trim() !== '') {
-                                const today = new Date();
-                                const formattedDate = today.toLocaleDateString('en-US', {
-                                    month: 'long',
-                                    day: 'numeric',
-                                    year: 'numeric'
-                                });
+                    // Add active class to clicked button
+                    button.classList.add('active');
 
-                                const newReply = document.createElement('div');
-                                newReply.className = 'review-reply';
-                                newReply.innerHTML = `
-                                    <div class="reply-header">
-                                        <div class="reply-title">Your Reply</div>
-                                        <div class="reply-date">${formattedDate}</div>
-                                    </div>
-                                    <div class="reply-content">
-                                        ${replyText}
-                                    </div>
-                                `;
+                    // Hide all tab contents
+                    tabContents.forEach(content => content.classList.add('hidden'));
 
-                                reviewItem.removeChild(replyForm);
-                                reviewItem.appendChild(newReply);
-                            }
-                        });
-                    }
-                }
+                    // Show the selected tab content
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.remove('hidden');
+                });
             });
+
+            // Animate elements on load
+            const animateElements = () => {
+                gsap.fromTo('.dashboard-card', {
+                    opacity: 0,
+                    y: 20
+                }, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    stagger: 0.1,
+                    ease: "power2.out"
+                });
+            };
+
+            // Run animations
+            animateElements();
         });
     </script>
 </body>
