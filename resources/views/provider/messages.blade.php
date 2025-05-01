@@ -4,1460 +4,849 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Provider Messages/Inbox - QuickHands</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>QuickHands - Available Tasks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B', // Coral red
+                        secondary: '#4ECDC4', // Teal
+                        accent: '#FFE66D', // Yellow
+                        dark: '#1A535C', // Dark teal
+                        light: '#F7FFF7', // Off-white
+                        'dark-blue': '#2C3E50',
+                        'light-blue': '#3498DB',
+                        'success': '#2ECC71',
+                        'warning': '#F39C12',
+                        'danger': '#E74C3C',
+                        'info': '#3498DB',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Clash Display', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary: #FF7D5C;
-            --primary-light: #FFE8E2;
-            --secondary: #2CCCC3;
-            --secondary-light: #E5F7F6;
-            --dark: #333333;
-            --gray: #6C757D;
-            --light-gray: #E9ECEF;
-            --lighter-gray: #F8F9FA;
-            --white: #FFFFFF;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --info: #17a2b8;
+        /* Custom Styles */
+        .dashboard-card {
+            @apply bg-white rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-100;
+            transform-origin: center;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .dashboard-card:hover {
+            @apply transform scale-[1.01];
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 30px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .user-actions {
-            display: flex;
-            align-items: center;
-        }
-
-        .notification-bell {
+        .gradient-border {
             position: relative;
-            margin-right: 20px;
-            cursor: pointer;
+            border-radius: 1rem;
+            background: white;
         }
 
-        .notification-bell i {
-            font-size: 20px;
-            color: var(--gray);
-        }
-
-        .notification-count {
+        .gradient-border::before {
+            content: "";
             position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
+            inset: -2px;
+            border-radius: 1.1rem;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+
+        .task-card {
+            @apply relative overflow-hidden rounded-2xl p-6 transition-all duration-300 bg-white border border-gray-100 shadow-sm hover:shadow-md;
+        }
+
+        .task-card:hover {
+            @apply transform scale-[1.01];
+        }
+
+        .task-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            z-index: 1;
+        }
+
+        .task-card .task-icon {
+            @apply absolute right-4 bottom-4 text-4xl opacity-20;
+            z-index: 0;
+        }
+
+        /* Custom Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .float-delay-1 {
+            animation-delay: 1s;
+        }
+
+        .float-delay-2 {
+            animation-delay: 2s;
+        }
+
+        .float-delay-3 {
+            animation-delay: 3s;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6B6B;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            @apply invisible absolute;
+            width: max-content;
+        }
+
+        .has-tooltip:hover .tooltip {
+            @apply visible z-50;
+        }
+
+        /* Pulse Animation */
+        .pulse-dot {
+            position: relative;
+        }
+
+        .pulse-dot::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: inherit;
+            border-radius: inherit;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5);
+            }
+        }
+
+        /* Glow Effect */
+        .glow-on-hover {
+            position: relative;
+            z-index: 1;
+        }
+
+        .glow-on-hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            border-radius: inherit;
+        }
+
+        .glow-on-hover:hover::after {
+            opacity: 1;
+        }
+
+        /* Range Slider */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #e5e7eb;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
             width: 18px;
             height: 18px;
-            font-size: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
             border-radius: 50%;
-            object-fit: cover;
-            margin-right: 10px;
-        }
-
-        .user-name {
-            font-weight: 600;
-        }
-
-        /* Main Content Styles */
-        .main-content {
-            padding: 30px 0;
-        }
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .page-title {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .page-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 500;
+            background: #FF6B6B;
             cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            border: 2px solid white;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #ff6a45;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--gray);
-            color: var(--gray);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--light-gray);
-        }
-
-        /* Dashboard Stats */
-        .dashboard-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background-color: var(--white);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .stat-title {
-            font-size: 14px;
-            color: var(--gray);
-            font-weight: 500;
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-        }
-
-        .icon-primary {
-            background-color: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .icon-secondary {
-            background-color: var(--secondary-light);
-            color: var(--secondary);
-        }
-
-        .icon-success {
-            background-color: #e5f7ed;
-            color: var(--success);
-        }
-
-        .icon-warning {
-            background-color: #fff8e5;
-            color: var(--warning);
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .stat-change {
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .change-positive {
-            color: var(--success);
-        }
-
-        .change-negative {
-            color: var(--danger);
-        }
-
-        /* Messages Section */
-        .messages-container {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 20px;
-            height: calc(100vh - 250px);
-            min-height: 600px;
-        }
-
-        .conversation-list {
-            background-color: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .conversation-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .search-bar {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 10px 15px 10px 40px;
-            border-radius: 8px;
-            border: 1px solid var(--light-gray);
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .search-bar i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-        }
-
-        .conversation-filters {
-            display: flex;
-            gap: 10px;
-        }
-
-        .filter-btn {
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #FF6B6B;
             cursor: pointer;
-            transition: all 0.3s;
-            border: none;
+            border: 2px solid white;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
         }
 
-        .filter-btn.active {
-            background-color: var(--primary);
-            color: white;
+        /* Modal */
+        .modal-backdrop {
+            @apply fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .filter-btn:not(.active) {
-            background-color: var(--light-gray);
-            color: var(--gray);
+        .modal-backdrop.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            @apply bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal-backdrop.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Checkbox */
+        .custom-checkbox {
+            @apply relative flex items-center;
+        }
+
+        .custom-checkbox input[type="checkbox"] {
+            @apply absolute opacity-0 w-0 h-0;
+        }
+
+        .custom-checkbox .checkmark {
+            @apply w-5 h-5 rounded border border-gray-300 flex items-center justify-center;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked~.checkmark {
+            @apply bg-primary border-primary;
+        }
+
+        .custom-checkbox .checkmark:after {
+            content: '';
+            @apply w-2 h-2 bg-white rounded-sm;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked~.checkmark:after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Chat Styling */
+        .app-container {
+            @apply flex flex-col lg:flex-row w-full min-h-screen bg-gray-50;
         }
 
         .conversations {
-            overflow-y: auto;
-            flex-grow: 1;
+            @apply w-full lg:w-1/4 bg-white border-r border-gray-200 overflow-y-auto;
+            height: calc(100vh - 140px);
         }
 
         .conversation-item {
-            padding: 15px 20px;
-            display: flex;
-            gap: 15px;
-            border-bottom: 1px solid var(--light-gray);
-            cursor: pointer;
-            transition: background-color 0.3s;
+            @apply flex items-start px-4 py-3 border-b border-gray-100 cursor-pointer transition-all;
         }
 
         .conversation-item:hover {
-            background-color: var(--lighter-gray);
+            @apply bg-gray-50;
         }
 
         .conversation-item.active {
-            background-color: var(--primary-light);
-            border-left: 3px solid var(--primary);
+            @apply bg-primary/5 border-l-4 border-l-primary;
         }
 
         .conversation-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
+            @apply w-12 h-12 rounded-full object-cover mr-3 flex-shrink-0;
         }
 
         .conversation-details {
-            flex-grow: 1;
-            overflow: hidden;
+            @apply flex-1 min-w-0;
         }
 
         .conversation-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
+            @apply flex justify-between items-center mb-1;
         }
 
         .conversation-name {
-            font-weight: 600;
-            font-size: 15px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            @apply font-medium text-gray-900 truncate;
         }
 
         .conversation-time {
-            font-size: 12px;
-            color: var(--gray);
+            @apply text-xs text-gray-500 whitespace-nowrap ml-2;
         }
 
         .conversation-preview {
-            font-size: 13px;
-            color: var(--gray);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            @apply text-sm text-gray-600 truncate flex items-center;
         }
 
         .unread-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            display: inline-block;
+            @apply w-2 h-2 bg-primary rounded-full mr-2 flex-shrink-0;
         }
 
         .task-badge {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 12px;
-            margin-left: 5px;
+            @apply text-xs rounded-full px-2 py-0.5 ml-2 whitespace-nowrap;
         }
 
         .task-active {
-            background-color: var(--secondary-light);
-            color: var(--secondary);
+            @apply bg-blue-100 text-blue-800;
         }
 
         .task-completed {
-            background-color: #e5f7ed;
-            color: var(--success);
+            @apply bg-green-100 text-green-800;
         }
 
-        /* Chat Area */
         .chat-area {
-            background-color: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            @apply flex-1 flex flex-col bg-gray-50;
+            height: calc(100vh - 140px);
         }
 
         .chat-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            @apply flex justify-between items-center p-4 bg-white border-b border-gray-200;
         }
 
         .chat-user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            @apply flex items-center;
         }
 
         .chat-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
+            @apply w-10 h-10 rounded-full object-cover mr-3;
         }
 
         .chat-user-details h4 {
-            font-weight: 600;
-            margin-bottom: 3px;
+            @apply font-medium text-gray-900;
         }
 
         .chat-user-details p {
-            font-size: 13px;
-            color: var(--gray);
+            @apply text-xs text-gray-500;
         }
 
         .chat-actions {
-            display: flex;
-            gap: 15px;
+            @apply flex items-center;
         }
 
         .chat-action-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--light-gray);
-            color: var(--gray);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .chat-action-btn:hover {
-            background-color: var(--primary-light);
-            color: var(--primary);
+            @apply w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 cursor-pointer mx-1 hover:bg-gray-200 transition-colors;
         }
 
         .chat-messages {
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background-color: #f9f9f9;
-        }
-
-        .message {
-            max-width: 70%;
-            padding: 12px 15px;
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .message-time {
-            font-size: 11px;
-            color: var(--gray);
-            margin-top: 5px;
-            text-align: right;
-        }
-
-        .message-received {
-            align-self: flex-start;
-            background-color: var(--light-gray);
-            border-bottom-left-radius: 0;
-        }
-
-        .message-sent {
-            align-self: flex-end;
-            background-color: var(--primary-light);
-            color: var(--dark);
-            border-bottom-right-radius: 0;
-        }
-
-        .message-image {
-            max-width: 100%;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-
-        .message-file {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background-color: var(--white);
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 5px;
-        }
-
-        .file-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background-color: var(--light-gray);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--gray);
-        }
-
-        .file-details {
-            flex-grow: 1;
-            overflow: hidden;
-        }
-
-        .file-name {
-            font-size: 13px;
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .file-size {
-            font-size: 11px;
-            color: var(--gray);
-        }
-
-        .file-download {
-            color: var(--primary);
-            cursor: pointer;
+            @apply flex-1 p-4 overflow-y-auto;
         }
 
         .date-divider {
-            display: flex;
-            align-items: center;
-            color: var(--gray);
-            font-size: 12px;
-            margin: 15px 0;
+            @apply flex items-center justify-center my-4 text-xs text-gray-500;
         }
 
         .date-divider::before,
         .date-divider::after {
             content: "";
-            flex-grow: 1;
-            height: 1px;
-            background-color: var(--light-gray);
+            @apply flex-1 h-px bg-gray-200 mx-2;
         }
 
-        .date-divider::before {
-            margin-right: 15px;
+        .message {
+            @apply max-w-[75%] mb-4 rounded-lg p-3 relative;
         }
 
-        .date-divider::after {
-            margin-left: 15px;
+        .message-time {
+            @apply text-xs text-gray-500 mt-1;
+        }
+
+        .message-received {
+            @apply bg-white text-gray-800 shadow-sm;
+            border-radius: 0 12px 12px 12px;
+        }
+
+        .message-sent {
+            @apply bg-primary text-white ml-auto;
+            border-radius: 12px 0 12px 12px;
+        }
+
+        .message-sent .message-time {
+            @apply text-primary-100;
+        }
+
+        .message-image {
+            @apply rounded-lg mt-2 w-full max-w-xs object-cover;
+        }
+
+        .message-file {
+            @apply flex items-center bg-gray-100 rounded-lg p-3 mt-2;
+        }
+
+        .file-icon {
+            @apply text-primary text-2xl mr-3;
+        }
+
+        .file-details {
+            @apply flex-1;
+        }
+
+        .file-name {
+            @apply font-medium text-sm;
+        }
+
+        .file-size {
+            @apply text-xs text-gray-500;
+        }
+
+        .file-download {
+            @apply text-gray-500 hover:text-primary cursor-pointer;
         }
 
         .typing-indicator {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--gray);
-            font-size: 13px;
-            padding: 0 20px;
-            height: 30px;
+            @apply flex items-center p-3 text-xs text-gray-500;
         }
 
         .typing-dots {
-            display: flex;
-            gap: 3px;
+            @apply flex ml-2;
         }
 
         .typing-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: var(--gray);
-            animation: typingAnimation 1.5s infinite ease-in-out;
+            @apply w-2 h-2 bg-gray-400 rounded-full mx-0.5;
+            animation: typingDot 1.4s infinite ease-in-out both;
         }
 
         .typing-dot:nth-child(1) {
-            animation-delay: 0s;
+            animation-delay: -0.32s;
         }
 
         .typing-dot:nth-child(2) {
-            animation-delay: 0.3s;
+            animation-delay: -0.16s;
         }
 
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.6s;
-        }
-
-        @keyframes typingAnimation {
-            0% {
-                transform: translateY(0);
+        @keyframes typingDot {
+            0%, 80%, 100% {
+                transform: scale(0.6);
             }
-
-            50% {
-                transform: translateY(-5px);
-            }
-
-            100% {
-                transform: translateY(0);
+            40% {
+                transform: scale(1);
             }
         }
 
         .chat-input-area {
-            padding: 15px 20px;
-            border-top: 1px solid var(--light-gray);
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            @apply flex items-center p-3 bg-white border-t border-gray-200;
         }
 
         .attachment-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--light-gray);
-            color: var(--gray);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .attachment-btn:hover {
-            background-color: var(--primary-light);
-            color: var(--primary);
+            @apply p-2 rounded-full text-gray-500 hover:bg-gray-100 cursor-pointer transition-colors;
         }
 
         .message-input {
-            flex-grow: 1;
-            position: relative;
+            @apply flex-1 bg-gray-100 rounded-full flex items-center overflow-hidden mx-2 px-4;
         }
 
         .message-input textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 25px;
-            border: 1px solid var(--light-gray);
-            font-size: 14px;
-            resize: none;
-            max-height: 100px;
-            transition: border-color 0.3s;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .message-input textarea:focus {
-            outline: none;
-            border-color: var(--primary);
+            @apply bg-transparent border-none resize-none w-full py-2 focus:outline-none;
+            max-height: 80px;
         }
 
         .emoji-btn {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .emoji-btn:hover {
-            color: var(--primary);
+            @apply p-2 text-gray-500 cursor-pointer;
         }
 
         .send-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--primary);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
+            @apply w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-colors;
         }
 
-        .send-btn:hover {
-            background-color: #ff6a45;
-        }
-
-        /* Task Details Sidebar */
         .task-details {
-            background-color: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            margin-top: 20px;
+            @apply w-full lg:w-1/4 bg-white border-l border-gray-200 p-4 overflow-y-auto;
+            height: calc(100vh - 140px);
         }
 
         .task-details-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+            @apply flex justify-between items-center mb-4 pb-3 border-b border-gray-200;
         }
 
         .task-details-title {
-            font-size: 18px;
-            font-weight: 600;
+            @apply font-medium text-lg;
         }
 
         .task-details-toggle {
-            color: var(--primary);
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            @apply text-sm text-gray-500 cursor-pointer flex items-center;
+        }
+
+        .task-details-toggle i {
+            @apply ml-1;
         }
 
         .task-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
+            @apply mb-4;
         }
 
         .task-info-item {
-            display: flex;
-            flex-direction: column;
+            @apply flex justify-between py-2 border-b border-gray-100;
         }
 
         .task-info-label {
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 5px;
+            @apply text-sm text-gray-500;
         }
 
         .task-info-value {
-            font-size: 14px;
-            font-weight: 500;
+            @apply text-sm font-medium;
         }
 
         .task-status {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
+            @apply text-xs rounded-full px-2 py-0.5;
         }
 
         .status-in-progress {
-            background-color: var(--secondary-light);
-            color: var(--secondary);
+            @apply bg-blue-100 text-blue-800;
         }
 
         .task-description {
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            @apply text-sm text-gray-700 p-3 bg-gray-50 rounded-lg mb-4;
         }
 
         .task-actions {
-            display: flex;
-            gap: 10px;
+            @apply flex flex-wrap gap-2;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .dashboard-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .messages-container {
-                grid-template-columns: 1fr;
-            }
-
-            .conversation-list {
-                display: none;
-            }
-
-            .conversation-list.active {
-                display: flex;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 10;
-            }
-
-            .back-to-list {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                color: var(--primary);
-                cursor: pointer;
-                margin-bottom: 15px;
-            }
+        .btn {
+            @apply py-2 px-4 rounded-lg text-sm font-medium transition-colors;
         }
 
-        @media (max-width: 768px) {
-            .dashboard-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
+        .btn-outline {
+            @apply border border-gray-300 text-gray-700 hover:bg-gray-50;
         }
 
-        /* Animation */
+        .btn-primary {
+            @apply bg-primary text-white hover:bg-primary/90;
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(-20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        .fade-in {
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        /* Notification Dropdown */
-        .notification-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            width: 300px;
-            background-color: var(--white);
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: none;
-        }
-
-        .notification-dropdown.show {
-            display: block;
-        }
-
-        .notification-header {
-            padding: 15px;
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .notification-title {
-            font-weight: 600;
-        }
-
-        .mark-all-read {
-            color: var(--primary);
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .notification-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .notification-item {
-            padding: 15px;
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
-            gap: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .notification-item:hover {
-            background-color: var(--lighter-gray);
-        }
-
-        .notification-item.unread {
-            background-color: var(--primary-light);
-        }
-
-        .notification-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-        }
-
-        .notification-content {
-            flex-grow: 1;
-        }
-
-        .notification-message {
-            font-size: 13px;
-            margin-bottom: 5px;
-        }
-
-        .notification-time {
-            font-size: 11px;
-            color: var(--gray);
-        }
-
-        .notification-footer {
-            padding: 15px;
-            text-align: center;
-            border-top: 1px solid var(--light-gray);
-        }
-
-        .view-all-notifications {
-            color: var(--primary);
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-        }
     </style>
 </head>
 
-<body>
-    <header>
-        <div class="container header-container">
-            <a href="#" class="logo">
-                <i class="fas fa-hands-helping"></i>
-                QuickHands
-            </a>
-            <ul class="nav-links">
-                <li><a href="provider-dashboard.html">Dashboard</a></li>
-                <li><a href="provider-available-tasks.html">Available Tasks</a></li>
-                <li><a href="provider-task-management.html">My Tasks</a></li>
-                <li><a href="provider-earnings-payments.html">Earnings</a></li>
-                <li><a href="provider-reviews-ratings.html">Reviews</a></li>
-            </ul>
-            <div class="user-actions">
-                <div class="notification-bell">
-                    <i class="far fa-bell"></i>
-                    <span class="notification-count">3</span>
+<body class="font-sans bg-gray-50 text-dark">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-primary/10 to-secondary/10 py-8 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                <div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center mr-4">
+                            <i class="fas fa-hands-helping text-primary text-xl"></i>
+                        </div>
+                        <h1 class="font-display text-2xl font-bold">QuickHands</h1>
+                    </div>
+                    <p class="text-gray-600 mt-1">Provider Dashboard</p>
                 </div>
-                <div class="user-profile">
-                    <img src="/placeholder.svg?height=40&width=40" alt="User Avatar" class="user-avatar">
-                    <span class="user-name">John D.</span>
+
+                <div class="mt-4 md:mt-0 flex items-center space-x-4">
+                    <div class="relative">
+                        <button
+                            class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
+                            <i class="fas fa-bell"></i>
+                            <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
+                        </button>
+                    </div>
+
+                    <div class="relative">
+                        <button
+                            class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
+                            <i class="fas fa-envelope"></i>
+                            <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center">
+                        <img src="/api/placeholder/45/45" alt="Provider"
+                            class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                        <div class="ml-3">
+                            <p class="font-medium">John Smith</p>
+                            <p class="text-xs text-gray-500">Professional Handyman</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="container main-content">
-        <div class="page-header">
-            <h1 class="page-title">Messages</h1>
-            <div class="page-actions">
-                <button class="btn btn-outline">
-                    <i class="fas fa-filter"></i>
-                    Filter
-                </button>
-                <button class="btn btn-primary">
-                    <i class="fas fa-bell"></i>
-                    Notification Settings
-                </button>
-            </div>
-        </div>
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-30 bg-white shadow-md py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between overflow-x-auto hide-scrollbar">
+                <div class="flex space-x-1 md:space-x-4">
+                    <a href="#"
+                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
+                        <i class="fas fa-chart-line mr-2"></i> Dashboard
+                    </a>
+                    <a href="#"
+                        class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
+                        <i class="fas fa-tasks mr-2"></i> Available Tasks
+                    </a>
+                    <a href="#"
+                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
+                        <i class="fas fa-clipboard-list mr-2"></i> Task Management
+                    </a>
+                    <a href="#"
+                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
+                        <i class="fas fa-star mr-2"></i> Reviews
+                    </a>
+                </div>
 
-        <div class="dashboard-stats">
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div class="stat-title">Unread Messages</div>
-                    <div class="stat-icon icon-primary">
-                        <i class="fas fa-envelope"></i>
-                    </div>
+                <div class="hidden md:flex space-x-2">
+                    <a href="#"
+                        class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
+                        <i class="fas fa-user-circle mr-2"></i> Profile
+                    </a>
+                    <a href="#"
+                        class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
+                        <i class="fas fa-question-circle mr-2"></i> Help
+                    </a>
                 </div>
-                <div class="stat-value">12</div>
-                <div class="stat-change change-positive">
-                    <i class="fas fa-arrow-up"></i>
-                    3 new since yesterday
-                </div>
-            </div>
 
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div class="stat-title">Active Conversations</div>
-                    <div class="stat-icon icon-secondary">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                </div>
-                <div class="stat-value">8</div>
-                <div class="stat-change">
-                    <i class="fas fa-minus"></i>
-                    No change
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div class="stat-title">Response Rate</div>
-                    <div class="stat-icon icon-success">
-                        <i class="fas fa-reply"></i>
-                    </div>
-                </div>
-                <div class="stat-value">98%</div>
-                <div class="stat-change change-positive">
-                    <i class="fas fa-arrow-up"></i>
-                    2% from last week
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <div class="stat-title">Avg. Response Time</div>
-                    <div class="stat-icon icon-warning">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                </div>
-                <div class="stat-value">5 min</div>
-                <div class="stat-change change-positive">
-                    <i class="fas fa-arrow-down"></i>
-                    2 min from last week
+                <div class="md:hidden">
+                    <button class="p-2 rounded-lg hover:bg-gray-100 text-gray-700">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <div class="messages-container">
-            <div class="conversation-list">
-                <div class="conversation-header">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search conversations...">
+    <!-- Main Content -->
+    <div class="app-container">
+        <!-- Conversations List -->
+        <div class="conversations">
+            <div class="conversation-item active">
+                <img src="/api/placeholder/50/50" alt="Sarah Johnson" class="conversation-avatar">
+                <div class="conversation-details">
+                    <div class="conversation-header-row">
+                        <div class="conversation-name">Sarah Johnson</div>
+                        <div class="conversation-time">10:23 AM</div>
                     </div>
-                    <div class="conversation-filters">
-                        <button class="filter-btn active">All</button>
-                        <button class="filter-btn">Active Tasks</button>
-                        <button class="filter-btn">Completed</button>
-                    </div>
-                </div>
-                <div class="conversations">
-                    <div class="conversation-item active">
-                        <img src="/placeholder.svg?height=50&width=50" alt="Sarah Johnson" class="conversation-avatar">
-                        <div class="conversation-  alt="Sarah Johnson" class="conversation-avatar">
-                            <div class="conversation-details">
-                                <div class="conversation-header-row">
-                                    <div class="conversation-name">Sarah Johnson</div>
-                                    <div class="conversation-time">10:23 AM</div>
-                                </div>
-                                <div class="conversation-preview">
-                                    <span class="unread-indicator"></span>
-                                    Can you deliver the package by 3 PM?
-                                    <span class="task-badge task-active">Active</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="conversation-item">
-                            <img src="/placeholder.svg?height=50&width=50" alt="Michael Brown"
-                                class="conversation-avatar">
-                            <div class="conversation-details">
-                                <div class="conversation-header-row">
-                                    <div class="conversation-name">Michael Brown</div>
-                                    <div class="conversation-time">Yesterday</div>
-                                </div>
-                                <div class="conversation-preview">
-                                    Thanks for your help with the furniture assembly!
-                                    <span class="task-badge task-completed">Completed</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="conversation-item">
-                            <img src="/placeholder.svg?height=50&width=50" alt="Emily Davis"
-                                class="conversation-avatar">
-                            <div class="conversation-details">
-                                <div class="conversation-header-row">
-                                    <div class="conversation-name">Emily Davis</div>
-                                    <div class="conversation-time">Yesterday</div>
-                                </div>
-                                <div class="conversation-preview">
-                                    <span class="unread-indicator"></span>
-                                    I've sent you the address for the grocery pickup
-                                </div>
-                            </div>
-                        </div>
-                        <div class="conversation-item">
-                            <img src="/placeholder.svg?height=50&width=50" alt="David Wilson"
-                                class="conversation-avatar">
-                            <div class="conversation-details">
-                                <div class="conversation-header-row">
-                                    <div class="conversation-name">David Wilson</div>
-                                    <div class="conversation-time">Monday</div>
-                                </div>
-                                <div class="conversation-preview">
-                                    Perfect! The lawn looks great. Thank you!
-                                    <span class="task-badge task-completed">Completed</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="conversation-item">
-                            <img src="/placeholder.svg?height=50&width=50" alt="Jennifer Lee"
-                                class="conversation-avatar">
-                            <div class="conversation-details">
-                                <div class="conversation-header-row">
-                                    <div class="conversation-name">Jennifer Lee</div>
-                                    <div class="conversation-time">Monday</div>
-                                </div>
-                                <div class="conversation-preview">
-                                    <span class="unread-indicator"></span>
-                                    Are you available for a dog walking task tomorrow?
-                                </div>
-                            </div>
-                        </div>
-                        <div class="conversation-item">
-                            <img src="/placeholder.svg?height=50&width=50" alt="Robert Taylor"
-                                class="conversation-avatar">
-                            <div class="conversation-details">
-                                <div class="conversation-header-row">
-                                    <div class="conversation-name">Robert Taylor</div>
-                                    <div class="conversation-time">Sunday</div>
-                                </div>
-                                <div class="conversation-preview">
-                                    I've updated the task details for the house cleaning
-                                    <span class="task-badge task-active">Active</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="conversation-item">
-                            <img src="/placeholder.svg?height=50&width=50" alt="Lisa Anderson"
-                                class="conversation-avatar">
-                            <div class="conversation-details">
-                                <div class="conversation-header-row">
-                                    <div class="conversation-name">Lisa Anderson</div>
-                                    <div class="conversation-time">Last week</div>
-                                </div>
-                                <div class="conversation-preview">
-                                    The delivery was on time. Thanks for your help!
-                                    <span class="task-badge task-completed">Completed</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="chat-area">
-                    <div class="chat-header">
-                        <div class="chat-user-info">
-                            <img src="/placeholder.svg?height=45&width=45" alt="Sarah Johnson" class="chat-avatar">
-                            <div class="chat-user-details">
-                                <h4>Sarah Johnson</h4>
-                                <p>Package Delivery • 2.5 miles away</p>
-                            </div>
-                        </div>
-                        <div class="chat-actions">
-                            <div class="chat-action-btn">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="chat-action-btn">
-                                <i class="fas fa-video"></i>
-                            </div>
-                            <div class="chat-action-btn">
-                                <i class="fas fa-info-circle"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chat-messages">
-                        <div class="date-divider">Yesterday</div>
-
-                        <div class="message message-received">
-                            <div>Hi! I need help with a package delivery. Are you available tomorrow afternoon?</div>
-                            <div class="message-time">2:15 PM</div>
-                        </div>
-
-                        <div class="message message-sent">
-                            <div>Hello Sarah! Yes, I'm available tomorrow afternoon. What time do you need the delivery
-                                done?</div>
-                            <div class="message-time">2:18 PM</div>
-                        </div>
-
-                        <div class="message message-received">
-                            <div>Great! I need it delivered by 3 PM. It's a small package, about the size of a shoebox.
-                            </div>
-                            <div class="message-time">2:20 PM</div>
-                        </div>
-
-                        <div class="message message-sent">
-                            <div>That works for me. Can you provide the pickup and delivery addresses?</div>
-                            <div class="message-time">2:22 PM</div>
-                        </div>
-
-                        <div class="message message-received">
-                            <div>Pickup: 123 Oak Street, Apt 4B. Delivery: 456 Pine Avenue, Suite 302. Both are in
-                                downtown.</div>
-                            <div class="message-time">2:25 PM</div>
-                        </div>
-
-                        <div class="date-divider">Today</div>
-
-                        <div class="message message-received">
-                            <div>Good morning! Just checking if we're still on for the delivery today?</div>
-                            <div class="message-time">9:45 AM</div>
-                        </div>
-
-                        <div class="message message-sent">
-                            <div>Good morning Sarah! Yes, we're still on for today. I'll pick up the package around 2 PM
-                                and deliver it by 3 PM as requested.</div>
-                            <div class="message-time">9:50 AM</div>
-                        </div>
-
-                        <div class="message message-received">
-                            <div>Perfect! I've left instructions with the doorman at the pickup location. Here's a photo
-                                of the package:</div>
-                            <img src="/placeholder.svg?height=200&width=300" alt="Package Photo"
-                                class="message-image">
-                            <div class="message-time">10:05 AM</div>
-                        </div>
-
-                        <div class="message message-sent">
-                            <div>Got it! I'll make sure to handle it carefully. Is there a specific person I should ask
-                                for at the delivery location?</div>
-                            <div class="message-time">10:10 AM</div>
-                        </div>
-
-                        <div class="message message-received">
-                            <div>Yes, please ask for Mr. Thompson at the front desk. Also, here's the receipt for the
-                                package that you'll need to show:</div>
-                            <div class="message-file">
-                                <div class="file-icon">
-                                    <i class="fas fa-file-pdf"></i>
-                                </div>
-                                <div class="file-details">
-                                    <div class="file-name">delivery_receipt.pdf</div>
-                                    <div class="file-size">245 KB</div>
-                                </div>
-                                <div class="file-download">
-                                    <i class="fas fa-download"></i>
-                                </div>
-                            </div>
-                            <div class="message-time">10:23 AM</div>
-                        </div>
-                    </div>
-
-                    <div class="typing-indicator">
-                        <span>Sarah is typing</span>
-                        <div class="typing-dots">
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                        </div>
-                    </div>
-
-                    <div class="chat-input-area">
-                        <div class="attachment-btn">
-                            <i class="fas fa-paperclip"></i>
-                        </div>
-                        <div class="message-input">
-                            <textarea placeholder="Type a message..."></textarea>
-                            <div class="emoji-btn">
-                                <i class="far fa-smile"></i>
-                            </div>
-                        </div>
-                        <button class="send-btn">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+                    <div class="conversation-preview">
+                        <span class="unread-indicator"></span>
+                        Can you deliver the package by 3 PM?
+                        <span class="task-badge task-active">Active</span>
                     </div>
                 </div>
             </div>
-
-            <div class="task-details">
-                <div class="task-details-header">
-                    <h3 class="task-details-title">Task Details</h3>
-                    <div class="task-details-toggle">
-                        <i class="fas fa-chevron-up"></i>
-                        Hide
+            <div class="conversation-item">
+                <img src="/api/placeholder/50/50" alt="Michael Brown" class="conversation-avatar">
+                <div class="conversation-details">
+                    <div class="conversation-header-row">
+                        <div class="conversation-name">Michael Brown</div>
+                        <div class="conversation-time">Yesterday</div>
+                    </div>
+                    <div class="conversation-preview">
+                        Thanks for your help with the furniture assembly!
+                        <span class="task-badge task-completed">Completed</span>
                     </div>
                 </div>
-                <div class="task-info">
-                    <div class="task-info-item">
-                        <div class="task-info-label">Task ID</div>
-                        <div class="task-info-value">#T-78945</div>
+            </div>
+            <div class="conversation-item">
+                <img src="/api/placeholder/50/50" alt="Emily Davis" class="conversation-avatar">
+                <div class="conversation-details">
+                    <div class="conversation-header-row">
+                        <div class="conversation-name">Emily Davis</div>
+                        <div class="conversation-time">Yesterday</div>
                     </div>
-                    <div class="task-info-item">
-                        <div class="task-info-label">Status</div>
-                        <div class="task-info-value">
-                            <span class="task-status status-in-progress">In Progress</span>
-                        </div>
-                    </div>
-                    <div class="task-info-item">
-                        <div class="task-info-label">Due Date</div>
-                        <div class="task-info-value">Today, 3:00 PM</div>
-                    </div>
-                    <div class="task-info-item">
-                        <div class="task-info-label">Payment</div>
-                        <div class="task-info-value">$25.00</div>
+                    <div class="conversation-preview">
+                        <span class="unread-indicator"></span>
+                        I've sent you the address for the grocery pickup
                     </div>
                 </div>
-                <div class="task-description">
-                    Package delivery from 123 Oak Street, Apt 4B to 456 Pine Avenue, Suite 302. Small package, handle
-                    with care. Recipient: Mr. Thompson.
+            </div>
+            <div class="conversation-item">
+                <img src="/api/placeholder/50/50" alt="David Wilson" class="conversation-avatar">
+                <div class="conversation-details">
+                    <div class="conversation-header-row">
+                        <div class="conversation-name">David Wilson</div>
+                        <div class="conversation-time">Monday</div>
+                    </div>
+                    <div class="conversation-preview">
+                        Perfect! The lawn looks great. Thank you!
+                        <span class="task-badge task-completed">Completed</span>
+                    </div>
                 </div>
-                <div class="task-actions">
-                    <button class="btn btn-outline">View Full Details</button>
-                    <button class="btn btn-primary">Update Status</button>
+            </div>
+            <div class="conversation-item">
+                <img src="/api/placeholder/50/50" alt="Jennifer Lee" class="conversation-avatar">
+                <div class="conversation-details">
+                    <div class="conversation-header-row">
+                        <div class="conversation-name">Jennifer Lee</div>
+                        <div class="conversation-time">Monday</div>
+                    </div>
+                    <div class="conversation-preview">
+                        <span class="unread-indicator"></span>
+                        Are you available for a dog walking task tomorrow?
+                    </div>
+                </div>
+            </div>
+            <div class="conversation-item">
+                <img src="/api/placeholder/50/50" alt="Robert Taylor" class="conversation-avatar">
+                <div class="conversation-details">
+                    <div class="conversation-header-row">
+                        <div class="conversation-name">Robert Taylor</div>
+                        <div class="conversation-time">Sunday</div>
+                    </div>
+                    <div class="conversation-preview">
+                        I've updated the task details for the house cleaning
+                        <span class="task-badge task-active">Active</span>
+                    </div>
+                </div>
+            </div>
+            <div class="conversation-item">
+                <img src="/api/placeholder/50/50" alt="Lisa Anderson" class="conversation-avatar">
+                <div class="conversation-details">
+                    <div class="conversation-header-row">
+                        <div class="conversation-name">Lisa Anderson</div>
+                        <div class="conversation-time">Last week</div>
+                    </div>
+                    <div class="conversation-preview">
+                        The delivery was on time. Thanks for your help!
+                        <span class="task-badge task-completed">Completed</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <script>
-            // Toggle notification dropdown
-            document.querySelector('.notification-bell').addEventListener('click', function() {
-                // Implementation would go here
-                alert('Notification panel would open here');
-            });
+        <!-- Chat Area -->
+        <div class="chat-area">
+            <div class="chat-header">
+                <div class="chat-user-info">
+                    <img src="/api/placeholder/45/45" alt="Sarah Johnson" class="chat-avatar">
+                    <div class="chat-user-details">
+                        <h4>Sarah Johnson</h4>
+                        <p>Package Delivery • 2.5 miles away</p>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <div class="chat-action-btn">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="chat-action-btn">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="chat-action-btn">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                </div>
+            </div>
 
-            // Toggle task details
-            document.querySelector('.task-details-toggle').addEventListener('click', function() {
-                const taskDetails = document.querySelector('.task-details');
-                const taskDetailsContent = taskDetails.querySelector('.task-info').parentElement;
-                const toggleIcon = this.querySelector('i');
-                const toggleText = this.textContent.trim();
+            <div class="chat-messages">
+                <div class="date-divider">Yesterday</div>
 
-                if (toggleText === 'Hide') {
-                    taskDetailsContent.style.display = 'none';
-                    toggleIcon.className = 'fas fa-chevron-down';
-                    this.innerHTML = '<i class="fas fa-chevron-down"></i> Show';
-                } else {
-                    taskDetailsContent.style.display = 'block';
-                    toggleIcon.className = 'fas fa-chevron-up';
-                    this.innerHTML = '<i class="fas fa-chevron-up"></i> Hide';
-                }
-            });
+                <div class="message message-received">
+                    <div>Hi! I need help with a package delivery. Are you available tomorrow afternoon?</div>
+                    <div class="message-time">2:15 PM</div>
+                </div>
 
-            // Send message
-            document.querySelector('.send-btn').addEventListener('click', function() {
-                const messageInput = document.querySelector('.message-input textarea');
-                const message = messageInput.value.trim();
+                <div class="message message-sent">
+                    <div>Hello Sarah! Yes, I'm available tomorrow afternoon. What time do you need the delivery
+                        done?</div>
+                    <div class="message-time">2:18 PM</div>
+                </div>
 
-                if (message) {
-                    const chatMessages = document.querySelector('.chat-messages');
-                    const newMessage = document.createElement('div');
-                    newMessage.className = 'message message-sent fade-in';
+                <div class="message message-received">
+                    <div>Great! I need it delivered by 3 PM. It's a small package, about the size of a shoebox.
+                    </div>
+                    <div class="message-time">2:20 PM</div>
+                </div>
 
-                    const messageContent = document.createElement('div');
-                    messageContent.textContent = message;
+                <div class="message message-sent">
+                    <div>That works for me. Can you provide the pickup and delivery addresses?</div>
+                    <div class="message-time">2:22 PM</div>
+                </div>
 
-                    const messageTime = document.createElement('div');
-                    messageTime.className = 'message-time';
+                <div class="message message-received">
+                    <div>Pickup: 123 Oak Street, Apt 4B. Delivery: 456 Pine Avenue, Suite 302. Both are in
+                        downtown.</div>
+                    <div class="message-time">2:25 PM</div>
+                </div>
 
-                    // Get current time
-                    const now = new Date();
-                    let hours = now.getHours();
-                    const minutes = now.getMinutes().toString().padStart(2, '0');
-                    const ampm = hours >= 12 ? 'PM' : 'AM';
-                    hours = hours % 12;
-                    hours = hours ? hours : 12;
+                <div class="date-divider">Today</div>
 
-                    messageTime.textContent = `${hours}:${minutes} ${ampm}`;
+                <div class="message message-received">
+                    <div>Good morning! Just checking if we're still on for the delivery today?</div>
+                    <div class="message-time">9:45 AM</div>
+                </div>
 
-                    newMessage.appendChild(messageContent);
-                    newMessage.appendChild(messageTime);
-                    chatMessages.appendChild(newMessage);
+                <div class="message message-sent">
+                    <div>Good morning Sarah! Yes, we're still on for today. I'll pick up the package around 2 PM
+                        and deliver it by 3 PM as requested.</div>
+                    <div class="message-time">9:50 AM</div>
+                </div>
 
-                    // Clear input
-                    messageInput.value = '';
-
-                    // Scroll to bottom
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }
-            });
-
-            // Handle Enter key in textarea
-            document.querySelector('.message-input textarea').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    document.querySelector('.send-btn').click();
-                }
-            });
-
-            // Switch between conversations
-            document.querySelectorAll('.conversation-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    document.querySelectorAll('.conversation-item').forEach(i => {
-                        i.classList.remove('active');
-                    });
-                    this.classList.add('active');
-
-                    // In a real app, this would load the conversation
-                    // For demo purposes, we'll just show an alert
-                    if (!this.classList.contains('active-loaded')) {
-                        alert('In a real app, this would load the conversation with ' + this.querySelector(
-                            '.conversation-name').textContent);
-                        this.classList.add('active-loaded');
-                    }
-                });
-            });
-        </script>
-</body>
-
-</html>
+                <div class="message message-received">
+                    <div>Perfect! I've left instructions with the doorman at the pickup location

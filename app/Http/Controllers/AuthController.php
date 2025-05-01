@@ -60,7 +60,7 @@ class AuthController extends Controller
                 }
                 return redirect("provider/dashboard");
             } else {
-                return view('/user/dashboard');
+                return redirect('/user/dashboard');
             }
         }
 
@@ -76,22 +76,7 @@ class AuthController extends Controller
 
 
 
-    public function showMsg()
-    {
-        return view("provider.messages");
-    }
-    public function showSupport()
-    {
-        return view("provider.support");
-    }
-    public function showUserDashboard()
-    {
-        return view("user.dashboard");
-    }
-    public function showPostTask()
-    {
-        return view("user.postTask");
-    }
+
     public function showActiveTask()
     {
         return view("user.activePost");

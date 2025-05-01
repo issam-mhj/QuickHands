@@ -222,6 +222,11 @@ class ProviderController extends Controller
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
+    public function showSupport()
+    {
+        return view("provider.support");
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ProviderController;
@@ -47,21 +48,21 @@ Route::delete("/offer/delete/{offer}", [OfferController::class, "destroy"]);
 Route::get("/provider/reviews", [ProviderController::class, "showReviews"]);
 Route::get("/provider/profile", [ProviderController::class, "showProfile"]);
 Route::post("/provider/updateprofile", [ProviderController::class, "updateProfile"]);
+Route::get("/provider/support", [ProviderController::class, "showSupport"]);
+Route::get("/provider/messages", [MessageController::class, "showMsg"]);
 
 
 
+Route::get("/user/dashboard", [UserController::class, "showUserDashboard"]);
+Route::get("/user/task", [TaskController::class, "showPostTask"]);
 
-Route::get("/support", [AuthController::class, "showSupport"]);
-Route::get("/messages", [AuthController::class, "showMsg"]);
-Route::get("/user", [AuthController::class, "showUserDashboard"]);
-Route::get("/user/task", [AuthController::class, "showPostTask"]);
+
+
 Route::get("/user/activetask", [AuthController::class, "showActiveTask"]);
 Route::get("/user/selectprovider", [AuthController::class, "showSelectProvider"]);
 Route::get("/user/conversation", [AuthController::class, "showMessages"]);
 Route::get("/user/reviews", [AuthController::class, "showUserReviews"]);
 Route::get("/user/profile", [AuthController::class, "showUserProfile"]);
-
-
 
 Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);

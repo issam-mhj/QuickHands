@@ -246,4 +246,27 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
+
+    public function showUserDashboard()
+    {
+        $user = auth()->user();
+        $usertasksNum = Task::with(['offer.service'])
+            ->whereHas('offer.service', function ($query) {
+                $query->where('user_id', auth()->id());
+            })->count();
+        $usertasks = Task::with(['offer.service'])
+            ->whereHas('offer.service', function ($query) {
+                $query->where('user_id', auth()->id());
+            })->where("status", "completed")->get();
+        $totalspent = 0;
+        foreach ($usertasks as $task) {
+            $totalspent += $task->offer->proposed_amount;
+        }
+        return view("user.dashboard", [
+            "user" => $user,
+            "usertasksNum" => $usertasksNum,
+            "totalspent" => $totalspent,
+            "usertasks" => $usertasks,
+        ]);
+    }
 }

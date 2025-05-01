@@ -30,6 +30,11 @@ class TaskController extends Controller
         ]);
     }
 
+    public function showPostTask()
+    {
+        return view("user.postTask");
+    }
+
     /**
      * Show the form for creating a new resource.
      */

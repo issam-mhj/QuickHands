@@ -8,12 +8,10 @@ use App\Http\Requests\UpdateMessageRequest;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function showMsg()
     {
-        //
+        $user = auth()->user();
+        return view("provider.messages", ["user" => $user]);
     }
 
     /**
