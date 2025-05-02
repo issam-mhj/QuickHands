@@ -6,6 +6,7 @@ use App\Models\Offer;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Service;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,29 @@ class OfferController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Offer submitted!');
+    }
+    public function acceptOffer(Request $request, Offer $offer)
+    {
+        $offer->update([
+            'status' => 'accepted',
+        ]);
+        $task = Task::create([
+            'start_date' => now(),
+            'end_date' => now()->addHours($offer->estimated_time),
+            'offer_id' => $offer->id,
+            'service_id' => $offer->service_id,
+            'status' => 'not-started',
+        ]);
+
+        return redirect()->back()->with('success', 'Offer accepted!');
+    }
+    public function rejectOffer(Request $request, Offer $offer)
+    {
+        $offer->update([
+            'status' => 'rejected',
+        ]);
+
+        return redirect()->back()->with('success', 'Offer rejected!');
     }
     /**
      * Show the form for creating a new resource.

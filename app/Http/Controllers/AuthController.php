@@ -76,10 +76,6 @@ class AuthController extends Controller
 
 
 
-    public function showSelectProvider()
-    {
-        return view("user.selectProvider");
-    }
     public function showMessages()
     {
         return view("user.messages");

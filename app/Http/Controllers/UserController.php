@@ -269,4 +269,19 @@ class UserController extends Controller
             "usertasks" => $usertasks,
         ]);
     }
+    public function showSelectProvider()
+    {
+        $user = auth()->user();
+        $services = Service::where("user_id", $user->id)->where("status", "open")->get();
+        $offers = Offer::whereIn("service_id", $services->pluck("id"))->where("status", "pending")->get();
+        $providerSkills = Provider::whereIn("id", $offers->pluck("provider_id"))->get();
+        $providerSkills = $providerSkills->map(function ($provider) {
+            return explode(",", $provider->skills);
+        });
+        return view("user.selectProvider", [
+            "user" => $user,
+            "offers" => $offers,
+            "providerSkills" => $providerSkills,
+        ]);
+    }
 }

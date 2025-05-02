@@ -60,10 +60,11 @@ Route::post("/user/postTask", [TaskController::class, "storeTask"]);
 Route::get("/user/activetask", [TaskController::class, "showActiveTask"]);
 Route::get("/user/task/detail/{service}", [ServiceController::class, "showServiceDetail"]);
 Route::delete("/task/delete/{service}", [ServiceController::class, "deleteServiceDetail"]);
+Route::get("/user/selectprovider", [UserController::class, "showSelectProvider"]);
+Route::post("/offer/accept/{offer}", [OfferController::class, "acceptOffer"]);
+Route::post("/offer/reject/{offer}", [OfferController::class, "rejectOffer"]);
 
 
-
-Route::get("/user/selectprovider", [AuthController::class, "showSelectProvider"]);
 Route::get("/user/conversation", [AuthController::class, "showMessages"]);
 Route::get("/user/reviews", [AuthController::class, "showUserReviews"]);
 Route::get("/user/profile", [AuthController::class, "showUserProfile"]);
