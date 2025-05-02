@@ -284,4 +284,44 @@ class UserController extends Controller
             "providerSkills" => $providerSkills,
         ]);
     }
+    public function showUserProfile()
+    {
+        $user = auth()->user();
+        return view("user.profile", ["user" => $user]);
+    }
+    public function editUserProf(Request $request, User $user)
+    {
+        $user = auth()->user();
+        $validated = $request->validate([
+            'name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'age' => ['nullable', 'integer', 'min:18', 'max:100'],
+            'gender' => ['nullable', 'in:m,f'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'password' => ['nullable', 'current_password'],
+            'new_password' => [
+                'nullable',
+                'string',
+                'confirmed',
+                'min:8',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/'
+            ],
+        ]);
+
+        if (isset($validated['name'])) $user->name = $validated['name'];
+        if (isset($validated['email'])) $user->email = $validated['email'];
+        $user->age = $validated['age'] ;
+        $user->gender = $validated['gender'] ;
+        $user->location = $validated['location'] ;
+
+        if (!empty($validated['new_password'])) {
+            $user->password = Hash::make($validated['new_password']);
+        }
+
+        $user->save();
+        return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
 }

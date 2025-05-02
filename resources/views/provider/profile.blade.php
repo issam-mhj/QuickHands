@@ -522,12 +522,6 @@
                                 <option value="f"
                                     {{ old('gender', $user->gender ?? '') == 'f' ? 'selected' : '' }}>Female
                                 </option>
-                                <option value="other"
-                                    {{ old('gender', $user->gender ?? '') == 'other' ? 'selected' : '' }}>
-                                    Non-binary/Other</option>
-                                <option value="prefer_not"
-                                    {{ old('gender', $user->gender ?? '') == 'prefer_not' ? 'selected' : '' }}>
-                                    Prefer not to say</option>
                             </select>
                         </div>
                     </div>

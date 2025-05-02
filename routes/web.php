@@ -9,6 +9,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TaskController;
 
@@ -63,11 +64,14 @@ Route::delete("/task/delete/{service}", [ServiceController::class, "deleteServic
 Route::get("/user/selectprovider", [UserController::class, "showSelectProvider"]);
 Route::post("/offer/accept/{offer}", [OfferController::class, "acceptOffer"]);
 Route::post("/offer/reject/{offer}", [OfferController::class, "rejectOffer"]);
+Route::get("/user/reviews", [ReviewsController::class, "showUserReviews"]);
+Route::post("/review/store/{offer}", [ReviewsController::class, "storeReview"]);
+Route::get("/user/profile", [UserController::class, "showUserProfile"]);
+Route::post("/edit/user/{user}", [UserController::class, "editUserProf"]);
+
 
 
 Route::get("/user/conversation", [AuthController::class, "showMessages"]);
-Route::get("/user/reviews", [AuthController::class, "showUserReviews"]);
-Route::get("/user/profile", [AuthController::class, "showUserProfile"]);
 
 Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);

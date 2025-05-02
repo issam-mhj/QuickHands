@@ -405,11 +405,11 @@
                         <i class="fas fa-tasks mr-2"></i> Available Tasks
                     </a>
                     <a href="#"
-                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
+                        class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
                         <i class="fas fa-clipboard-list mr-2"></i> Task Management
                     </a>
                     <a href="#"
-                        class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
+                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-star mr-2"></i> Reviews
                     </a>
                 </div>
@@ -434,117 +434,115 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-8">
 
-        <section class="mb-8">
-            <h1 class="font-display text-3xl font-bold text-dark-blue">Reviews & Ratings</h1>
-            <nav class="text-sm text-gray-500 flex items-center space-x-2 mt-1">
-                <a href="provider-dashboard.html" class="hover:text-dark-blue">Dashboard</a>
-                <span>/</span>
-                <span>Reviews & Ratings</span>
-            </nav>
-        </section>
-
-
-        <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition">
-                <div class="text-sm text-gray-500 uppercase">Overall Rating</div>
-                <div class="text-3xl font-semibold text-dark mt-2">{{ $ratingAvg }}</div>
-            </div>
-            <div class="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition">
-                <div class="text-sm text-gray-500 uppercase">Total Reviews</div>
-                <div class="text-3xl font-semibold text-dark mt-2">{{ $totalRv }}</div>
-            </div>
-            <div class="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition">
-                <div class="text-sm text-gray-500 uppercase">5-Star Reviews</div>
-                <div class="text-3xl font-semibold text-dark mt-2">{{ $fiveStar }}</div>
-            </div>
-        </section>
-        <section class="bg-white rounded-2xl p-6 shadow-lg">
-            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
-                <h2 class="text-2xl font-semibold text-dark">User Reviews</h2>
-                <div class="mt-4 md:mt-0">
-                    <select class="border-gray-300 rounded-lg px-4 py-2 text-gray-700">
-                        <option>All Reviews</option>
-                        <option>5 Star</option>
-                        <option>4 Star</option>
-                        <option>3 Star</option>
-                        <option>2 Star</option>
-                        <option>1 Star</option>
-                    </select>
+    <div class="container">
+        <div class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Reviews & Ratings</h1>
+                <div class="breadcrumb">
+                    <a href="provider-dashboard.html">Dashboard</a>
+                    <span>/</span>
+                    <span>Reviews & Ratings</span>
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between space-y-4 sm:space-y-0 mb-6">
-                <div class="flex items-center border border-gray-200 rounded-lg px-3 py-2 w-full sm:w-1/2">
-                    <i class="fas fa-search text-gray-400 mr-2"></i>
-                    <input type="text" class="w-full outline-none text-gray-700" placeholder="Search reviews…">
+            <div class="stats-grid fade-in">
+                <div class="stats-card primary delay-1">
+                    <div class="stats-label">Overall Rating</div>
+                    <div class="stats-value">{{ $ratingAvg }}</div>
                 </div>
-                <div class="flex space-x-4">
-                    <select class="border-gray-300 rounded-lg px-4 py-2 text-gray-700">
-                        <option>All Task Types</option>
-                        <option>Deliveries</option>
-                        <option>Errands</option>
-                        <option>Cleaning</option>
-                        <option>Assembly</option>
-                        <option>Other</option>
-                    </select>
-                    <select class="border-gray-300 rounded-lg px-4 py-2 text-gray-700">
-                        <option>Most Recent</option>
-                        <option>Highest Rated</option>
-                        <option>Lowest Rated</option>
-                    </select>
+                <div class="stats-card secondary delay-2">
+                    <div class="stats-label">Total Reviews</div>
+                    <div class="stats-value">{{ $totalRv }}</div>
+                </div>
+                <div class="stats-card success delay-3">
+                    <div class="stats-label">5-Star Reviews</div>
+                    <div class="stats-value">{{ $fiveStar }}</div>
                 </div>
             </div>
-
-            <div class="space-y-6">
-                @foreach ($userRVW as $review)
-                    <div class="bg-gray-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center space-x-4">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white font-semibold">
-                                    {{ $review->offer->service->user->name[0] }}
-                                </div>
-                                <div>
-                                    <div class="font-medium text-dark-blue">{{ $review->offer->service->user->name }}
-                                    </div>
-                                    <div class="text-xs text-gray-500">
-                                        {{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-yellow-400">
-                                @for ($i = 0; $i < (int) $review->rating; $i++)
-                                    <i class="fas fa-star"></i>
-                                @endfor
-                            </div>
-                        </div>
-                        <div class="text-sm mb-2">
-                            <span class="font-medium">Task:</span>
-                            <span>{{ $review->offer->service->title }}</span>
-                            <span class="ml-2 inline-block bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
-                                {{ $review->offer->service->servicecategory->name }}
-                            </span>
-                        </div>
-                        <!-- Comment -->
-                        <p class="text-gray-700 mb-4">{{ $review->comment }}</p>
-                        <!-- Actions -->
+            <div class="card fade-in delay-3">
+                <div class="card-header">
+                    <h2 class="card-title">User Reviews</h2>
+                    <div class="card-actions">
+                        <select class="select-control">
+                            <option>All Reviews</option>
+                            <option>5 Star</option>
+                            <option>4 Star</option>
+                            <option>3 Star</option>
+                            <option>2 Star</option>
+                            <option>1 Star</option>
+                        </select>
                     </div>
-                @endforeach
-            </div>
+                </div>
 
-            <div class="flex items-center justify-center space-x-2 mt-8">
-                <button class="p-2 rounded hover:bg-gray-100"><i class="fas fa-chevron-left"></i></button>
-                <button class="px-3 py-1 bg-primary text-white rounded">1</button>
-                <button class="px-3 py-1 rounded hover:bg-gray-100">2</button>
-                <button class="px-3 py-1 rounded hover:bg-gray-100">3</button>
-                <span class="px-3 py-1 text-gray-500">…</span>
-                <button class="px-3 py-1 rounded hover:bg-gray-100">12</button>
-                <button class="p-2 rounded hover:bg-gray-100"><i class="fas fa-chevron-right"></i></button>
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <div class="search-box">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="form-control" placeholder="Search reviews...">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <select class="select-control">
+                            <option>All Task Types</option>
+                            <option>Deliveries</option>
+                            <option>Errands</option>
+                            <option>Cleaning</option>
+                            <option>Assembly</option>
+                            <option>Other</option>
+                        </select>
+                        <select class="select-control">
+                            <option>Most Recent</option>
+                            <option>Highest Rated</option>
+                            <option>Lowest Rated</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="review-list">
+                    @foreach ($userRVW as $review)
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <div class="reviewer-avatar">{{ $review->offer->service->user->name[0] }}</div>
+                                    <div class="reviewer-details">
+                                        <div class="reviewer-name">{{ $review->offer->service->user->name }}</div>
+                                        <div class="review-date">
+                                            {{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</div>
+                                    </div>
+                                </div>
+                                <div class="review-rating">
+                                    @for ($i = 0; $i < (int) $review->rating; $i++)
+                                        <i class="fas fa-star star"></i>
+                                    @endfor
+                                </div>
+                            </div>
+                            <div class="review-task">
+                                Task: <span>{{ $review->offer->service->title }}</span> <span
+                                    class="badge badge-assembly">{{ $review->offer->service->servicecategory->name }}</span>
+                            </div>
+                            <div class="review-content">
+                                {{ $review->comment }}
+                            </div>
+                            <div class="review-actions">
+                                <button class="btn btn-outline btn-sm">Reply</button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="pagination">
+                    <div class="page-item"><i class="fas fa-chevron-left"></i></div>
+                    <div class="page-item active">1</div>
+                    <div class="page-item">2</div>
+                    <div class="page-item">3</div>
+                    <div class="page-item">...</div>
+                    <div class="page-item">12</div>
+                    <div class="page-item"><i class="fas fa-chevron-right"></i></div>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 py-6 px-6 md:px-12">
