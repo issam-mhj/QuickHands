@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickHands - Messages</title>
+    <title>QuickHands - Contact User</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -132,30 +132,6 @@
             }
         }
 
-        /* Glow Effect */
-        .glow-on-hover {
-            position: relative;
-            z-index: 1;
-        }
-
-        .glow-on-hover::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-            border-radius: inherit;
-        }
-
-        .glow-on-hover:hover::after {
-            opacity: 1;
-        }
-
         /* Wave Animation */
         .wave-bg {
             position: relative;
@@ -187,7 +163,7 @@
 </head>
 
 <body class="font-sans bg-gray-50 text-dark">
-    <!-- Header (From Dashboard) -->
+    <!-- Header -->
     <header class="bg-gradient-to-r from-primary/10 to-secondary/10 py-8 px-6 md:px-12">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-center justify-between">
@@ -198,7 +174,7 @@
                         </div>
                         <h1 class="font-display text-2xl font-bold">QuickHands</h1>
                     </div>
-                    <p class="text-gray-600 mt-1">Messages</p>
+                    <p class="text-gray-600 mt-1">Provider Dashboard</p>
                 </div>
 
                 <div class="mt-4 md:mt-0 flex items-center space-x-4">
@@ -231,7 +207,7 @@
         </div>
     </header>
 
-    <!-- Navigation (From Dashboard) -->
+    <!-- Navigation -->
     <nav class="sticky top-0 z-50 bg-white shadow-md py-4 px-6 md:px-12">
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center justify-between overflow-x-auto hide-scrollbar">
@@ -250,7 +226,7 @@
                     </a>
                     <a href="#"
                         class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
-                        <i class="fas fa-envelope mr-2"></i> Messages
+                        <i class="fas fa-envelope mr-2"></i> Contact User
                     </a>
                     <a href="#"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
@@ -278,55 +254,97 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-6 md:px-12 py-8">
         <!-- Page Header -->
-        <div class="mb-6">
-            <h1 class="font-display text-2xl font-bold text-slate-800">Messages</h1>
-            <p class="text-slate-500 mt-1">Manage your conversations</p>
-        </div>
+        <section class="mb-8">
+            <div class="dashboard-card gradient-border wave-bg">
+                <div class="flex flex-col md:flex-row md:items-center justify-between">
+                    <div class="mb-4 md:mb-0">
+                        <h2 class="font-display text-2xl md:text-3xl font-bold mb-2">Contact Users</h2>
+                        <p class="text-gray-600">Communicate directly with your clients about tasks and services.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- Chat Interface -->
-        <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 mx-auto md:mx-10">
-            <!-- Conversation List -->
-            <div class="bg-white rounded-xl shadow-lg border border-slate-200 lg:col-span-1 overflow-hidden">
-
-                <!-- Conversations -->
-                <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
-                    <!-- Active Conversation -->
-                    @foreach ($conversations as $conversation)
-                        <div class="p-4 hover:bg-slate-50 border-b border-slate-100 cursor-pointer transition-colors">
-                            <div class="flex items-start space-x-3">
-                                <div class="relative">
-                                    <div
-                                        class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center font-medium">
-                                        {{ $conversation->offer->provider->user->name[0] }}
-                                    </div>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex justify-between">
-                                        <h3 class="font-semibold text-slate-800 truncate">
-                                            {{ $conversation->offer->provider->user->name }}</h3>
-                                        <span class="text-xs text-gray-500">3h ago</span>
-                                    </div>
-                                    <form action="/user/message/{{ $conversation->id }}">
-                                        @csrf
-                                        <button type="submit"
-                                            class="mt-2 px-4 py-1.5 bg-primary text-white rounded-lg text-sm hover:bg-primary/90 transition-colors">
-                                            View Messages
-                                        </button>
-                                    </form>
-                                </div>
+        <!-- Contact User Interface -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Chat Area -->
+            <div class="lg:col-span-3">
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden h-[calc(100vh-200px)] flex flex-col">
+                    <!-- Chat Header -->
+                    <div class="p-4 border-b border-gray-300 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium">
+                                J
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900">John Doe</h3>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+
+                    <!-- Chat Messages -->
+                    <div class="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
+                        @foreach ($messages as $message)
+                            @if ($message->user_id != $user->id)
+                                <div class="flex items-start space-x-2 max-w-[75%]">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs">
+                                        {{ $message->user->name[0] }}
+                                    </div>
+                                    <div>
+                                        <div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm">
+                                            <p> {{ $message->content }} </p>
+                                        </div>
+                                        <div class="text-xs text-gray-500 mt-1 ml-2">{{ $message->created_at }}</div>
+                                    </div>
+                                </div>
+                            @else
+                                <!-- My message -->
+                                <div class="flex items-start justify-end space-x-2 max-w-[75%] ml-auto">
+                                    <div>
+                                        <div class="bg-primary text-white p-3 rounded-lg rounded-tr-none shadow-sm">
+                                            <p>{{ $message->content }}</p>
+                                        </div>
+                                        <div class="flex items-center justify-end text-xs text-gray-500 mt-1 mr-2">
+                                            <span>{{ $message->created_at }}</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs">
+                                        {{ $user->name[0] }}
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="p-4 border-t border-gray-100 bg-white">
+                        <div class="flex items-end space-x-3">
+                            <form action="/sendmsg/{{ $message->conversation->id }}" method="post">
+                                @csrf
+                                <div class="flex-1 relative">
+                                    <textarea rows="1" placeholder="Type a message..." name="content"
+                                        class="w-full pl-5 pr-14 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"></textarea>
+                                </div>
+                                <button type="submit"
+                                    class="p-3 bg-primary hover:bg-primary/90 text-white rounded-lg shadow transition-colors flex items-center justify-center">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-6 px-6 md:px-12 mt-10">
+    <footer class="bg-white border-t border-gray-200 py-6 px-6 md:px-12 mt-12">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-center justify-between">
                 <div class="mb-4 md:mb-0">
@@ -348,34 +366,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Auto-expand textarea as user types
             const textarea = document.querySelector('textarea');
-            if (textarea) {
-                textarea.addEventListener('input', function() {
-                    this.style.height = 'auto';
-                    this.style.height = (this.scrollHeight) + 'px';
-                    // Cap at certain height
-                    if (this.scrollHeight > 150) {
-                        this.style.height = '150px';
-                        this.style.overflowY = 'auto';
-                    } else {
-                        this.style.overflowY = 'hidden';
-                    }
-                });
-            }
-
-            // Make conversation items clickable
-            const conversationItems = document.querySelectorAll('.p-4.hover\\:bg-slate-50');
-            conversationItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Remove active class from all conversations
-                    conversationItems.forEach(i => {
-                        i.classList.remove('bg-blue-50');
-                        i.classList.add('hover:bg-slate-50');
-                    });
-
-                    // Add active class to clicked conversation
-                    this.classList.remove('hover:bg-slate-50');
-                    this.classList.add('bg-blue-50', 'hover:bg-blue-50');
-                });
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+                // Cap at certain height
+                if (this.scrollHeight > 150) {
+                    this.style.height = '150px';
+                    this.style.overflowY = 'auto';
+                } else {
+                    this.style.overflowY = 'hidden';
+                }
             });
         });
     </script>

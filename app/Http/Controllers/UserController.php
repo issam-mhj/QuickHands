@@ -88,7 +88,96 @@ class UserController extends Controller
     }
     public function editUser(Request $request)
     {
-        dd($request);
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+            'name' => 'required|string|max:30',
+            'email' => 'required|email|unique:users,email,' . $request->id,
+            'role' => 'required|in:user,provider,admin',
+            'status' => 'required|in:active,suspended,banned',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role = $validated['role'];
+        $user->is_suspended = $validated['status'] === 'active' ? 0 : ($validated['status'] === 'suspended' ? 1 : 2);
+        $user->save();
+
+        if ($validated['role'] === 'provider') {
+            $provider = Provider::firstOrCreate(['user_id' => $user->id], ['status' => 'pending']);
+        }
+
+        return redirect()->back()->with('success', 'User updated successfully.');
+    }
+
+    public function banUser(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->is_suspended = 2;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User has been banned successfully.');
+    }
+
+    public function unbanUser(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->is_suspended = 0; // Active status
+        $user->save();
+
+        return redirect()->back()->with('success', 'User has been unbanned successfully.');
+    }
+
+    public function deleteUser(Request $request, User $user)
+    {
+        $user->delete();
+        return redirect()->back()->with('success', 'User deleted successfully.');
+    }
+
+    public function banProvider(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->is_suspended = 2; // Banned status
+        $user->save();
+
+        return redirect()->back()->with('success', 'Provider has been banned successfully.');
+    }
+
+    public function unbanProvider(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->is_suspended = 0; // Active status
+        $user->save();
+
+        return redirect()->back()->with('success', 'Provider has been unbanned successfully.');
+    }
+
+    public function deleteProvider(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Provider has been deleted successfully.');
     }
 
     public function showproviderManage()
@@ -313,9 +402,9 @@ class UserController extends Controller
 
         if (isset($validated['name'])) $user->name = $validated['name'];
         if (isset($validated['email'])) $user->email = $validated['email'];
-        $user->age = $validated['age'] ;
-        $user->gender = $validated['gender'] ;
-        $user->location = $validated['location'] ;
+        $user->age = $validated['age'];
+        $user->gender = $validated['gender'];
+        $user->location = $validated['location'];
 
         if (!empty($validated['new_password'])) {
             $user->password = Hash::make($validated['new_password']);

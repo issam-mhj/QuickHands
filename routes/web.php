@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OfferController;
@@ -39,7 +40,11 @@ Route::get("/admin/task", [TaskController::class, "showTask"])->name("admin.task
 Route::post("/removetask/{id}", [TaskController::class, "deleteTask"]);
 Route::get("/admin/notifications", [NotificationController::class, "showNotifications"])->name("admin.notifications");
 Route::post("/markasread", [NotificationController::class, "markasread"]);
+Route::post("/deleteuser/{user}", [UserController::class, "deleteUser"]);
 
+Route::post('/admin/providers/ban', [UserController::class, 'banProvider'])->name('admin.banProvider');
+Route::post('/admin/providers/unban', [UserController::class, 'unbanProvider'])->name('admin.unbanProvider');
+Route::delete('/admin/providers/delete', [UserController::class, 'deleteProvider'])->name('admin.deleteProvider');
 
 Route::get("/provider/dashboard", [ProviderController::class, "showProviderDashboard"])->name("provider.dashboard");
 Route::get("/provider/task", [ProviderController::class, "showAvailableTasks"]);
@@ -52,6 +57,8 @@ Route::get("/provider/profile", [ProviderController::class, "showProfile"]);
 Route::post("/provider/updateprofile", [ProviderController::class, "updateProfile"]);
 Route::get("/provider/support", [ProviderController::class, "showSupport"]);
 Route::get("/provider/messages", [MessageController::class, "showMsg"]);
+Route::get("/user/message/{conversation}", [MessageController::class, "showusermsg"]);
+Route::post("/sendmsg/{conversation}", [MessageController::class, "sendToUsermsg"]);
 
 
 
@@ -68,10 +75,11 @@ Route::get("/user/reviews", [ReviewsController::class, "showUserReviews"]);
 Route::post("/review/store/{offer}", [ReviewsController::class, "storeReview"]);
 Route::get("/user/profile", [UserController::class, "showUserProfile"]);
 Route::post("/edit/user/{user}", [UserController::class, "editUserProf"]);
+Route::get("/user/conversation", [ConversationController::class, "showMessages"]);
+Route::get("/message/{conversation}", [ConversationController::class, "showusermsg"]);
+Route::post("/message/store/{conversation}", [MessageController::class, "storemsg"]);
 
 
-
-Route::get("/user/conversation", [AuthController::class, "showMessages"]);
 
 Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);

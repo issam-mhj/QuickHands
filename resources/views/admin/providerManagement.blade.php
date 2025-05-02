@@ -326,7 +326,8 @@
         <div class="sidebar-content">
             <div class="mb-8">
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="user-avatar">
+                    <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png" alt="Admin"
+                        class="user-avatar">
                     <div>
                         <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">{{ ucfirst($user->role) }}</p>
@@ -347,7 +348,7 @@
                     <i class="fas fa-user-tie icon"></i>
                     <span>Provider Management</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/content" class="nav-link">
                     <i class="fas fa-shield-alt icon"></i>
                     <span>Content Moderation</span>
                 </a>
@@ -362,8 +363,7 @@
                 <a href="#" class="nav-link">
                     <i class="fas fa-bell icon"></i>
                     <span>Notifications</span>
-                    <span
-                        class="ml-auto bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">8</span>
+
                 </a>
                 <a href="#" class="nav-link">
                     <i class="fas fa-cog icon"></i>
@@ -378,8 +378,7 @@
             </div>
         </div>
         <div class="sidebar-footer">
-            <a href=""
-                class="flex items-center space-x-2 text-gray-500 hover:text-primary transition-colors">
+            <a href="" class="flex items-center space-x-2 text-gray-500 hover:text-primary transition-colors">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </a>
@@ -405,80 +404,10 @@
                                 class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
                         <div class="relative">
-                            <button id="notifications-btn"
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-primary/10 transition-colors">
-                                <i class="fas fa-bell"></i>
-                                <span class="notification-badge">5</span>
-                            </button>
-                            <div id="notifications-dropdown" class="dropdown">
-                                <div class="p-4 border-b border-gray-100">
-                                    <h5 class="font-medium">Notifications</h5>
-                                    <p class="text-xs text-gray-500">You have 5 unread notifications</p>
-                                </div>
-                                <div class="max-h-64 overflow-y-auto">
-                                    <a href="#" class="dropdown-item">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                                            <i class="fas fa-user-plus text-primary"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">New provider registered</p>
-                                            <p class="text-xs text-gray-500">5 minutes ago</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="dropdown-item">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
-                                            <i class="fas fa-tasks text-secondary"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">New task created</p>
-                                            <p class="text-xs text-gray-500">1 hour ago</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="dropdown-item">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-                                            <i class="fas fa-star text-accent"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">New review submitted</p>
-                                            <p class="text-xs text-gray-500">3 hours ago</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="dropdown-item">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-success/20 flex items-center justify-center">
-                                            <i class="fas fa-dollar-sign text-success"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">Payment received</p>
-                                            <p class="text-xs text-gray-500">Yesterday</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="dropdown-item">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-warning/20 flex items-center justify-center">
-                                            <i class="fas fa-exclamation-triangle text-warning"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">System alert</p>
-                                            <p class="text-xs text-gray-500">2 days ago</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="p-3 border-t border-gray-100">
-                                    <a href="#"
-                                        class="text-center block text-sm text-primary hover:underline">View all
-                                        notifications</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="relative">
                             <button id="user-btn"
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
-                                    class="w-8 h-8 rounded-full">
+                                <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png"
+                                    alt="Admin" class="w-8 h-8 rounded-full">
                                 <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
@@ -508,17 +437,6 @@
                     <div class="mb-4 md:mb-0">
                         <h2 class="text-xl font-semibold text-gray-800">Provider List</h2>
                         <p class="text-sm text-gray-500">Manage and monitor all service providers on the platform</p>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <button id="addProviderBtn"
-                            class="btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg flex items-center">
-                            <i class="fas fa-plus mr-2"></i> Add Provider
-                        </button>
-                        <button id="exportBtn"
-                            class="btn bg-success hover:bg-success/90 text-white px-4 py-2 rounded-lg flex items-center">
-                            <i class="fas fa-file-export mr-2"></i> Export Data
-                        </button>
                     </div>
                 </div>
 
@@ -635,29 +553,26 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             @php
-                                                // Get provider's offers
-$offers = $provider->provider
-    ? $provider->provider->offers
-    : collect([]);
+                                                $offers = $provider->provider
+                                                    ? $provider->provider->offers
+                                                    : collect([]);
 
-// Get reviews from offers
-$reviews = collect();
-foreach ($offers as $offer) {
-    if ($offer->review) {
-        $reviews->push($offer->review);
-    }
-}
+                                                $reviews = collect();
+                                                foreach ($offers as $offer) {
+                                                    if ($offer->review) {
+                                                        $reviews->push($offer->review);
+                                                    }
+                                                }
 
-// Calculate average rating
-$avgRating = $reviews->avg('rating') ?? 0;
-$fullStars = floor($avgRating);
-$hasHalfStar = $avgRating - $fullStars >= 0.5;
-$emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                                $avgRating = $reviews->avg('rating') ?? 0;
+                                                $fullStars = floor($avgRating);
+                                                $hasHalfStar = $avgRating - $fullStars >= 0.5;
+                                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
 
-$starsHTML =
-    str_repeat('★', $fullStars) .
-    ($hasHalfStar ? '½' : '') .
-    str_repeat('☆', $emptyStars);
+                                                $starsHTML =
+                                                    str_repeat('★', $fullStars) .
+                                                    ($hasHalfStar ? '½' : '') .
+                                                    str_repeat('☆', $emptyStars);
                                             @endphp
                                             <div class="rating-stars mr-1">{!! $starsHTML !!}</div>
                                             <span
@@ -675,26 +590,40 @@ $starsHTML =
                                         {{ \Carbon\Carbon::parse($provider->created_at)->format('M d, Y') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div class="flex space-x-2 justify-end">
-                                            <button class="view-activity text-info hover:text-info/80"
-                                                data-id="{{ $provider->id }}">
-                                                <i class="fas fa-chart-line"></i>
-                                            </button>
-                                            <button class="edit-provider text-primary hover:text-primary/80"
-                                                data-id="{{ $provider->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                        <div class="flex space-x-2 justify-center">
                                             @if (!$provider->is_suspended)
-                                                <button class="suspend-provider text-danger hover:text-danger/80"
-                                                    data-id="{{ $provider->id }}">
-                                                    <i class="fas fa-ban"></i>
-                                                </button>
+                                                <form action="{{ route('admin.banProvider') }}" method="POST"
+                                                    class="inline">
+                                                    @csrf
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $provider->id }}">
+                                                    <button type="submit"
+                                                        class="suspend-provider text-danger hover:text-danger/80">
+                                                        <i class="fas fa-ban"></i>
+                                                    </button>
+                                                </form>
                                             @else
-                                                <button class="reactivate-provider text-warning hover:text-warning/80"
-                                                    data-id="{{ $provider->id }}">
-                                                    <i class="fas fa-undo"></i>
-                                                </button>
+                                                <form action="{{ route('admin.unbanProvider') }}" method="POST"
+                                                    class="inline">
+                                                    @csrf
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $provider->id }}">
+                                                    <button type="submit"
+                                                        class="reactivate-provider text-warning hover:text-warning/80">
+                                                        <i class="fas fa-undo"></i>
+                                                    </button>
+                                                </form>
                                             @endif
+                                            <form action="{{ route('admin.deleteProvider') }}" method="POST"
+                                                class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="id" value="{{ $provider->id }}">
+                                                <button type="submit"
+                                                    class="delete-provider text-danger hover:text-danger/80">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

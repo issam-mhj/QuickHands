@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Offer;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
+use App\Models\Conversation;
 use App\Models\Service;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -40,6 +41,10 @@ class OfferController extends Controller
             'offer_id' => $offer->id,
             'service_id' => $offer->service_id,
             'status' => 'not-started',
+        ]);
+
+        Conversation::create([
+            'offer_id' => $offer->id,
         ]);
 
         return redirect()->back()->with('success', 'Offer accepted!');

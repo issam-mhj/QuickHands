@@ -5,13 +5,58 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
+use App\Models\Conversation;
+use App\Models\Offer;
+use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
     public function showMsg()
     {
         $user = auth()->user();
-        return view("provider.messages", ["user" => $user]);
+        //get all offers where provider->user->id = $user->provider->user()->id and status = accepted
+        $offers = Offer::where("provider_id", $user->provider->id)
+            ->where("status", "accepted")
+            ->get();
+        //get all conversations where offer_id = $offers->id
+        $conversations = Conversation::where("offer_id", $offers[0]->id)->get();
+        return view("provider.messages", ["user" => $user, "conversations" => $conversations]);
+    }
+    //create function to send message
+    public function storemsg(Request $request, Conversation $conversation)
+    {
+        $validated = $request->validate([
+            'content' => 'required|string|max:1000',
+        ]);
+        $user = auth()->user();
+        Message::create([
+            "content" => $validated['content'],
+            "conversation_id" => $conversation->id,
+            "user_id" => $user->id,
+        ]);
+        return redirect()->back()->with('success', 'Message sent!');
+    }
+    public function showusermsg(Conversation $conversation)
+    {
+        $user = auth()->user();
+        $messages = $conversation->messages()->where('conversation_id', $conversation->id)->get();
+        return view("provider.contactUser", [
+            "user" => $user,
+            "messages" => $messages,
+        ]);
+    }
+    public function sendToUsermsg(Request $request, Conversation $conversation)
+    {
+        $validated = $request->validate([
+            'content' => 'required|string|max:1000',
+        ]);
+        $user = auth()->user();
+        Message::create([
+            "content" => $validated['content'],
+            "conversation_id" => $conversation->id,
+            "user_id" => $user->id,
+        ]);
+        return redirect()->back()->with('success', 'Message sent!');
     }
 
     /**

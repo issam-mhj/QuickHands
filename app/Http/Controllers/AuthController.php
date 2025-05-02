@@ -73,12 +73,4 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/join');
     }
-
-
-
-    public function showMessages()
-    {
-        return view("user.messages");
-    }
-
 }

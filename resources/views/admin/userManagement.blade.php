@@ -262,10 +262,6 @@
                 @apply w-10 h-10 rounded-full object-cover border-2 border-white;
             }
 
-            .notification-badge {
-                @apply absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-white text-xs flex items-center justify-center;
-            }
-
             .dropdown {
                 @apply absolute right-0 top-full mt-2 w-64 bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 opacity-0 invisible;
                 z-index: 30;
@@ -328,7 +324,7 @@
             </div>
 
             <nav class="space-y-2">
-                <a href="simplified-dashboard.html" class="nav-link">
+                <a href="/admin/dashboard" class="nav-link">
                     <i class="fas fa-chart-pie icon"></i>
                     <span>Dashboard</span>
                 </a>
@@ -336,7 +332,7 @@
                     <i class="fas fa-users icon"></i>
                     <span>User Management</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/providermanage" class="nav-link">
                     <i class="fas fa-user-tie icon"></i>
                     <span>Provider Management</span>
                 </a>
@@ -355,8 +351,6 @@
                 <a href="#" class="nav-link">
                     <i class="fas fa-bell icon"></i>
                     <span>Notifications</span>
-                    <span
-                        class="ml-auto bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">8</span>
                 </a>
                 <a href="#" class="nav-link">
                     <i class="fas fa-cog icon"></i>
@@ -397,11 +391,6 @@
                                 class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
                         <div class="relative">
-                            <button id="notifications-btn"
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-primary/10 transition-colors">
-                                <i class="fas fa-bell"></i>
-                                <span class="notification-badge">5</span>
-                            </button>
                             <div id="notifications-dropdown" class="dropdown">
                                 <div class="p-4 border-b border-gray-100">
                                     <h5 class="font-medium">Notifications</h5>
@@ -502,16 +491,6 @@
                         <p class="text-sm text-gray-500">Manage and monitor all users on the platform</p>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <button id="addUserBtn"
-                            class="btn bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg flex items-center">
-                            <i class="fas fa-plus mr-2"></i> Add User
-                        </button>
-                        <button id="exportBtn"
-                            class="btn bg-success hover:bg-success/90 text-white px-4 py-2 rounded-lg flex items-center">
-                            <i class="fas fa-file-export mr-2"></i> Export Data
-                        </button>
-                    </div>
                 </div>
 
                 <!-- Search and Filter -->
@@ -639,11 +618,7 @@
                                                 data-id="{{ $user->id }}">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="view-activity text-success hover:text-success/80"
-                                                data-id="{{ $user->id }}">
-                                                <i class="fas fa-chart-line"></i>
-                                            </button>
-                                            @if ($user->status !== 'banned')
+                                            {{-- @if ($user->status !== 'banned')
                                                 <button class="ban-user text-danger hover:text-danger/80"
                                                     data-id="{{ $user->id }}">
                                                     <i class="fas fa-ban"></i>
@@ -653,7 +628,14 @@
                                                     data-id="{{ $user->id }}">
                                                     <i class="fas fa-undo"></i>
                                                 </button>
-                                            @endif
+                                            @endif --}}
+                                            <form action="/deleteuser/{{$user->id}}" method="post">
+                                                @csrf
+                                                <button class="delete-user text-danger hover:text-danger/80"
+                                                    data-id="{{ $user->id }}" data-name="{{ $user->name }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -694,59 +676,6 @@
         </div>
     </main>
 
-    <!-- Add User Modal -->
-    <div id="adduser" class="modal fixed inset-0 z-50 hidden flex items-center justify-center">
-        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
-        <div class="modal-content relative bg-white w-full max-w-md mx-4 rounded-lg shadow-lg">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">Add User</h3>
-                    <button class="close-modal text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <form action="/adduser" method="POST">
-                    @csrf
-
-                    <div class="mb-4">
-                        <label for="editName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                        <input type="text" name="name"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="editEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" name="email"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" name="password"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="editRole" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                        <select name="role"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="user">User</option>
-                            <option value="provider">Provider</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-                    <div class="flex justify-end space-x-3 mt-6">
-                        <button type="button"
-                            class="close-modal px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                        <button type="submit"
-                            class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">Save
-                            Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <!-- Edit User Modal -->
     <div id="editUserModal" class="modal fixed inset-0 z-50 hidden flex items-center justify-center">
@@ -761,23 +690,23 @@
                 </div>
                 <form action="/edituser" method="POST">
                     @csrf
-                    <input type="hidden" id="editUserId">
+                    <input type="hidden" name="id" id="editUserId">
 
                     <div class="mb-4">
                         <label for="editName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                        <input type="text" id="editName"
+                        <input type="text" name="name" id="editName"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
 
                     <div class="mb-4">
                         <label for="editEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="editEmail"
+                        <input type="email" name="email" id="editEmail"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
 
                     <div class="mb-4">
                         <label for="editRole" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                        <select id="editRole"
+                        <select name="role" id="editRole"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="user">User</option>
                             <option value="provider">Provider</option>
@@ -787,7 +716,7 @@
 
                     <div class="mb-4">
                         <label for="editStatus" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select id="editStatus"
+                        <select name="status" id="editStatus"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                             <option value="active">Active</option>
                             <option value="suspended">Suspended</option>
@@ -981,6 +910,7 @@
         </div>
     </div>
 
+
     <script>
         // Sample task data
         const tasks = [{
@@ -1154,6 +1084,21 @@
                 }
             });
 
+            // Delete user buttons
+            document.querySelectorAll('.delete-user').forEach(button => {
+                button.addEventListener('click', function() {
+                    const userId = this.dataset.id;
+                    const userName = this.dataset.name;
+
+                    // Populate the form with the correct user data
+                    document.getElementById('deleteUserId').value = userId;
+                    document.getElementById('deleteUserName').textContent = userName;
+
+                    // Show the delete confirmation modal
+                    document.getElementById('deleteUserModal').classList.remove('hidden');
+                });
+            });
+
             // Modal close buttons
             document.querySelectorAll('.close-modal').forEach(button => {
                 button.addEventListener('click', () => {
@@ -1161,6 +1106,7 @@
                     document.getElementById('userActivityModal').classList.add('hidden');
                     document.getElementById('exportModal').classList.add('hidden');
                     document.getElementById('adduser').classList.add('hidden');
+                    document.getElementById('deleteUserModal').classList.add('hidden');
                 });
             });
 

@@ -243,17 +243,16 @@
                 </a>
             </nav>
 
-            <div class="mt-8 p-4 rounded-2xl bg-gray-50">
-                <h5 class="font-medium mb-2">Need Help?</h5>
-                <p class="text-sm text-gray-600 mb-3">Contact our support team for assistance</p>
-                <a href="#" class="text-sm text-primary font-medium hover:underline">Get Support</a>
-            </div>
         </div>
         <div class="sidebar-footer">
-            <a href="#" class="flex items-center space-x-2 text-gray-500 hover:text-primary transition-colors">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+            <form action="/logout" method="post">
+                @csrf
+                <button type="submit"
+                    class="flex items-center space-x-2 text-gray-500 hover:text-primary transition-colors">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </form>
         </div>
     </div>
 
