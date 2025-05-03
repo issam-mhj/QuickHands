@@ -108,74 +108,67 @@
 
 <body class="bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 min-h-screen">
     <!-- Header -->
-    <header class="glassmorphism sticky top-0 z-50 border-b border-slate-200/50">
-        <div class="container mx-auto px-6 flex justify-between items-center h-16">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-[70px]">
             <div class="flex items-center">
-                <a href="#" class="flex items-center text-primary-dark font-bold text-xl group">
-                    <i
-                        class="fas fa-hands-helping mr-2 text-2xl transition-transform duration-300 group-hover:rotate-12 text-primary"></i>
-                    <span
-                        class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">QuickHands</span>
+                <a href="#" class="flex items-center text-2xl font-bold text-primary">
+                    <i class="fas fa-hands-helping mr-2 text-[1.75rem]"></i>
+                    <span>QuickHands</span>
                 </a>
             </div>
-            <div class="flex items-center space-x-5">
+            <div class="flex items-center gap-6">
                 <button
-                    class="relative p-2.5 text-slate-600 hover:text-primary hover:bg-blue-100/50 rounded-full transition-all duration-200 ease-in-out transform hover:scale-105">
-                    <i class="far fa-bell text-lg"></i>
+                    class="relative bg-transparent border-none text-slate-500 text-xl cursor-pointer p-2 rounded-full transition hover:text-primary hover:bg-slate-100">
+                    <i class="far fa-bell"></i>
                     <span
-                        class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm animate-pulse-slow">3</span>
+                        class="absolute -top-0 -right-0 bg-accent text-white text-xs font-semibold w-5 h-5 rounded-full flex items-center justify-center">3</span>
                 </button>
-                <div
-                    class="flex items-center space-x-3 pl-3 py-1.5 pr-2 rounded-full hover:bg-blue-100/50 transition-all duration-200 cursor-pointer border border-slate-200/60 shadow-sm">
-                    <div class="text-right hidden sm:block">
-                        <div class="font-semibold text-sm">{{ $user->name }}</div>
-                        <div class="text-xs text-slate-500">Member</div>
+                <div class="flex items-center gap-3 cursor-pointer p-2 rounded-md transition hover:bg-slate-100">
+                    <div class="text-right">
+                        <div class="font-semibold text-sm text-slate-800"> {{ $user->name }} </div>
                     </div>
                     <div
-                        class="w-9 h-9 bg-gradient-to-br from-primary to-primary-light text-white rounded-full flex items-center justify-center font-medium shadow-md">
-                        J
-                    </div>
+                        class="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center font-semibold text-white">
+                        AJ</div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Navigation -->
-    <nav class="bg-white/80 backdrop-blur-sm border-b border-slate-200/70 shadow-sm">
-        <div class="container mx-auto px-6">
-            <div class="overflow-x-auto flex whitespace-nowrap py-1.5 -mx-2 scrollbar-thin">
-                <a href="#"
-                    class="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-blue-50 rounded-lg mx-1.5 transition-all duration-200">
-                    <i class="fas fa-tachometer-alt mr-1.5"></i> Dashboard
-                </a>
-                <a href="#"
-                    class="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-blue-50 rounded-lg mx-1.5 transition-all duration-200">
-                    <i class="fas fa-plus-circle mr-1.5"></i> Post a Task
-                </a>
-                <a href="#"
-                    class="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-blue-50 rounded-lg mx-1.5 transition-all duration-200">
-                    <i class="fas fa-tasks mr-1.5"></i> Active Tasks
-                </a>
-                <a href="#"
-                    class="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-blue-50 rounded-lg mx-1.5 transition-all duration-200">
-                    <i class="fas fa-user-check mr-1.5"></i> Provider Selection
-                </a>
-                <a href="#"
-                    class="px-4 py-2.5 text-sm font-medium text-primary bg-blue-50 rounded-lg mx-1.5 transition-all duration-200 shadow-inner">
-                    <i class="fas fa-comments mr-1.5"></i> Messages
-                </a>
-                <a href="#"
-                    class="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-blue-50 rounded-lg mx-1.5 transition-all duration-200">
-                    <i class="fas fa-credit-card mr-1.5"></i> Payment & Billing
-                </a>
-                <a href="#"
-                    class="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-blue-50 rounded-lg mx-1.5 transition-all duration-200">
-                    <i class="fas fa-star mr-1.5"></i> Reviews
-                </a>
-                <a href="#"
-                    class="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-blue-50 rounded-lg mx-1.5 transition-all duration-200">
-                    <i class="fas fa-user-cog mr-1.5"></i> Profile & Settings
-                </a>
+    <nav class="bg-white border-b border-slate-200 py-2">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <ul class="flex gap-1">
+                <li><a href="/user/dashboard"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Dashboard</a>
+                </li>
+                <li><a href="#"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Post
+                        a Task</a></li>
+                <li><a href="/user/activetask"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Active
+                        Tasks</a></li>
+                <li><a href="/user/selectprovider"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Provider
+                        Selection</a></li>
+                <li><a href="#"
+                        class="block px-4 py-3 text-primary no-underline font-medium text-sm rounded-md bg-blue-50">Messages</a>
+                </li>
+                <li><a href="/user/reviews"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Reviews</a>
+                </li>
+                <li><a href="#"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Profile
+                        & Settings</a></li>
+            </ul>
+            <div class="flex items-center gap-4">
+                <form action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="flex items-center gap-2 text-slate-500 hover:text-danger transition">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>
@@ -184,20 +177,13 @@
     <main class="container mx-auto px-6 py-8">
         <!-- Page Header -->
         <div class="mb-8 animate-fade-in">
-            <div class="flex items-center justify-between">
-                <div>
+            <div>
+                <div class="ml-[125px]">
                     <h1 class="text-2xl font-bold text-slate-800 flex items-center">
                         <i class="fas fa-comments text-primary-light mr-3"></i>
                         Messages
                     </h1>
                     <p class="text-slate-500 mt-1.5 ml-1">Connect with your service providers</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <div class="relative">
-                        <input type="text" placeholder="Search conversations..."
-                            class="w-64 pl-10 pr-4 py-2 rounded-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary-light text-sm shadow-sm" />
-                        <i class="fas fa-search absolute left-3.5 top-2.5 text-slate-400"></i>
-                    </div>
                 </div>
             </div>
         </div>

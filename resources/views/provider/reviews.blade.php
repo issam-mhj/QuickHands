@@ -362,13 +362,6 @@
                 </div>
 
                 <div class="mt-4 md:mt-0 flex items-center space-x-4">
-                    <div class="relative">
-                        <button
-                            class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
-                            <i class="fas fa-bell"></i>
-                            <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
-                        </button>
-                    </div>
 
                     <div class="relative">
                         <button
@@ -379,7 +372,7 @@
                     </div>
 
                     <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider"
+                        <img src="https://cdn.pixabay.com/photo/2017/06/09/23/22/avatar-2388584_1280.png" alt="Provider"
                             class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
                         <div class="ml-3">
                             <p class="font-medium">{{ $user->name }}</p>
@@ -400,22 +393,22 @@
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-chart-line mr-2"></i> Dashboard
                     </a>
-                    <a href="#"
+                    <a href="/provider/task"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-tasks mr-2"></i> Available Tasks
                     </a>
-                    <a href="#"
-                        class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
+                    <a href="/provider/taskmanage"
+                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-clipboard-list mr-2"></i> Task Management
                     </a>
                     <a href="#"
-                        class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
+                        class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
                         <i class="fas fa-star mr-2"></i> Reviews
                     </a>
                 </div>
 
                 <div class="hidden md:flex space-x-2">
-                    <a href="#"
+                    <a href="/provider/profile"
                         class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
                         <i class="fas fa-user-circle mr-2"></i> Profile
                     </a>
@@ -438,33 +431,33 @@
     <div class="container">
         <div class="main-content">
             <div class="page-header">
-                <h1 class="page-title">Reviews & Ratings</h1>
-                <div class="breadcrumb">
-                    <a href="provider-dashboard.html">Dashboard</a>
-                    <span>/</span>
+                <h1 class="page-title text-2xl font-bold text-dark mb-4">Reviews & Ratings</h1>
+                <div class="breadcrumb text-sm text-gray-500 mb-6">
+                    <a href="provider-dashboard.html" class="hover:text-primary">Dashboard</a>
+                    <span class="mx-2">/</span>
                     <span>Reviews & Ratings</span>
                 </div>
             </div>
 
-            <div class="stats-grid fade-in">
-                <div class="stats-card primary delay-1">
-                    <div class="stats-label">Overall Rating</div>
-                    <div class="stats-value">{{ $ratingAvg }}</div>
+            <div class="stats-grid grid grid-cols-1 md:grid-cols-3 gap-6 fade-in">
+                <div class="stats-card bg-primary text-white p-6 rounded-lg shadow-md delay-1">
+                    <div class="stats-label text-sm font-medium">Overall Rating</div>
+                    <div class="stats-value text-3xl font-bold">{{ $ratingAvg }}</div>
                 </div>
-                <div class="stats-card secondary delay-2">
-                    <div class="stats-label">Total Reviews</div>
-                    <div class="stats-value">{{ $totalRv }}</div>
+                <div class="stats-card bg-secondary text-white p-6 rounded-lg shadow-md delay-2">
+                    <div class="stats-label text-sm font-medium">Total Reviews</div>
+                    <div class="stats-value text-3xl font-bold">{{ $totalRv }}</div>
                 </div>
-                <div class="stats-card success delay-3">
-                    <div class="stats-label">5-Star Reviews</div>
-                    <div class="stats-value">{{ $fiveStar }}</div>
+                <div class="stats-card bg-success text-white p-6 rounded-lg shadow-md delay-3">
+                    <div class="stats-label text-sm font-medium">5-Star Reviews</div>
+                    <div class="stats-value text-3xl font-bold">{{ $fiveStar }}</div>
                 </div>
             </div>
-            <div class="card fade-in delay-3">
-                <div class="card-header">
-                    <h2 class="card-title">User Reviews</h2>
+            <div class="card bg-white p-6 rounded-lg shadow-md fade-in delay-3">
+                <div class="card-header flex justify-between items-center border-b pb-4 mb-4">
+                    <h2 class="card-title text-xl font-semibold text-dark">User Reviews</h2>
                     <div class="card-actions">
-                        <select class="select-control">
+                        <select class="select-control border border-gray-300 rounded-lg p-2 text-sm">
                             <option>All Reviews</option>
                             <option>5 Star</option>
                             <option>4 Star</option>
@@ -474,71 +467,58 @@
                         </select>
                     </div>
                 </div>
-
-                <div class="filter-bar">
-                    <div class="filter-group">
-                        <div class="search-box">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" class="form-control" placeholder="Search reviews...">
-                        </div>
-                    </div>
-                    <div class="filter-group">
-                        <select class="select-control">
-                            <option>All Task Types</option>
-                            <option>Deliveries</option>
-                            <option>Errands</option>
-                            <option>Cleaning</option>
-                            <option>Assembly</option>
-                            <option>Other</option>
-                        </select>
-                        <select class="select-control">
-                            <option>Most Recent</option>
-                            <option>Highest Rated</option>
-                            <option>Lowest Rated</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="review-list">
+                <div class="review-list space-y-6">
                     @foreach ($userRVW as $review)
-                        <div class="review-item">
-                            <div class="review-header">
-                                <div class="reviewer-info">
-                                    <div class="reviewer-avatar">{{ $review->offer->service->user->name[0] }}</div>
-                                    <div class="reviewer-details">
-                                        <div class="reviewer-name">{{ $review->offer->service->user->name }}</div>
-                                        <div class="review-date">
-                                            {{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</div>
+                        <div class="review-item bg-gray-50 p-4 rounded-lg shadow-sm">
+                            <div class="review-header flex justify-between items-center mb-3">
+                                <div class="reviewer-info flex items-center space-x-4">
+                                    <div
+                                        class="reviewer-avatar bg-primary text-white w-10 h-10 flex items-center justify-center rounded-full text-lg font-bold">
+                                        {{ $review->offer->service->user->name[0] }}
+                                    </div>
+                                    <div>
+                                        <div class="reviewer-name font-semibold text-dark">
+                                            {{ $review->offer->service->user->name }}</div>
+                                        <div class="review-date text-sm text-gray-500">
+                                            {{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="review-rating">
+                                <div class="review-rating flex space-x-1">
                                     @for ($i = 0; $i < (int) $review->rating; $i++)
-                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star text-yellow-500"></i>
                                     @endfor
                                 </div>
                             </div>
-                            <div class="review-task">
-                                Task: <span>{{ $review->offer->service->title }}</span> <span
-                                    class="badge badge-assembly">{{ $review->offer->service->servicecategory->name }}</span>
+                            <div class="review-task text-sm text-gray-600 mb-2">
+                                Task: <span class="font-medium text-dark">{{ $review->offer->service->title }}</span>
+                                <span
+                                    class="badge bg-secondary text-white px-2 py-1 rounded-full text-xs ml-2">{{ $review->offer->service->servicecategory->name }}</span>
                             </div>
-                            <div class="review-content">
+                            <div class="review-content text-gray-700 mb-3">
                                 {{ $review->comment }}
-                            </div>
-                            <div class="review-actions">
-                                <button class="btn btn-outline btn-sm">Reply</button>
                             </div>
                         </div>
                     @endforeach
                 </div>
 
-                <div class="pagination">
-                    <div class="page-item"><i class="fas fa-chevron-left"></i></div>
-                    <div class="page-item active">1</div>
-                    <div class="page-item">2</div>
-                    <div class="page-item">3</div>
-                    <div class="page-item">...</div>
-                    <div class="page-item">12</div>
-                    <div class="page-item"><i class="fas fa-chevron-right"></i></div>
+                <div class="pagination flex justify-center items-center space-x-2 mt-6">
+                    <button
+                        class="page-item bg-gray-200 text-gray-600 px-3 py-1 rounded-lg hover:bg-primary hover:text-white">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="page-item bg-primary text-white px-3 py-1 rounded-lg">1</button>
+                    <button
+                        class="page-item bg-gray-200 text-gray-600 px-3 py-1 rounded-lg hover:bg-primary hover:text-white">2</button>
+                    <button
+                        class="page-item bg-gray-200 text-gray-600 px-3 py-1 rounded-lg hover:bg-primary hover:text-white">3</button>
+                    <span class="text-gray-500">...</span>
+                    <button
+                        class="page-item bg-gray-200 text-gray-600 px-3 py-1 rounded-lg hover:bg-primary hover:text-white">12</button>
+                    <button
+                        class="page-item bg-gray-200 text-gray-600 px-3 py-1 rounded-lg hover:bg-primary hover:text-white">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>

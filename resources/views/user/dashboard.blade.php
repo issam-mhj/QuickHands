@@ -799,19 +799,21 @@
         <div class="container nav-container">
             <ul class="nav-links">
                 <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="#">Post a Task</a></li>
+                <li><a href="/user/task">Post a Task</a></li>
                 <li><a href="#">Active Tasks</a></li>
                 <li><a href="#">Provider Selection</a></li>
                 <li><a href="#">Messages</a></li>
-                <li><a href="#">Payment & Billing</a></li>
                 <li><a href="#">Reviews</a></li>
                 <li><a href="#">Profile & Settings</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="#" class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Post New Task
-                </a>
+                <form action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="btn ">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>

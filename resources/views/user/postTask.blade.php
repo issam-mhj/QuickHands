@@ -61,7 +61,6 @@
                 <div class="flex items-center gap-3 cursor-pointer p-2 rounded-md transition hover:bg-slate-100">
                     <div class="text-right">
                         <div class="font-semibold text-sm text-slate-800"> {{ $user->name }} </div>
-                        <div class="text-xs text-slate-500">Premium Member</div>
                     </div>
                     <div
                         class="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center font-semibold text-white">
@@ -75,13 +74,13 @@
     <nav class="bg-white border-b border-slate-200 py-2">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <ul class="flex gap-1">
-                <li><a href="#"
+                <li><a href="/user/dashboard"
                         class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Dashboard</a>
                 </li>
                 <li><a href="#"
                         class="block px-4 py-3 text-primary no-underline font-medium text-sm rounded-md bg-blue-50">Post
                         a Task</a></li>
-                <li><a href="#"
+                <li><a href="/user/activetask"
                         class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Active
                         Tasks</a></li>
                 <li><a href="#"
@@ -91,16 +90,21 @@
                         class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Messages</a>
                 </li>
                 <li><a href="#"
-                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Payment
-                        & Billing</a></li>
-                <li><a href="#"
                         class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Reviews</a>
                 </li>
                 <li><a href="#"
                         class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Profile
                         & Settings</a></li>
             </ul>
-        </div>
+            <div class="flex items-center gap-4">
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-2 text-slate-500 hover:text-danger transition">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </form>
+            </div>
     </nav>
 
     <!-- Main Content -->

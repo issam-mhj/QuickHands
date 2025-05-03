@@ -83,61 +83,68 @@
 
 <body class="bg-slate-50 text-slate-800">
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 flex justify-between items-center h-16">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-[70px]">
             <div class="flex items-center">
-                <a href="#" class="flex items-center text-primary font-bold text-xl">
-                    <i class="fas fa-hands-helping mr-2 text-2xl"></i>
+                <a href="#" class="flex items-center text-2xl font-bold text-primary">
+                    <i class="fas fa-hands-helping mr-2 text-[1.75rem]"></i>
                     <span>QuickHands</span>
                 </a>
             </div>
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center gap-6">
                 <button
-                    class="relative p-2 text-slate-500 hover:text-primary hover:bg-slate-100 rounded-full transition-colors">
-                    <i class="far fa-bell text-lg"></i>
+                    class="relative bg-transparent border-none text-slate-500 text-xl cursor-pointer p-2 rounded-full transition hover:text-primary hover:bg-slate-100">
+                    <i class="far fa-bell"></i>
                     <span
-                        class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                        class="absolute -top-0 -right-0 bg-accent text-white text-xs font-semibold w-5 h-5 rounded-full flex items-center justify-center">3</span>
                 </button>
-                <div
-                    class="flex items-center space-x-3 pl-2 py-1 pr-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                    <div class="text-right hidden sm:block">
-                        <div class="font-semibold text-sm">{{ $user->name }}</div>
-                        <div class="text-xs text-slate-500">Member</div>
+                <div class="flex items-center gap-3 cursor-pointer p-2 rounded-md transition hover:bg-slate-100">
+                    <div class="text-right">
+                        <div class="font-semibold text-sm text-slate-800"> {{ $user->name }} </div>
+                        <div class="text-xs text-slate-500">Premium Member</div>
                     </div>
                     <div
-                        class="w-9 h-9 bg-primary-light text-white rounded-full flex items-center justify-center font-medium">
-                        J
-                    </div>
+                        class="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center font-semibold text-white">
+                        AJ</div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Navigation -->
-    <nav class="bg-white border-b border-slate-200">
-        <div class="container mx-auto px-4">
-            <div class="overflow-x-auto flex whitespace-nowrap py-1 -mx-2">
-                <a href="#"
-                    class="px-3 py-2 text-sm font-medium text-slate-500 hover:text-primary hover:bg-slate-50 rounded-md mx-1 transition-colors">Dashboard</a>
-                <a href="#"
-                    class="px-3 py-2 text-sm font-medium text-slate-500 hover:text-primary hover:bg-slate-50 rounded-md mx-1 transition-colors">Post
-                    a Task</a>
-                <a href="#"
-                    class="px-3 py-2 text-sm font-medium text-slate-500 hover:text-primary hover:bg-slate-50 rounded-md mx-1 transition-colors">Active
-                    Tasks</a>
-                <a href="#"
-                    class="px-3 py-2 text-sm font-medium text-slate-500 hover:text-primary hover:bg-slate-50 rounded-md mx-1 transition-colors">Provider
-                    Selection</a>
-                <a href="#"
-                    class="px-3 py-2 text-sm font-medium text-primary bg-blue-50 rounded-md mx-1 transition-colors">Messages</a>
-                <a href="#"
-                    class="px-3 py-2 text-sm font-medium text-slate-500 hover:text-primary hover:bg-slate-50 rounded-md mx-1 transition-colors">Payment
-                    & Billing</a>
-                <a href="#"
-                    class="px-3 py-2 text-sm font-medium text-slate-500 hover:text-primary hover:bg-slate-50 rounded-md mx-1 transition-colors">Reviews</a>
-                <a href="#"
-                    class="px-3 py-2 text-sm font-medium text-slate-500 hover:text-primary hover:bg-slate-50 rounded-md mx-1 transition-colors">Profile
-                    & Settings</a>
+    <nav class="bg-white border-b border-slate-200 py-2">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <ul class="flex gap-1">
+                <li><a href="/user/dashboard"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Dashboard</a>
+                </li>
+                <li><a href="#"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Post
+                        a Task</a></li>
+                <li><a href="/user/activetask"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Active
+                        Tasks</a></li>
+                <li><a href="#"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Provider
+                        Selection</a></li>
+                <li><a href="/user/conversation"
+                        class="block px-4 py-3 text-primary no-underline font-medium text-sm rounded-md bg-blue-50">Messages</a>
+                </li>
+                <li><a href="#"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Reviews</a>
+                </li>
+                <li><a href="#"
+                        class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Profile
+                        & Settings</a></li>
+            </ul>
+            <div class="flex items-center gap-4">
+                <form action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="flex items-center gap-2 text-slate-500 hover:text-danger transition">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>

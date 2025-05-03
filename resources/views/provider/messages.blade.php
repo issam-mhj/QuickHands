@@ -202,13 +202,6 @@
                 </div>
 
                 <div class="mt-4 md:mt-0 flex items-center space-x-4">
-                    <div class="relative">
-                        <button
-                            class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
-                            <i class="fas fa-bell"></i>
-                            <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
-                        </button>
-                    </div>
 
                     <div class="relative">
                         <button
@@ -236,37 +229,41 @@
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center justify-between overflow-x-auto hide-scrollbar">
                 <div class="flex space-x-1 md:space-x-4">
-                    <a href="#"
+                    <a href="/provider/dashboard"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-chart-line mr-2"></i> Dashboard
                     </a>
-                    <a href="#"
+                    <a href="/provider/tasks"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-tasks mr-2"></i> Available Tasks
                     </a>
-                    <a href="#"
+                    <a href="/provider/taskmanage"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-clipboard-list mr-2"></i> Task Management
                     </a>
-                    <a href="#"
-                        class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
-                        <i class="fas fa-envelope mr-2"></i> Messages
-                    </a>
-                    <a href="#"
+                    <a href="/provider/reviews"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-star mr-2"></i> Reviews
                     </a>
                 </div>
 
                 <div class="hidden md:flex space-x-2">
-                    <a href="#"
+                    <a href="/provider/profile"
                         class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
                         <i class="fas fa-user-circle mr-2"></i> Profile
                     </a>
-                    <a href="#"
+                    <a href="/provider/help"
                         class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
                         <i class="fas fa-question-circle mr-2"></i> Help
                     </a>
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit"
+                            class="px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium transition-colors">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </form>
                 </div>
 
                 <div class="md:hidden">
