@@ -5,24 +5,40 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use App\Http\Requests\StoreConversationRequest;
 use App\Http\Requests\UpdateConversationRequest;
+use App\Models\Offer;
+use App\Models\Service;
 
 class ConversationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+
+    public function showMessages()
     {
-        //
+        $user = auth()->user();
+        $services = Service::where('user_id', $user->id)->get();
+        $serviceIds = $services->pluck('id')->toArray();
+        $offers = Offer::where('status', 'accepted')
+            ->whereIn('service_id', $serviceIds)
+            ->get();
+        $offerIds = $offers->pluck('id')->toArray();
+        $conversations = Conversation::whereIn('offer_id', $offerIds)->get();
+        return view("user.messages", [
+            "user" => $user,
+            "conversations" => $conversations,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function showusermsg(Conversation $conversation)
     {
-        //
+        $user = auth()->user();
+        $messages = $conversation->messages()->where('conversation_id', $conversation->id)->get();
+        return view("user.contactUser", [
+            "user" => $user,
+            "messages" => $messages,
+        ]);
     }
+
+
 
     /**
      * Store a newly created resource in storage.

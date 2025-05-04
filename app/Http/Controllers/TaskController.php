@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Service;
+use App\Models\ServiceCategory;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -27,6 +30,49 @@ class TaskController extends Controller
             "notStartedTasks" => $notStartedTasks,
             "rateCompleted" => $completationRate,
             "tasks" => $alltasks,
+        ]);
+    }
+
+    public function showPostTask()
+    {
+        $user = auth()->user();
+        $taskcategories = ServiceCategory::all();
+        return view("user.postTask", [
+            "user" => $user,
+            "taskcategories" => $taskcategories,
+        ]);
+    }
+    public function storeTask(Request $request)
+    {
+        $validated = $request->validate(
+            [
+                'serviceTitle' => 'required|string|max:30',
+                'serviceDescription' => 'required|string|max:1000',
+                'service_category' => 'required|exists:service_categories,id',
+                'serviceLocation' => 'required|string|max:100',
+                'serviceDate' => 'required|date',
+            ]
+        );
+        $user = auth()->user();
+        $service = Service::create([
+            "title" => $validated['serviceTitle'],
+            "description" => $validated['serviceDescription'],
+            "desired_date" => $validated['serviceDate'],
+            "location" => $validated['serviceLocation'],
+            "status" => "open",
+            "user_id" => $user->id,
+            "service_category_id" => $validated['service_category'],
+        ]);
+        return redirect()->back()->with("done", "You have posted the task successfully");
+    }
+    public function showActiveTask()
+    {
+        $user = auth()->user();
+        // Get the user's services
+        $services = Service::where("user_id", $user->id)->get();
+        return view("user.activePost", [
+            "user" => $user,
+            "services" => $services,
         ]);
     }
 

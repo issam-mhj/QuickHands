@@ -205,13 +205,6 @@
                 </div>
 
                 <div class="mt-4 md:mt-0 flex items-center space-x-4">
-                    <div class="relative">
-                        <button
-                            class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
-                            <i class="fas fa-bell"></i>
-                            <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
-                        </button>
-                    </div>
 
                     <div class="relative">
                         <button
@@ -243,7 +236,7 @@
                         class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
                         <i class="fas fa-chart-line mr-2"></i> Dashboard
                     </a>
-                    <a href="#"
+                    <a href="/provider/task"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-tasks mr-2"></i> Available Tasks
                     </a>

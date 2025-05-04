@@ -60,7 +60,7 @@ class AuthController extends Controller
                 }
                 return redirect("provider/dashboard");
             } else {
-                return view('/user/dashboard');
+                return redirect('/user/dashboard');
             }
         }
 
@@ -72,44 +72,5 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('/join');
-    }
-
-
-
-    public function showMsg()
-    {
-        return view("provider.messages");
-    }
-    public function showSupport()
-    {
-        return view("provider.support");
-    }
-    public function showUserDashboard()
-    {
-        return view("user.dashboard");
-    }
-    public function showPostTask()
-    {
-        return view("user.postTask");
-    }
-    public function showActiveTask()
-    {
-        return view("user.activePost");
-    }
-    public function showSelectProvider()
-    {
-        return view("user.selectProvider");
-    }
-    public function showMessages()
-    {
-        return view("user.messages");
-    }
-    public function showUserReviews()
-    {
-        return view("user.feedback");
-    }
-    public function showUserProfile()
-    {
-        return view("user.profile");
     }
 }

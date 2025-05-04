@@ -12,8 +12,6 @@ class Task extends Model
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
     protected $fillable = [
-        'name',
-        'description',
         'start_date',
         'end_date',
         'status',
@@ -22,9 +20,5 @@ class Task extends Model
     public function offer(): BelongsTo
     {
         return $this->belongsTo(Offer::class);
-    }
-    public function TaskUpdates(): HasMany
-    {
-        return $this->hasMany(TaskUpdate::class);
     }
 }

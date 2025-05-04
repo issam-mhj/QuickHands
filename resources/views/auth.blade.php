@@ -795,6 +795,12 @@
 
     <!-- Main Content -->
     <main class="pt-32 pb-20 relative overflow-hidden">
+        @if (session('error'))
+            <div
+                class="fixed top-0 left-1/2 transform -translate-x-1/2 z-50 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="container mx-auto px-4 relative z-10">
             <!-- Hero Section -->
             <div class="text-center mb-16" data-aos="fade-up">
@@ -1336,21 +1342,21 @@
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         // Initialize Vanta.js background
-        VANTA.NET({
-            el: "#vanta-bg",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0xFF6B6B,
-            backgroundColor: 0xF7FFF7,
-            points: 10.00,
-            maxDistance: 20.00,
-            spacing: 16.00
-        });
+        // VANTA.NET({
+        //     el: "#vanta-bg",
+        //     mouseControls: true,
+        //     touchControls: true,
+        //     gyroControls: false,
+        //     minHeight: 200.00,
+        //     minWidth: 200.00,
+        //     scale: 1.00,
+        //     scaleMobile: 1.00,
+        //     color: 0xFF6B6B,
+        //     backgroundColor: 0xF7FFF7,
+        //     points: 10.00,
+        //     maxDistance: 20.00,
+        //     spacing: 16.00
+        // });
 
         // Initialize AOS animations
         AOS.init({
@@ -1379,47 +1385,47 @@
         });
 
         // Custom cursor
-        const cursorFollower = document.getElementById('cursor-follower');
-        const cursorDot = document.getElementById('cursor-dot');
+        // const cursorFollower = document.getElementById('cursor-follower');
+        // const cursorDot = document.getElementById('cursor-dot');
 
-        if (window.innerWidth > 768) {
-            document.addEventListener('mousemove', function(e) {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
+        // if (window.innerWidth > 768) {
+        //     document.addEventListener('mousemove', function(e) {
+        //         cursorFollower.style.left = e.clientX + 'px';
+        //         cursorFollower.style.top = e.clientY + 'px';
 
-                cursorDot.style.left = e.clientX + 'px';
-                cursorDot.style.top = e.clientY + 'px';
-            });
+        //         cursorDot.style.left = e.clientX + 'px';
+        //         cursorDot.style.top = e.clientY + 'px';
+        //     });
 
-            // Add special effects on hover for interactive elements
-            const interactiveElements = document.querySelectorAll('.interactive');
+        //     // Add special effects on hover for interactive elements
+        //     const interactiveElements = document.querySelectorAll('.interactive');
 
-            interactiveElements.forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    cursorFollower.style.width = '80px';
-                    cursorFollower.style.height = '80px';
-                    cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                });
+        //     interactiveElements.forEach(element => {
+        //         element.addEventListener('mouseenter', function() {
+        //             cursorFollower.style.width = '80px';
+        //             cursorFollower.style.height = '80px';
+        //             cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        //         });
 
-                element.addEventListener('mouseleave', function() {
-                    cursorFollower.style.width = '40px';
-                    cursorFollower.style.height = '40px';
-                    cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-                });
+        //         element.addEventListener('mouseleave', function() {
+        //             cursorFollower.style.width = '40px';
+        //             cursorFollower.style.height = '40px';
+        //             cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+        //         });
 
-                element.addEventListener('mousedown', function() {
-                    cursorFollower.style.width = '70px';
-                    cursorFollower.style.height = '70px';
-                    cursorDot.style.transform = 'translate(-50%, -50%) scale(0.5)';
-                });
+        //         element.addEventListener('mousedown', function() {
+        //             cursorFollower.style.width = '70px';
+        //             cursorFollower.style.height = '70px';
+        //             cursorDot.style.transform = 'translate(-50%, -50%) scale(0.5)';
+        //         });
 
-                element.addEventListener('mouseup', function() {
-                    cursorFollower.style.width = '80px';
-                    cursorFollower.style.height = '80px';
-                    cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                });
-            });
-        }
+        //         element.addEventListener('mouseup', function() {
+        //             cursorFollower.style.width = '80px';
+        //             cursorFollower.style.height = '80px';
+        //             cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        //         });
+        //     });
+        // }
 
         // Create particles on click
         document.addEventListener('click', function(e) {

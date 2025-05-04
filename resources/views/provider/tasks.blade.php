@@ -320,21 +320,13 @@
                     <div class="relative">
                         <button
                             class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
-                            <i class="fas fa-bell"></i>
-                            <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
-                        </button>
-                    </div>
-
-                    <div class="relative">
-                        <button
-                            class="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-primary transition-colors">
                             <i class="fas fa-envelope"></i>
                             <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full pulse-dot"></span>
                         </button>
                     </div>
 
                     <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Provider"
+                        <img src="https://cdn.pixabay.com/photo/2017/06/09/23/22/avatar-2388584_1280.png" alt="Provider"
                             class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
                         <div class="ml-3">
                             <p class="font-medium">{{ $user->name }}</p>
@@ -351,7 +343,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center justify-between overflow-x-auto hide-scrollbar">
                 <div class="flex space-x-1 md:space-x-4">
-                    <a href="#"
+                    <a href="/provider/dashboard"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-chart-line mr-2"></i> Dashboard
                     </a>
@@ -359,7 +351,7 @@
                         class="px-3 md:px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm md:text-base">
                         <i class="fas fa-tasks mr-2"></i> Available Tasks
                     </a>
-                    <a href="#"
+                    <a href="/provider/taskmanage"
                         class="px-3 md:px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium text-sm md:text-base transition-colors">
                         <i class="fas fa-clipboard-list mr-2"></i> Task Management
                     </a>

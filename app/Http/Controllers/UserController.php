@@ -63,6 +63,11 @@ class UserController extends Controller
             "users" => $allusers,
         ]);
     }
+    public function acceptprovider(Provider $provider)
+    {
+        $provider->update(['status' => 'approved']);
+        return redirect()->back()->with('success', 'Provider accepted successfully.');
+    }
     public function storeUser(Request $request)
     {
         $validated = $request->validate([
@@ -88,7 +93,96 @@ class UserController extends Controller
     }
     public function editUser(Request $request)
     {
-        dd($request);
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+            'name' => 'required|string|max:30',
+            'email' => 'required|email|unique:users,email,' . $request->id,
+            'role' => 'required|in:user,provider,admin',
+            'status' => 'required|in:active,suspended,banned',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role = $validated['role'];
+        $user->is_suspended = $validated['status'] === 'active' ? 0 : ($validated['status'] === 'suspended' ? 1 : 2);
+        $user->save();
+
+        if ($validated['role'] === 'provider') {
+            $provider = Provider::firstOrCreate(['user_id' => $user->id], ['status' => 'pending']);
+        }
+
+        return redirect()->back()->with('success', 'User updated successfully.');
+    }
+
+    public function banUser(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->is_suspended = 2;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User has been banned successfully.');
+    }
+
+    public function unbanUser(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->is_suspended = 0; // Active status
+        $user->save();
+
+        return redirect()->back()->with('success', 'User has been unbanned successfully.');
+    }
+
+    public function deleteUser(Request $request, User $user)
+    {
+        $user->delete();
+        return redirect()->back()->with('success', 'User deleted successfully.');
+    }
+
+    public function banProvider(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->is_suspended = 2; // Banned status
+        $user->save();
+
+        return redirect()->back()->with('success', 'Provider has been banned successfully.');
+    }
+
+    public function unbanProvider(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->is_suspended = 0; // Active status
+        $user->save();
+
+        return redirect()->back()->with('success', 'Provider has been unbanned successfully.');
+    }
+
+    public function deleteProvider(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($validated['id']);
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Provider has been deleted successfully.');
     }
 
     public function showproviderManage()
@@ -244,6 +338,84 @@ class UserController extends Controller
         }
         $user->save();
 
+        return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function showUserDashboard()
+    {
+        $user = auth()->user();
+        $usertasksNum = Task::with(['offer.service'])
+            ->whereHas('offer.service', function ($query) {
+                $query->where('user_id', auth()->id());
+            })->count();
+        $usertasks = Task::with(['offer.service'])
+            ->whereHas('offer.service', function ($query) {
+                $query->where('user_id', auth()->id());
+            })->where("status", "completed")->get();
+        $totalspent = 0;
+        foreach ($usertasks as $task) {
+            $totalspent += $task->offer->proposed_amount;
+        }
+        return view("user.dashboard", [
+            "user" => $user,
+            "usertasksNum" => $usertasksNum,
+            "totalspent" => $totalspent,
+            "usertasks" => $usertasks,
+        ]);
+    }
+    public function showSelectProvider()
+    {
+        $user = auth()->user();
+        $services = Service::where("user_id", $user->id)->where("status", "open")->get();
+        $offers = Offer::whereIn("service_id", $services->pluck("id"))->where("status", "pending")->get();
+        $providerSkills = Provider::whereIn("id", $offers->pluck("provider_id"))->get();
+        $providerSkills = $providerSkills->map(function ($provider) {
+            return explode(",", $provider->skills);
+        });
+        return view("user.selectProvider", [
+            "user" => $user,
+            "offers" => $offers,
+            "providerSkills" => $providerSkills,
+        ]);
+    }
+    public function showUserProfile()
+    {
+        $user = auth()->user();
+        return view("user.profile", ["user" => $user]);
+    }
+    public function editUserProf(Request $request, User $user)
+    {
+        $user = auth()->user();
+        $validated = $request->validate([
+            'name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'age' => ['nullable', 'integer', 'min:18', 'max:100'],
+            'gender' => ['nullable', 'in:m,f'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'password' => ['nullable', 'current_password'],
+            'new_password' => [
+                'nullable',
+                'string',
+                'confirmed',
+                'min:8',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/'
+            ],
+        ]);
+
+        if (isset($validated['name'])) $user->name = $validated['name'];
+        if (isset($validated['email'])) $user->email = $validated['email'];
+        $user->age = $validated['age'];
+        $user->gender = $validated['gender'];
+        $user->location = $validated['location'];
+
+        if (!empty($validated['new_password'])) {
+            $user->password = Hash::make($validated['new_password']);
+        }
+
+        $user->save();
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 }

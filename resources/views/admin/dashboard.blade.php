@@ -313,29 +313,29 @@
                     <i class="fas fa-users icon"></i>
                     <span>User Management</span>
                 </a>
-                <a href="" class="nav-link">
+                <a href="/admin/providermanage" class="nav-link">
                     <i class="fas fa-user-tie icon"></i>
                     <span>Provider Management</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/content" class="nav-link">
                     <i class="fas fa-shield-alt icon"></i>
                     <span>Content Moderation</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/task" class="nav-link">
                     <i class="fas fa-tasks icon"></i>
                     <span>Task Oversight</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/analytics" class="nav-link">
                     <i class="fas fa-chart-line icon"></i>
                     <span>Analytics & Reports</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/notifications" class="nav-link">
                     <i class="fas fa-bell icon"></i>
                     <span>Notifications</span>
                     <span
                         class="ml-auto bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">8</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/settings" class="nav-link">
                     <i class="fas fa-cog icon"></i>
                     <span>Settings</span>
                 </a>
@@ -375,7 +375,6 @@
                             <button id="notifications-btn"
                                 class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-primary/10 transition-colors">
                                 <i class="fas fa-bell"></i>
-                                <span class="notification-badge">5</span>
                             </button>
                             <div id="notifications-dropdown" class="dropdown">
                                 <div class="p-4 border-b border-gray-100">
@@ -477,10 +476,6 @@
                         <div>
                             <p class="text-gray-500 mb-1">Total Users</p>
                             <h3 class="text-3xl font-bold mb-2 animated-number" id="users-count">0</h3>
-                            <div class="flex items-center space-x-1">
-                                <span class="text-success text-sm">+12.5%</span>
-                                <span class="text-xs text-gray-500">vs last month</span>
-                            </div>
                         </div>
                         <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
                             <i class="fas fa-users text-primary"></i>
@@ -503,10 +498,6 @@
                         <div>
                             <p class="text-gray-500 mb-1">Service Providers</p>
                             <h3 class="text-3xl font-bold mb-2 animated-number" id="providers-count">0</h3>
-                            <div class="flex items-center space-x-1">
-                                <span class="text-success text-sm">+8.3%</span>
-                                <span class="text-xs text-gray-500">vs last month</span>
-                            </div>
                         </div>
                         <div class="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center">
                             <i class="fas fa-user-tie text-secondary"></i>
@@ -529,10 +520,7 @@
                         <div>
                             <p class="text-gray-500 mb-1">Active Tasks</p>
                             <h3 class="text-3xl font-bold mb-2 animated-number" id="tasks-count">0</h3>
-                            <div class="flex items-center space-x-1">
-                                <span class="text-warning text-sm">+5.2%</span>
-                                <span class="text-xs text-gray-500">vs last month</span>
-                            </div>
+
                         </div>
                         <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center">
                             <i class="fas fa-tasks text-accent"></i>
@@ -555,10 +543,6 @@
                         <div>
                             <p class="text-gray-500 mb-1">Total Revenue</p>
                             <h3 class="text-3xl font-bold mb-2 animated-number" id="revenue-count">$0</h3>
-                            <div class="flex items-center space-x-1">
-                                <span class="text-success text-sm">+15.7%</span>
-                                <span class="text-xs text-gray-500">vs last month</span>
-                            </div>
                         </div>
                         <div class="w-12 h-12 rounded-xl bg-success/20 flex items-center justify-center">
                             <i class="fas fa-dollar-sign text-success"></i>
@@ -577,39 +561,7 @@
             </div>
 
             <!-- Charts Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                <!-- User Growth Chart -->
-                <div class="dashboard-card col-span-1 lg:col-span-2">
-                    <div class="flex items-start justify-between mb-6">
-                        <div>
-                            <h3 class="font-display text-xl font-semibold">User Growth</h3>
-                            <p class="text-gray-500 text-sm">Monthly user acquisition</p>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button
-                                class="px-3 py-1 rounded-lg text-xs font-medium bg-white shadow-sm hover:bg-gray-50 transition-colors">
-                                Weekly
-                            </button>
-                            <button
-                                class="px-3 py-1 rounded-lg text-xs font-medium bg-primary text-white shadow-sm hover:bg-primary/90 transition-colors">
-                                Monthly
-                            </button>
-                            <button
-                                class="px-3 py-1 rounded-lg text-xs font-medium bg-white shadow-sm hover:bg-gray-50 transition-colors">
-                                Yearly
-                            </button>
-                        </div>
-                    </div>
-                    <div class="chart-container" id="user-growth-chart">
-                        <canvas id="userGrowthChart"></canvas>
-                        <div class="chart-overlay">
-                            <button
-                                class="px-4 py-2 bg-primary text-white rounded-lg shadow-lg hover:bg-primary/90 transition-colors">
-                                View Detailed Report
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-8">
                 <!-- Task Distribution Chart -->
                 <div class="dashboard-card">
                     <div class="flex items-start justify-between mb-6">
@@ -645,90 +597,8 @@
                 </div>
             </div>
 
-            <!-- Provider Performance and Recent Tasks -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <!-- Provider Performance -->
-                <div class="dashboard-card">
-                    <div class="flex items-start justify-between mb-6">
-                        <div>
-                            <h3 class="font-display text-xl font-semibold">Top Providers</h3>
-                            <p class="text-gray-500 text-sm">By rating and completed tasks</p>
-                        </div>
-                        <button class="text-gray-400 hover:text-primary transition-colors">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                    <div class="chart-container" id="provider-performance-chart">
-                        <canvas id="providerPerformanceChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Recent Tasks -->
-                <div class="dashboard-card">
-                    <div class="flex items-start justify-between mb-6">
-                        <div>
-                            <h3 class="font-display text-xl font-semibold">Recent Tasks</h3>
-                            <p class="text-gray-500 text-sm">Latest activity</p>
-                        </div>
-                        <a href="#" class="text-primary hover:underline text-sm font-medium">View All</a>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center p-3 rounded-xl bg-white/50 hover:bg-gray-50 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center mr-4">
-                                <i class="fas fa-truck text-primary"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium">Furniture Delivery</h4>
-                                <p class="text-xs text-gray-500">Sarah Johnson • 2 hours ago</p>
-                            </div>
-                            <span class="badge badge-success">Completed</span>
-                        </div>
-                        <div class="flex items-center p-3 rounded-xl bg-white/50 hover:bg-gray-50 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center mr-4">
-                                <i class="fas fa-broom text-secondary"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium">House Cleaning</h4>
-                                <p class="text-xs text-gray-500">Michael Brown • 3 hours ago</p>
-                            </div>
-                            <span class="badge badge-primary">In Progress</span>
-                        </div>
-                        <div class="flex items-center p-3 rounded-xl bg-white/50 hover:bg-gray-50 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center mr-4">
-                                <i class="fas fa-hammer text-accent"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium">Furniture Assembly</h4>
-                                <p class="text-xs text-gray-500">David Wilson • 5 hours ago</p>
-                            </div>
-                            <span class="badge badge-warning">Pending</span>
-                        </div>
-                        <div class="flex items-center p-3 rounded-xl bg-white/50 hover:bg-gray-50 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-success/20 flex items-center justify-center mr-4">
-                                <i class="fas fa-leaf text-success"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium">Lawn Mowing</h4>
-                                <p class="text-xs text-gray-500">Emily Davis • 6 hours ago</p>
-                            </div>
-                            <span class="badge badge-success">Completed</span>
-                        </div>
-                        <div class="flex items-center p-3 rounded-xl bg-white/50 hover:bg-gray-50 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-danger/20 flex items-center justify-center mr-4">
-                                <i class="fas fa-shopping-bag text-danger"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium">Grocery Shopping</h4>
-                                <p class="text-xs text-gray-500">Robert Miller • 8 hours ago</p>
-                            </div>
-                            <span class="badge badge-danger">Cancelled</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Quick Links and Platform Growth -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
                 <!-- Quick Links -->
                 <div class="dashboard-card">
                     <h3 class="font-display text-xl font-semibold mb-6">Quick Actions</h3>
@@ -757,33 +627,6 @@
                             <i class="fas fa-question-circle icon text-warning"></i>
                             <span class="text-sm font-medium">Help</span>
                         </a>
-                    </div>
-                </div>
-
-                <!-- Platform Growth -->
-                <div class="dashboard-card col-span-1 lg:col-span-2">
-                    <div class="flex items-start justify-between mb-6">
-                        <div>
-                            <h3 class="font-display text-xl font-semibold">Platform Growth</h3>
-                            <p class="text-gray-500 text-sm">Monthly overview</p>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button
-                                class="px-3 py-1 rounded-lg text-xs font-medium bg-white shadow-sm hover:bg-gray-50 transition-colors">
-                                3 Months
-                            </button>
-                            <button
-                                class="px-3 py-1 rounded-lg text-xs font-medium bg-primary text-white shadow-sm hover:bg-primary/90 transition-colors">
-                                6 Months
-                            </button>
-                            <button
-                                class="px-3 py-1 rounded-lg text-xs font-medium bg-white shadow-sm hover:bg-gray-50 transition-colors">
-                                1 Year
-                            </button>
-                        </div>
-                    </div>
-                    <div class="chart-container" id="platform-growth-chart">
-                        <div id="platformGrowthChart"></div>
                     </div>
                 </div>
             </div>
@@ -900,73 +743,6 @@
                 animateValue('tasks-count', 0, {{ $activeSrv }}, 2000);
                 animateValue('revenue-count', 0, {{ $totalAmount }}, 2000);
             }, 500);
-
-            // Initialize charts
-            // User Growth Chart
-            const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
-            const userGrowthChart = new Chart(userGrowthCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    datasets: [{
-                            label: 'Users',
-                            data: [5200, 5700, 6200, 6800, 7200, 7500],
-                            borderColor: '#FF6B6B',
-                            backgroundColor: 'rgba(255, 107, 107, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        },
-                        {
-                            label: 'Providers',
-                            data: [2100, 2300, 2500, 2700, 2900, 3000],
-                            borderColor: '#4ECDC4',
-                            backgroundColor: 'rgba(78, 205, 196, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                            titleColor: '#1A535C',
-                            bodyColor: '#1A535C',
-                            borderColor: 'rgba(26, 83, 92, 0.1)',
-                            borderWidth: 1,
-                            cornerRadius: 8,
-                            displayColors: true,
-                            usePointStyle: true,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + context.parsed.y
-                                        .toLocaleString();
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                display: true,
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-
             // Task Distribution Chart
             const taskDistributionCtx = document.getElementById('taskDistributionChart').getContext('2d');
             const taskDistributionChart = new Chart(taskDistributionCtx, {
@@ -1012,65 +788,6 @@
                                 label: function(context) {
                                     return context.label + ': ' + context.parsed + '%';
                                 }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Provider Performance Chart
-            const providerPerformanceCtx = document.getElementById('providerPerformanceChart').getContext('2d');
-            const providerPerformanceChart = new Chart(providerPerformanceCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['John D.', 'Sarah M.', 'Robert K.', 'Emily L.', 'David P.'],
-                    datasets: [{
-                        label: 'Completed Tasks',
-                        data: [85, 72, 68, 65, 58],
-                        backgroundColor: '#4ECDC4',
-                        borderRadius: 8
-                    }, {
-                        label: 'Average Rating',
-                        data: [95, 88, 90, 85, 92],
-                        backgroundColor: '#FF6B6B',
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                            titleColor: '#1A535C',
-                            bodyColor: '#1A535C',
-                            borderColor: 'rgba(26, 83, 92, 0.1)',
-                            borderWidth: 1,
-                            cornerRadius: 8,
-                            displayColors: true,
-                            usePointStyle: true
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            grid: {
-                                display: true,
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
                             }
                         }
                     }

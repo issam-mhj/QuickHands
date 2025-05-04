@@ -109,8 +109,8 @@
         }
 
         .nav-link.active {
-            background-color: #FF6B6B;
-            color: white;
+            background-color: white;
+            color: #FF6B6B;
             font-weight: 500;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
@@ -393,7 +393,7 @@
         <div class="sidebar-content">
             <div class="mb-8">
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
+                    <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png" alt="Admin"
                         class="w-10 h-10 rounded-full border-2 border-white">
                     <div>
                         <h4 class="font-medium">{{ $user->name }}</h4>
@@ -415,7 +415,7 @@
                     <i class="fas fa-user-tie icon mr-3"></i>
                     <span>Provider Management</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/content" class="nav-link">
                     <i class="fas fa-shield-alt icon mr-3"></i>
                     <span>Content Moderation</span>
                 </a>
@@ -423,7 +423,7 @@
                     <i class="fas fa-tasks icon mr-3"></i>
                     <span>Task Oversight</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/analytics" class="nav-link">
                     <i class="fas fa-chart-line icon mr-3"></i>
                     <span>Analytics & Reports</span>
                 </a>
@@ -544,7 +544,7 @@
                         <div class="relative">
                             <button id="user-btn"
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
+                                <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png" alt="Admin"
                                     class="w-8 h-8 rounded-full">
                                 <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
@@ -578,17 +578,6 @@
                         <div class="relative z-10">
                             <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Tasks</h3>
                             <p class="text-3xl font-bold mt-2 text-gray-800">{{ $taskNum }}</p>
-                            <div class="mt-4 flex items-center">
-                                <div class="flex items-center text-emerald-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                    </svg>
-                                    <span class="text-xs font-medium ml-1">12%</span>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-2">vs last month</span>
-                            </div>
                         </div>
                         <div class="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none"
@@ -616,17 +605,7 @@
                         <div class="relative z-10">
                             <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Active Tasks</h3>
                             <p class="text-3xl font-bold mt-2 text-gray-800">{{ $activeTaskNum }}</p>
-                            <div class="mt-4 flex items-center">
-                                <div class="flex items-center text-blue-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                                    </svg>
-                                    <span class="text-xs font-medium ml-1">8%</span>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-2">vs last month</span>
-                            </div>
+
                         </div>
                         <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none"
@@ -653,17 +632,6 @@
                             <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Not Started Tasks
                             </h3>
                             <p class="text-3xl font-bold mt-2 text-gray-800">{{ $notStartedTasks }}</p>
-                            <div class="mt-4 flex items-center">
-                                <div class="flex items-center text-amber-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                    </svg>
-                                    <span class="text-xs font-medium ml-1">5%</span>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-2">vs last month</span>
-                            </div>
                         </div>
                         <div class="w-12 h-12 rounded-lg bg-amber-100 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none"
@@ -690,17 +658,6 @@
                         <div class="relative z-10">
                             <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Completion Rate</h3>
                             <p class="text-3xl font-bold mt-2 text-gray-800">{{ $rateCompleted }}%</p>
-                            <div class="mt-4 flex items-center">
-                                <div class="flex items-center text-emerald-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                    </svg>
-                                    <span class="text-xs font-medium ml-1">15%</span>
-                                </div>
-                                <span class="text-xs text-gray-500 ml-2">vs last month</span>
-                            </div>
                         </div>
                         <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none"

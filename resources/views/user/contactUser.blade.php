@@ -36,8 +36,7 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     boxShadow: {
-                        card: '0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.06)',
-                        inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
+                        card: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
                     }
                 }
             }
@@ -46,18 +45,17 @@
     <style>
         /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
         }
 
         ::-webkit-scrollbar-track {
             background: #f1f5f9;
-            border-radius: 8px;
         }
 
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
-            border-radius: 8px;
+            border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
@@ -80,33 +78,10 @@
         .animate-fade-in {
             animation: fadeIn 0.3s ease forwards;
         }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.7;
-            }
-        }
-
-        .animate-pulse-slow {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        /* Glass morphism effect */
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
     </style>
 </head>
 
-<body class="bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 min-h-screen">
+<body class="bg-slate-50 text-slate-800">
     <!-- Header -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-[70px]">
@@ -126,6 +101,7 @@
                 <div class="flex items-center gap-3 cursor-pointer p-2 rounded-md transition hover:bg-slate-100">
                     <div class="text-right">
                         <div class="font-semibold text-sm text-slate-800"> {{ $user->name }} </div>
+                        <div class="text-xs text-slate-500">Premium Member</div>
                     </div>
                     <div
                         class="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center font-semibold text-white">
@@ -148,13 +124,13 @@
                 <li><a href="/user/activetask"
                         class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Active
                         Tasks</a></li>
-                <li><a href="/user/selectprovider"
+                <li><a href="#"
                         class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Provider
                         Selection</a></li>
-                <li><a href="#"
+                <li><a href="/user/conversation"
                         class="block px-4 py-3 text-primary no-underline font-medium text-sm rounded-md bg-blue-50">Messages</a>
                 </li>
-                <li><a href="/user/reviews"
+                <li><a href="#"
                         class="block px-4 py-3 text-slate-500 no-underline font-medium text-sm rounded-md transition hover:text-primary hover:bg-slate-100">Reviews</a>
                 </li>
                 <li><a href="#"
@@ -174,79 +150,95 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-8">
+    <main class="container mx-auto px-4 py-6">
         <!-- Page Header -->
-        <div class="mb-8 animate-fade-in">
-            <div>
-                <div class="ml-[125px]">
-                    <h1 class="text-2xl font-bold text-slate-800 flex items-center">
-                        <i class="fas fa-comments text-primary-light mr-3"></i>
-                        Messages
-                    </h1>
-                    <p class="text-slate-500 mt-1.5 ml-1">Connect with your service providers</p>
-                </div>
-            </div>
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-slate-800">Messages</h1>
+            <p class="text-slate-500 mt-1">Manage your conversations</p>
         </div>
 
         <!-- Chat Interface -->
-        <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 mx-auto max-w-4xl animate-fade-in">
+        <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
             <!-- Conversation List -->
-            <div class="bg-white rounded-2xl shadow-card border border-slate-200/60 lg:col-span-1 overflow-hidden">
-                <div class="border-b border-slate-100 px-6 py-4 flex justify-between items-center bg-slate-50/50">
-                    <h2 class="font-medium text-slate-700 flex items-center">
-                        <i class="fas fa-user-friends text-primary-light mr-2"></i>
-                        My Conversations
-                    </h2>
-                    <div class="flex space-x-2">
-                        <button
-                            class="text-sm text-slate-500 hover:text-primary flex items-center px-3 py-1.5 rounded-md hover:bg-slate-100 transition-colors">
-                            <i class="fas fa-filter mr-1.5"></i> Filter
-                        </button>
-                        <button
-                            class="text-sm text-slate-500 hover:text-primary flex items-center px-3 py-1.5 rounded-md hover:bg-slate-100 transition-colors">
-                            <i class="fas fa-sort mr-1.5"></i> Sort
-                        </button>
+            <div class="bg-white rounded-xl shadow-card border border-slate-200 lg:col-span-1 overflow-hidden">
+
+
+                <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div
+                            class="w-10 h-10 bg-purple-500 text-white rounded-full flex items-center justify-center font-medium">
+                            {{ $messages[0]->conversation->offer->provider->user->name[0] }}
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-slate-800">
+                                {{ $messages[0]->conversation->offer->provider->user->name }} </h3>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Conversations -->
-                <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
-                    <!-- Active Conversation -->
-                    @foreach ($conversations as $conversation)
-                        <div
-                            class="p-4 hover:bg-blue-50/70 bg-blue-50/80 border-l-4 border-primary cursor-pointer transition-all duration-200 ease-in-out">
-                            <div class="flex items-start space-x-4">
-                                <div class="relative">
-                                    <div
-                                        class="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 text-white rounded-full flex items-center justify-center font-medium shadow-md">
-                                        {{ $conversation->offer->provider->user->name[0] }}
+                <!-- Chat Messages -->
+                <div class="flex-1 overflow-y-auto p-4 bg-slate-50 space-y-4">
+                    @foreach ($messages as $msg)
+                        @if ($msg->user_id == $user->id)
+                            <div class="flex items-start justify-end space-x-2 max-w-[75%] ml-auto">
+                                <div>
+                                    <div class="bg-primary text-white p-3 rounded-lg rounded-tr-none shadow-sm">
+                                        <p>{{ $msg->content }}</p>
                                     </div>
-                                    <div
-                                        class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white">
+                                    <div class="flex items-center justify-end text-xs text-slate-500 mt-1 mr-2">
+                                        <span>{{ $msg->created_at }}</span>
+                                        <i class="fas fa-check-double ml-1 text-primary"></i>
                                     </div>
                                 </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex justify-between items-center">
-                                        <h3 class="font-semibold text-slate-800 truncate text-base">
-                                            {{ $conversation->offer->provider->user->name }}</h3>
-                                        <span class="text-xs text-slate-500 whitespace-nowrap">2h ago</span>
-                                    </div>
-                                    <p class="text-slate-500 text-sm mt-1 truncate">Last message preview would go
-                                        here...</p>
-                                    <form action="/message/{{ $conversation->id }}" class="mt-3">
-                                        @csrf
-                                        <button type="submit"
-                                            class="w-full py-2 px-4 bg-primary hover:bg-primary-dark text-white text-sm font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow flex items-center justify-center">
-                                            <i class="fas fa-comment-dots mr-2"></i> View Conversation
-                                        </button>
-                                    </form>
+                                <div
+                                    class="w-8 h-8 bg-primary-light text-white rounded-full flex items-center justify-center text-xs">
+                                    {{ $user->name[0] }}
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <!-- Message - Other Person -->
+                            <div class="flex items-start space-x-2 max-w-[75%]">
+                                <div
+                                    class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-xs">
+                                    {{ $msg->conversation->offer->provider->user->name[0] }}
+                                </div>
+                                <div>
+                                    <div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm">
+                                        <div class="text-xs text-green-600 font-medium mb-1">
+                                            {{ $msg->conversation->offer->provider->user->name }} </div>
+                                        <p>{{ $msg->content }}</p>
+                                    </div>
+                                    <div class="text-xs text-slate-500 mt-1 ml-2">{{ $msg->created_at }}</div>
+                                </div>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
+
+                <!-- Chat Input -->
+                <div class="p-6 border-t border-slate-200 bg-white">
+                    <form action="/message/store/{{ $messages[0]->conversation->id }}" method="POST"
+                        class="flex items-end space-x-3">
+                        @csrf
+                        <div class="flex-1 relative">
+                            <textarea rows="1" placeholder="Type a message..." name="content"
+                                class="w-full pl-5 pr-14 py-4 border border-slate-300 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm resize-none"></textarea>
+                            <div class="absolute right-3 bottom-3 flex space-x-2 text-gray-400">
+                                <button type="button" class="hover:text-blue-500 transition-colors">
+                                    <i class="fas fa-paperclip"></i>
+                                </button>
+                                <button type="button" class="hover:text-blue-500 transition-colors">
+                                    <i class="fas fa-smile"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow transition-colors flex items-center justify-center">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
     </main>
 
     <script>
@@ -254,36 +246,34 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Auto-expand textarea as user types
             const textarea = document.querySelector('textarea');
-            if (textarea) {
-                textarea.addEventListener('input', function() {
-                    this.style.height = 'auto';
-                    this.style.height = (this.scrollHeight) + 'px';
-                    // Cap at certain height
-                    if (this.scrollHeight > 150) {
-                        this.style.height = '150px';
-                        this.style.overflowY = 'auto';
-                    } else {
-                        this.style.overflowY = 'hidden';
-                    }
-                });
-            }
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+                // Cap at certain height
+                if (this.scrollHeight > 150) {
+                    this.style.height = '150px';
+                    this.style.overflowY = 'auto';
+                } else {
+                    this.style.overflowY = 'hidden';
+                }
+            });
 
             // Make conversation items clickable
             const conversationItems = document.querySelectorAll(
-                '.p-4.hover\\:bg-blue-50\\/70, .p-4.hover\\:bg-blue-50\\/70');
+                '.p-3.hover\\:bg-slate-50, .p-3.hover\\:bg-blue-50');
             conversationItems.forEach(item => {
                 item.addEventListener('click', function() {
                     // Remove active class from all conversations
                     conversationItems.forEach(i => {
-                        i.classList.remove('bg-blue-50/80', 'border-l-4', 'border-primary');
-                        i.classList.add('hover:bg-slate-50/70', 'border-b',
+                        i.classList.remove('bg-blue-50', 'border-l-4', 'border-primary');
+                        i.classList.add('hover:bg-slate-50', 'border-b',
                             'border-slate-100');
                     });
 
                     // Add active class to clicked conversation
-                    this.classList.remove('hover:bg-slate-50/70', 'border-b', 'border-slate-100');
-                    this.classList.add('bg-blue-50/80', 'border-l-4', 'border-primary',
-                        'hover:bg-blue-50/70');
+                    this.classList.remove('hover:bg-slate-50', 'border-b', 'border-slate-100');
+                    this.classList.add('bg-blue-50', 'border-l-4', 'border-primary',
+                        'hover:bg-blue-50');
                 });
             });
         });

@@ -786,10 +786,9 @@
                 </button>
                 <div class="user-menu">
                     <div class="user-info">
-                        <div class="user-name">Alex Johnson</div>
-                        <div class="user-role">Premium Member</div>
+                        <div class="user-name"> {{ $user->name }} </div>
                     </div>
-                    <div class="user-avatar">AJ</div>
+                    <div class="user-avatar"> {{ $user->name[0] }} </div>
                 </div>
             </div>
         </div>
@@ -800,19 +799,21 @@
         <div class="container nav-container">
             <ul class="nav-links">
                 <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="#">Post a Task</a></li>
+                <li><a href="/user/task">Post a Task</a></li>
                 <li><a href="#">Active Tasks</a></li>
                 <li><a href="#">Provider Selection</a></li>
                 <li><a href="#">Messages</a></li>
-                <li><a href="#">Payment & Billing</a></li>
                 <li><a href="#">Reviews</a></li>
                 <li><a href="#">Profile & Settings</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="#" class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Post New Task
-                </a>
+                <form action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="btn ">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>
@@ -822,7 +823,7 @@
         <div class="container">
             <!-- Dashboard Header -->
             <div class="dashboard-header">
-                <h1 class="dashboard-title">Welcome back, Alex!</h1>
+                <h1 class="dashboard-title">Welcome back, {{ $user->name }}!</h1>
                 <p class="dashboard-subtitle">Here's what's happening with your tasks today</p>
             </div>
 
@@ -836,178 +837,26 @@
                             <i class="fas fa-tasks"></i>
                         </div>
                     </div>
-                    <div class="stat-value">5</div>
-                    <div class="stat-trend trend-up">
-                        <i class="fas fa-arrow-up trend-icon"></i>
-                        <span>2 more than last week</span>
-                    </div>
+                    <div class="stat-value">{{ $usertasksNum }}</div>
                 </div>
 
                 <!-- Total Spending -->
                 <div class="stat-card">
                     <div class="stat-header">
-                        <div class="stat-label">Total Spending (April)</div>
+                        <div class="stat-label">Total Spending</div>
                         <div class="stat-icon green">
                             <i class="fas fa-wallet"></i>
                         </div>
                     </div>
-                    <div class="stat-value">$342.50</div>
-                    <div class="stat-trend trend-down">
-                        <i class="fas fa-arrow-down trend-icon"></i>
-                        <span>$28.75 less than March</span>
-                    </div>
-                </div>
-
-                <!-- Average Provider Rating -->
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-label">Average Provider Rating</div>
-                        <div class="stat-icon yellow">
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="stat-value">4.8/5</div>
-                    <div class="stat-trend trend-up">
-                        <i class="fas fa-arrow-up trend-icon"></i>
-                        <span>0.2 higher than average</span>
-                    </div>
-                </div>
-
-                <!-- Savings -->
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-label">Savings from Recurring Tasks</div>
-                        <div class="stat-icon orange">
-                            <i class="fas fa-piggy-bank"></i>
-                        </div>
-                    </div>
-                    <div class="stat-value">$78.25</div>
-                    <div class="stat-trend trend-up">
-                        <i class="fas fa-arrow-up trend-icon"></i>
-                        <span>15% discount applied</span>
-                    </div>
+                    <div class="stat-value">${{ $totalspent }} </div>
                 </div>
             </div>
-
-            <!-- Task Alerts -->
-            <div class="section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-bell"></i>
-                        Task Alerts
-                    </h2>
-                    <a href="#" class="view-all">
-                        View All
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
-                <div class="alerts-container">
-                    <!-- Alert 1 -->
-                    <div class="alert-item new">
-                        <div class="alert-icon info">
-                            <i class="fas fa-route"></i>
-                        </div>
-                        <div class="alert-content">
-                            <div class="alert-title">
-                                Provider en route to your location
-                                <span class="new-badge">New</span>
-                            </div>
-                            <div class="alert-meta">
-                                <span class="alert-time">
-                                    <i class="far fa-clock"></i>
-                                    10 minutes ago
-                                </span>
-                                <span class="alert-task">
-                                    <i class="fas fa-box"></i>
-                                    Package Delivery
-                                </span>
-                            </div>
-                        </div>
-                        <div class="alert-actions">
-                            <button class="alert-btn">Track</button>
-                        </div>
-                    </div>
-
-                    <!-- Alert 2 -->
-                    <div class="alert-item new">
-                        <div class="alert-icon success">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="alert-content">
-                            <div class="alert-title">
-                                Task completed: Furniture Assembly
-                                <span class="new-badge">New</span>
-                            </div>
-                            <div class="alert-meta">
-                                <span class="alert-time">
-                                    <i class="far fa-clock"></i>
-                                    1 hour ago
-                                </span>
-                                <span class="alert-task">
-                                    <i class="fas fa-couch"></i>
-                                    Furniture Assembly
-                                </span>
-                            </div>
-                        </div>
-                        <div class="alert-actions">
-                            <button class="alert-btn">Review</button>
-                        </div>
-                    </div>
-
-                    <!-- Alert 3 -->
-                    <div class="alert-item">
-                        <div class="alert-icon warning">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="alert-content">
-                            <div class="alert-title">Reminder: Upcoming House Cleaning</div>
-                            <div class="alert-meta">
-                                <span class="alert-time">
-                                    <i class="far fa-calendar"></i>
-                                    Tomorrow, 10:00 AM
-                                </span>
-                                <span class="alert-task">
-                                    <i class="fas fa-broom"></i>
-                                    House Cleaning
-                                </span>
-                            </div>
-                        </div>
-                        <div class="alert-actions">
-                            <button class="alert-btn">Details</button>
-                        </div>
-                    </div>
-
-                    <!-- Alert 4 -->
-                    <div class="alert-item">
-                        <div class="alert-icon warning">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </div>
-                        <div class="alert-content">
-                            <div class="alert-title">Action needed: Confirm grocery list</div>
-                            <div class="alert-meta">
-                                <span class="alert-time">
-                                    <i class="far fa-clock"></i>
-                                    Due in 3 hours
-                                </span>
-                                <span class="alert-task">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    Grocery Shopping
-                                </span>
-                            </div>
-                        </div>
-                        <div class="alert-actions">
-                            <button class="alert-btn">Confirm</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Recent Providers -->
             <div class="section">
                 <div class="section-header">
                     <h2 class="section-title">
                         <i class="fas fa-user-check"></i>
-                        Recent Providers
+                        Last providers i worked with
                     </h2>
                     <a href="#" class="view-all">
                         View All
@@ -1015,113 +864,15 @@
                     </a>
                 </div>
                 <div class="providers-grid">
-                    <!-- Provider 1 -->
-                    <div class="provider-card">
-                        <div class="provider-header"></div>
-                        <div class="provider-avatar">
-                            <img src="/placeholder.svg?height=60&width=60" alt="Provider">
-                        </div>
-                        <div class="provider-content">
-                            <h3 class="provider-name">Michael Brown</h3>
-                            <div class="provider-service">Furniture Assembly</div>
-                            <div class="provider-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="rating-value">5.0</span>
-                                <span class="rating-count">(42)</span>
-                            </div>
-                            <div class="provider-actions">
-                                <button class="btn btn-outline provider-btn">Message</button>
-                                <button class="btn btn-primary provider-btn">Hire Again</button>
+                    @foreach ($usertasks as $task)
+                        <div class="provider-card">
+                            <div class="provider-header"></div>
+                            <div class="provider-content">
+                                <h3 class="provider-name"> {{ $task->offer->provider->user->name }} </h3>
+                                <div class="provider-service">{{ $task->offer->service->title }}</div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Provider 2 -->
-                    <div class="provider-card">
-                        <div class="provider-header"></div>
-                        <div class="provider-avatar">
-                            <img src="/placeholder.svg?height=60&width=60" alt="Provider">
-                        </div>
-                        <div class="provider-content">
-                            <h3 class="provider-name">Sarah Wilson</h3>
-                            <div class="provider-service">House Cleaning</div>
-                            <div class="provider-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.7</span>
-                                <span class="rating-count">(38)</span>
-                            </div>
-                            <div class="provider-actions">
-                                <button class="btn btn-outline provider-btn">Message</button>
-                                <button class="btn btn-primary provider-btn">Hire Again</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Provider 3 -->
-                    <div class="provider-card">
-                        <div class="provider-header"></div>
-                        <div class="provider-avatar">
-                            <img src="/placeholder.svg?height=60&width=60" alt="Provider">
-                        </div>
-                        <div class="provider-content">
-                            <h3 class="provider-name">David Chen</h3>
-                            <div class="provider-service">Package Delivery</div>
-                            <div class="provider-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                                <span class="rating-value">4.2</span>
-                                <span class="rating-count">(27)</span>
-                            </div>
-                            <div class="provider-actions">
-                                <button class="btn btn-outline provider-btn">Message</button>
-                                <button class="btn btn-primary provider-btn">Hire Again</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Provider 4 -->
-                    <div class="provider-card">
-                        <div class="provider-header"></div>
-                        <div class="provider-avatar">
-                            <img src="/placeholder.svg?height=60&width=60" alt="Provider">
-                        </div>
-                        <div class="provider-content">
-                            <h3 class="provider-name">Emily Rodriguez</h3>
-                            <div class="provider-service">Grocery Shopping</div>
-                            <div class="provider-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="rating-value">4.9</span>
-                                <span class="rating-count">(56)</span>
-                            </div>
-                            <div class="provider-actions">
-                                <button class="btn btn-outline provider-btn">Message</button>
-                                <button class="btn btn-primary provider-btn">Hire Again</button>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

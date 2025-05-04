@@ -109,8 +109,8 @@
         }
 
         .nav-link.active {
-            background-color: #FF6B6B;
-            color: white;
+            background-color: #ffffff;
+            color: #FF6B6B;
             font-weight: 500;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
@@ -389,7 +389,7 @@
         <div class="sidebar-content">
             <div class="mb-8">
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
+                    <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png" alt="Admin"
                         class="w-10 h-10 rounded-full border-2 border-white">
                     <div>
                         <h4 class="font-medium">{{ $user->name }}</h4>
@@ -407,7 +407,7 @@
                     <i class="fas fa-users icon mr-3"></i>
                     <span>User Management</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/providermanage" class="nav-link">
                     <i class="fas fa-user-tie icon mr-3"></i>
                     <span>Provider Management</span>
                 </a>
@@ -415,7 +415,7 @@
                     <i class="fas fa-shield-alt icon mr-3"></i>
                     <span>Content Moderation</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/task" class="nav-link">
                     <i class="fas fa-tasks icon mr-3"></i>
                     <span>Task Oversight</span>
                 </a>
@@ -426,8 +426,6 @@
                 <a href="#" class="nav-link">
                     <i class="fas fa-bell icon mr-3"></i>
                     <span>Notifications</span>
-                    <span
-                        class="ml-auto bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">8</span>
                 </a>
                 <a href="#" class="nav-link">
                     <i class="fas fa-cog icon mr-3"></i>
@@ -540,8 +538,8 @@
                         <div class="relative">
                             <button id="user-btn"
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
-                                    class="w-8 h-8 rounded-full">
+                                <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png"
+                                    alt="Admin" class="w-8 h-8 rounded-full">
                                 <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
@@ -686,8 +684,6 @@
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-3 px-4">
                                             <div class="flex items-center">
-                                                <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                    class="h-8 w-8 rounded-full">
                                                 <div class="ml-3">
                                                     <p class="text-sm font-medium">{{ $review->user->name }}</p>
                                                     <p class="text-xs text-gray-500">{{ $review->user->email }}</p>
@@ -807,8 +803,6 @@
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-3 px-4">
                                             <div class="flex items-center">
-                                                <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                    class="h-8 w-8 rounded-full">
                                                 <div class="ml-3">
                                                     <p class="text-sm font-medium">{{ $message->user->name }}</p>
                                                     <p class="text-xs text-gray-500">{{ $message->user->email }}</p>
@@ -927,8 +921,6 @@
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-3 px-4">
                                             <div class="flex items-center">
-                                                <img src="/placeholder.svg?height=32&width=32" alt="User"
-                                                    class="h-8 w-8 rounded-full">
                                                 <div class="ml-3">
                                                     <p class="text-sm font-medium">{{ $service->user->name }}</p>
                                                     <p class="text-xs text-gray-500">{{ $service->user->email }}</p>

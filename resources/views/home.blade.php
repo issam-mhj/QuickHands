@@ -1020,30 +1020,29 @@
             }
         });
 
-        // Cursor follower for desktop
-        const cursorFollower = document.getElementById('cursor-follower');
+        // const cursorFollower = document.getElementById('cursor-follower');
 
-        if (window.innerWidth > 768) {
-            document.addEventListener('mousemove', function(e) {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            });
+        // if (window.innerWidth > 768) {
+        //     document.addEventListener('mousemove', function(e) {
+        //         cursorFollower.style.left = e.clientX + 'px';
+        //         cursorFollower.style.top = e.clientY + 'px';
+        //     });
 
-            // Add special effects on hover for interactive elements
-            const interactiveElements = document.querySelectorAll('a, button, .card, .service-card');
+        //     // Add special effects on hover for interactive elements
+        //     const interactiveElements = document.querySelectorAll('a, button, .card, .service-card');
 
-            interactiveElements.forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    cursorFollower.classList.add('scale-150');
-                    cursorFollower.classList.add('opacity-30');
-                });
+        //     interactiveElements.forEach(element => {
+        //         element.addEventListener('mouseenter', function() {
+        //             cursorFollower.classList.add('scale-150');
+        //             cursorFollower.classList.add('opacity-30');
+        //         });
 
-                element.addEventListener('mouseleave', function() {
-                    cursorFollower.classList.remove('scale-150');
-                    cursorFollower.classList.remove('opacity-30');
-                });
-            });
-        }
+        //         element.addEventListener('mouseleave', function() {
+        //             cursorFollower.classList.remove('scale-150');
+        //             cursorFollower.classList.remove('opacity-30');
+        //         });
+        //     });
+        // }
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1058,29 +1057,6 @@
                 }
             });
         });
-    </script>
-
-    <!-- React Integration Script (External) -->
-    <script type="text/javascript">
-        // This is where you would load your React components
-        // Example:
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     // Load React and ReactDOM from CDN
-        //     const reactScript = document.createElement('script');
-        //     reactScript.src = 'https://unpkg.com/react@18/umd/react.production.min.js';
-        //     document.body.appendChild(reactScript);
-        //
-        //     const reactDOMScript = document.createElement('script');
-        //     reactDOMScript.src = 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js';
-        //     document.body.appendChild(reactDOMScript);
-        //
-        //     // Load your custom React components
-        //     reactDOMScript.onload = function() {
-        //         const customScript = document.createElement('script');
-        //         customScript.src = '/path/to/your/react-components.js';
-        //         document.body.appendChild(customScript);
-        //     };
-        // });
     </script>
 </body>
 

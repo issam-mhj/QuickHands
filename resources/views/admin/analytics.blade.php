@@ -398,7 +398,7 @@
         <div class="sidebar-content">
             <div class="mb-8">
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="user-avatar">
+                    <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png" alt="Admin" class="user-avatar">
                     <div>
                         <h4 class="font-medium">{{ $user->name }}</h4>
                         <p class="text-xs text-gray-500">Super Admin</p>
@@ -423,7 +423,7 @@
                     <i class="fas fa-shield-alt icon"></i>
                     <span>Content Moderation</span>
                 </a>
-                <a href="task-oversight.html" class="nav-link">
+                <a href="/admin/task" class="nav-link">
                     <i class="fas fa-tasks icon"></i>
                     <span>Task Oversight</span>
                 </a>
@@ -431,11 +431,9 @@
                     <i class="fas fa-chart-line icon"></i>
                     <span>Analytics & Reports</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="/admin/notifications" class="nav-link">
                     <i class="fas fa-bell icon"></i>
                     <span>Notifications</span>
-                    <span
-                        class="ml-auto bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">8</span>
                 </a>
                 <a href="#" class="nav-link">
                     <i class="fas fa-cog icon"></i>
@@ -548,7 +546,7 @@
                         <div class="relative">
                             <button id="user-btn"
                                 class="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin"
+                                <img src="https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png" alt="Admin"
                                     class="w-8 h-8 rounded-full">
                                 <span class="hidden md:block">{{ $user->name }}</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
@@ -606,10 +604,7 @@
                             <i class="fas fa-users"></i>
                         </div>
                     </div>
-                    <div class="metric-trend trend-up">
-                        <i class="fas fa-arrow-up mr-1"></i>
-                        <span>12.5% vs last period</span>
-                    </div>
+
                 </div>
 
                 <div class="metric-card">
@@ -623,10 +618,6 @@
                             <i class="fas fa-user-tie"></i>
                         </div>
                     </div>
-                    <div class="metric-trend trend-up">
-                        <i class="fas fa-arrow-up mr-1"></i>
-                        <span>8.3% vs last period</span>
-                    </div>
                 </div>
 
                 <div class="metric-card">
@@ -638,10 +629,6 @@
                         <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent">
                             <i class="fas fa-tasks"></i>
                         </div>
-                    </div>
-                    <div class="metric-trend trend-up">
-                        <i class="fas fa-arrow-up mr-1"></i>
-                        <span>15.2% vs last period</span>
                     </div>
                 </div>
 
@@ -655,10 +642,6 @@
                             class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center text-success">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
-                    </div>
-                    <div class="metric-trend trend-up">
-                        <i class="fas fa-arrow-up mr-1"></i>
-                        <span>18.7% vs last period</span>
                     </div>
                 </div>
             </div>
