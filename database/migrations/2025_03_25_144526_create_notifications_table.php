@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("message");
             $table->enum('type', ['offer', 'task-update', 'review', 'message'])->default('offer');
             $table->boolean("read_status")->default(false);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

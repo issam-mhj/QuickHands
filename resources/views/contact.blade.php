@@ -802,29 +802,29 @@
         });
 
         // Cursor follower for desktop
-        const cursorFollower = document.getElementById('cursor-follower');
+        // const cursorFollower = document.getElementById('cursor-follower');
 
-        if (window.innerWidth > 768) {
-            document.addEventListener('mousemove', function(e) {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            });
+        // if (window.innerWidth > 768) {
+        //     document.addEventListener('mousemove', function(e) {
+        //         cursorFollower.style.left = e.clientX + 'px';
+        //         cursorFollower.style.top = e.clientY + 'px';
+        //     });
 
-            // Add special effects on hover for interactive elements
-            const interactiveElements = document.querySelectorAll('a, button, .card, .contact-card');
+        //     // Add special effects on hover for interactive elements
+        //     const interactiveElements = document.querySelectorAll('a, button, .card, .contact-card');
 
-            interactiveElements.forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    cursorFollower.classList.add('scale-150');
-                    cursorFollower.classList.add('opacity-30');
-                });
+        //     interactiveElements.forEach(element => {
+        //         element.addEventListener('mouseenter', function() {
+        //             cursorFollower.classList.add('scale-150');
+        //             cursorFollower.classList.add('opacity-30');
+        //         });
 
-                element.addEventListener('mouseleave', function() {
-                    cursorFollower.classList.remove('scale-150');
-                    cursorFollower.classList.remove('opacity-30');
-                });
-            });
-        }
+        //         element.addEventListener('mouseleave', function() {
+        //             cursorFollower.classList.remove('scale-150');
+        //             cursorFollower.classList.remove('opacity-30');
+        //         });
+        //     });
+        // }
 
         // FAQ Accordion
         const faqToggles = document.querySelectorAll('.faq-toggle');

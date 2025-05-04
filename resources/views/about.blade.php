@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=width=device-width, initial-scale=1.0">
     <title>QuickHands - Our Story</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -222,6 +222,7 @@
             }
         }
 
+
         @keyframes bounce-in {
             0% {
                 transform: scale(0.3);
@@ -357,9 +358,8 @@
 
         body {
             overflow-x: hidden;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23FF6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>') 12 12, auto;
+            /* cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23FF6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>') 12 12, auto; */
         }
-
         .gradient-text {
             background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #FFE66D);
             background-size: 200% auto;
@@ -2058,156 +2058,156 @@
             }
         }
 
-        // Custom cursor
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorOutline = document.getElementById('cursor-outline');
+        // // Custom cursor
+        // const cursorDot = document.getElementById('cursor-dot');
+        // const cursorOutline = document.getElementById('cursor-outline');
 
-        window.addEventListener('mousemove', function(e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
+        // window.addEventListener('mousemove', function(e) {
+        //     const posX = e.clientX;
+        //     const posY = e.clientY;
 
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
+        //     cursorDot.style.left = `${posX}px`;
+        //     cursorDot.style.top = `${posY}px`;
 
-            cursorOutline.style.left = `${posX}px`;
-            cursorOutline.style.top = `${posY}px`;
-        });
+        //     cursorOutline.style.left = `${posX}px`;
+        //     cursorOutline.style.top = `${posY}px`;
+        // });
 
         // Cursor effects on hover
-        document.querySelectorAll('a, button, .hover-card').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                cursorOutline.style.width = '60px';
-                cursorOutline.style.height = '60px';
-                cursorOutline.style.borderColor = 'rgba(255, 107, 107, 0.8)';
-            });
+        // document.querySelectorAll('a, button, .hover-card').forEach(item => {
+        //     item.addEventListener('mouseenter', () => {
+        //         cursorOutline.style.width = '60px';
+        //         cursorOutline.style.height = '60px';
+        //         cursorOutline.style.borderColor = 'rgba(255, 107, 107, 0.8)';
+        //     });
 
-            item.addEventListener('mouseleave', () => {
-                cursorOutline.style.width = '40px';
-                cursorOutline.style.height = '40px';
-                cursorOutline.style.borderColor = 'rgba(255, 107, 107, 0.5)';
-            });
-        });
+        //     item.addEventListener('mouseleave', () => {
+        //         cursorOutline.style.width = '40px';
+        //         cursorOutline.style.height = '40px';
+        //         cursorOutline.style.borderColor = 'rgba(255, 107, 107, 0.5)';
+        //     });
+        // });
 
         // Parallax effect
-        document.addEventListener('mousemove', function(e) {
-            const parallaxItems = document.querySelectorAll('.parallax-item');
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
+        // document.addEventListener('mousemove', function(e) {
+        //     const parallaxItems = document.querySelectorAll('.parallax-item');
+        //     const mouseX = e.clientX;
+        //     const mouseY = e.clientY;
 
-            parallaxItems.forEach(item => {
-                const depth = 0.05;
-                const moveX = (mouseX - window.innerWidth / 2) * depth;
-                const moveY = (mouseY - window.innerHeight / 2) * depth;
+        //     parallaxItems.forEach(item => {
+        //         const depth = 0.05;
+        //         const moveX = (mouseX - window.innerWidth / 2) * depth;
+        //         const moveY = (mouseY - window.innerHeight / 2) * depth;
 
-                item.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            });
-        });
+        //         item.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        //     });
+        // });
 
-        // Magnetic buttons
-        document.querySelectorAll('.magnetic-btn').forEach(btn => {
-            btn.addEventListener('mousemove', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+        // // Magnetic buttons
+        // document.querySelectorAll('.magnetic-btn').forEach(btn => {
+        //     btn.addEventListener('mousemove', function(e) {
+        //         const rect = this.getBoundingClientRect();
+        //         const x = e.clientX - rect.left;
+        //         const y = e.clientY - rect.top;
 
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
+        //         const centerX = rect.width / 2;
+        //         const centerY = rect.height / 2;
 
-                const deltaX = (x - centerX) / centerX;
-                const deltaY = (y - centerY) / centerY;
+        //         const deltaX = (x - centerX) / centerX;
+        //         const deltaY = (y - centerY) / centerY;
 
-                this.style.transform =
-                    `perspective(1000px) rotateX(${deltaY * 10}deg) rotateY(${deltaX * -10}deg)`;
-            });
+        //         this.style.transform =
+        //             `perspective(1000px) rotateX(${deltaY * 10}deg) rotateY(${deltaX * -10}deg)`;
+        //     });
 
-            btn.addEventListener('mouseleave', function() {
-                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-            });
-        });
+        //     btn.addEventListener('mouseleave', function() {
+        //         this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        //     });
+        // });
 
-        // 3D background with Three.js
-        function initThreeJSBackground() {
-            const container = document.getElementById('canvas-container');
+        // // 3D background with Three.js
+        // function initThreeJSBackground() {
+        //     const container = document.getElementById('canvas-container');
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        //     const scene = new THREE.Scene();
+        //     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-            const renderer = new THREE.WebGLRenderer({
-                alpha: true
-            });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(0x000000, 0);
-            container.appendChild(renderer.domElement);
+        //     const renderer = new THREE.WebGLRenderer({
+        //         alpha: true
+        //     });
+        //     renderer.setSize(window.innerWidth, window.innerHeight);
+        //     renderer.setClearColor(0x000000, 0);
+        //     container.appendChild(renderer.domElement);
 
-            // Create particles
-            const particleCount = 500;
-            const particles = new THREE.BufferGeometry();
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
+        //     // Create particles
+        //     const particleCount = 500;
+        //     const particles = new THREE.BufferGeometry();
+        //     const positions = new Float32Array(particleCount * 3);
+        //     const colors = new Float32Array(particleCount * 3);
 
-            for (let i = 0; i < particleCount * 3; i += 3) {
-                // Position
-                positions[i] = (Math.random() - 0.5) * 10;
-                positions[i + 1] = (Math.random() - 0.5) * 10;
-                positions[i + 2] = (Math.random() - 0.5) * 10;
+        //     for (let i = 0; i < particleCount * 3; i += 3) {
+        //         // Position
+        //         positions[i] = (Math.random() - 0.5) * 10;
+        //         positions[i + 1] = (Math.random() - 0.5) * 10;
+        //         positions[i + 2] = (Math.random() - 0.5) * 10;
 
-                // Color
-                colors[i] = Math.random();
-                colors[i + 1] = Math.random();
-                colors[i + 2] = Math.random();
-            }
+        //         // Color
+        //         colors[i] = Math.random();
+        //         colors[i + 1] = Math.random();
+        //         colors[i + 2] = Math.random();
+        //     }
 
-            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        //     particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        //     particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-            const particleMaterial = new THREE.PointsMaterial({
-                size: 0.05,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.7,
-                blending: THREE.AdditiveBlending
-            });
+        //     const particleMaterial = new THREE.PointsMaterial({
+        //         size: 0.05,
+        //         vertexColors: true,
+        //         transparent: true,
+        //         opacity: 0.7,
+        //         blending: THREE.AdditiveBlending
+        //     });
 
-            const particleSystem = new THREE.Points(particles, particleMaterial);
-            scene.add(particleSystem);
+        //     const particleSystem = new THREE.Points(particles, particleMaterial);
+        //     scene.add(particleSystem);
 
-            camera.position.z = 5;
+        //     camera.position.z = 5;
 
-            // Mouse movement effect
-            let mouseX = 0;
-            let mouseY = 0;
+        //     // Mouse movement effect
+        //     let mouseX = 0;
+        //     let mouseY = 0;
 
-            document.addEventListener('mousemove', (event) => {
-                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-            });
+        //     document.addEventListener('mousemove', (event) => {
+        //         mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+        //         mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        //     });
 
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
+        //     // Animation loop
+        //     function animate() {
+        //         requestAnimationFrame(animate);
 
-                particleSystem.rotation.x += 0.001;
-                particleSystem.rotation.y += 0.001;
+        //         particleSystem.rotation.x += 0.001;
+        //         particleSystem.rotation.y += 0.001;
 
-                // Follow mouse
-                particleSystem.rotation.x += (mouseY * 0.01 - particleSystem.rotation.x) * 0.05;
-                particleSystem.rotation.y += (mouseX * 0.01 - particleSystem.rotation.y) * 0.05;
+        //         // Follow mouse
+        //         particleSystem.rotation.x += (mouseY * 0.01 - particleSystem.rotation.x) * 0.05;
+        //         particleSystem.rotation.y += (mouseX * 0.01 - particleSystem.rotation.y) * 0.05;
 
-                renderer.render(scene, camera);
-            }
+        //         renderer.render(scene, camera);
+        //     }
 
-            animate();
+        //     animate();
 
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        }
+        //     // Handle window resize
+        //     window.addEventListener('resize', () => {
+        //         camera.aspect = window.innerWidth / window.innerHeight;
+        //         camera.updateProjectionMatrix();
+        //         renderer.setSize(window.innerWidth, window.innerHeight);
+        //     });
+        // }
 
-        // Initialize Three.js background
-        initThreeJSBackground();
+        // // Initialize Three.js background
+        // initThreeJSBackground();
 
         // Intersection Observer for animations
         const observerOptions = {

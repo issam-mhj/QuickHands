@@ -624,6 +624,16 @@
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
+                                            @if($provider->provider->status== "pending")
+                                            <form action="/accept/provider/{{ $provider->provider->id }}" method="POST"
+                                                class="inline">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="delete-provider text-danger hover:text-danger/80">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

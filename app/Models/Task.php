@@ -21,8 +21,4 @@ class Task extends Model
     {
         return $this->belongsTo(Offer::class);
     }
-    public function TaskUpdates(): HasMany
-    {
-        return $this->hasMany(TaskUpdate::class);
-    }
 }

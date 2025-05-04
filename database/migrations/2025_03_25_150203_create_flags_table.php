@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('content_type', ['review', 'message', 'service']);
             $table->text("reason");
             $table->enum('status', ['pending', 'reviewed'])->default('pending');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

@@ -63,6 +63,11 @@ class UserController extends Controller
             "users" => $allusers,
         ]);
     }
+    public function acceptprovider(Provider $provider)
+    {
+        $provider->update(['status' => 'approved']);
+        return redirect()->back()->with('success', 'Provider accepted successfully.');
+    }
     public function storeUser(Request $request)
     {
         $validated = $request->validate([
